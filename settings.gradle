@@ -1,0 +1,1 @@
+include ':app', ':flat_library', ':library', ':sample'

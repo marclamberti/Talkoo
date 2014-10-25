@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ActionBar styles -->
+    <style name="FlatActionBar"
+        parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/dark_primary</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowActionBarOverlay">true</item>
+    </style>
+
+    <style name="FlatActionBarHiddenAppLogo"
+        parent="FlatActionBar">
+        <item name="android:icon">@android:color/transparent</item>
+    </style>
+
+</resources>

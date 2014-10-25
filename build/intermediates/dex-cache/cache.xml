@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pre-dex-items>
+
+    <item
+        dex="/Users/Marc/Documents/Android/talkoo/app/build/intermediates/pre-dexed/debug/classes-53a0afe4e9e508548fc7e2f4518618af8880ad76.jar"
+        jar="/Users/Marc/Documents/Android/talkoo/app/build/intermediates/exploded-aar/com.github.eluleci/flatui/3.0.0/classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="d1089efa4a24767294278997764bea2fda31ccca"/>
+    <item
+        dex="/Users/Marc/Documents/Android/talkoo/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.0-540d2c8f7833630beb5d837c26bd82ee4d744b8e.jar"
+        jar="/Users/Marc/Documents/Android/talkoo/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.0/libs/internal_impl-21.0.0.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="1609e6d42d0480b0f4188e2c29f75388fa12a8f0"/>
+    <item
+        dex="/Users/Marc/Documents/Android/talkoo/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.0-ee576f91b45a6538d4156fc6e674b6f65034f74e.jar"
+        jar="/Applications/Android Studio.app/sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.0/support-annotations-21.0.0.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="1a578b9607b36266c63d43a4fa0ab5664dbe911e"/>
+    <item
+        dex="/Users/Marc/Documents/Android/talkoo/app/build/intermediates/pre-dexed/debug/classes-bef9e25f87d6aad7b267f8577193bc7d5bf01008.jar"
+        jar="/Users/Marc/Documents/Android/talkoo/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.0/classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="686344a780033e4ba22b926cd225f8d4941247e6"/>
+
+</pre-dex-items>

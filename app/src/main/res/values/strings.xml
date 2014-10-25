@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Talkoo</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Welcome activity -->
+    <string name="welcome_title_app">Talkoo</string>
+    <string name="welcome">Communicate with other people without Internet</string>
+    <string name="welcome_hint_sign_up_login">Login</string>
+    <string name="welcome_sign_up_button">Sign In</string>
+
+    <!-- Navigator Activity -->
+    <string name="navigator_activity">NavigatorActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- Home Fragment -->
+    <string name="home_title">Home</string>
+    <string name="button_home_create_group">Create group</string>
+    <string name="button_home_find_peers">Find peers</string>
+
+    <!-- Peers Fragment -->
+    <string name="peers_title">Peers</string>
+    <string name="item_peer_name">Name</string>
+    <string name="item_peer_details">Details</string>
+    <string name="empty_peers_list">There aren\'t peers around you</string>
+    <string name="action_refresh">Load</string>
+
+    <!-- Settings Fragment -->
+    <string name="settings_title">Settings</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Peer Details Fragment -->
+    <string name="peer_details_title">Details</string>
+    <string name="title_activity_chat">Room</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_room">Room</string>
+
+    <!-- Room Fragment -->
+    <string name="room_title">Room</string>
+
+</resources>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:flatui="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="15dp"
+    android:background="@drawable/item_peer"
+    >
+
+    <com.cengalabs.flatui.views.FlatTextView
+        android:id="@+id/item_peer_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:gravity="center"
+        android:text="@string/item_peer_name"
+        android:textSize="18sp"
+        flatui:fl_textColor="fl_main"
+        flatui:fl_theme="@array/snow" />
+
+    <com.cengalabs.flatui.views.FlatTextView
+        android:id="@+id/item_peer_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:gravity="center"
+        android:layout_marginTop="3dp"
+        android:text="@string/item_peer_details"
+        android:textSize="15sp"
+        flatui:fl_textColor="fl_main"
+        flatui:fl_theme="@array/candy" />
+
+</LinearLayout>

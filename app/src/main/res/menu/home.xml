@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.mobile.marc.talkoo.NavigatorActivity" >
+    <item
+        android:id="@+id/action_refresh"
+        android:icon="@drawable/ic_action_refresh"
+        android:orderInCategory="200"
+        android:showAsAction="always"
+        android:title="@string/action_refresh" />
+</menu>
