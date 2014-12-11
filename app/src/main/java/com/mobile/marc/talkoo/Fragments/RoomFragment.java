@@ -1,7 +1,6 @@
-package com.mobile.marc.talkoo;
+package com.mobile.marc.talkoo.Fragments;
 
 import android.app.Activity;
-import android.net.wifi.p2p.WifiP2pInfo;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,12 +10,10 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
-import android.net.wifi.p2p.WifiP2pManager.ConnectionInfoListener;
 
 
+import com.mobile.marc.talkoo.R;
 import com.mobile.marc.talkoo.dummy.DummyContent;
-
-import java.net.InetAddress;
 
 /**
  * A fragment representing a list of Items.
@@ -28,7 +25,7 @@ import java.net.InetAddress;
  * interface.
  */
 // TODO: When this fragment is displaying, change the navigator fragment by another navigator with a list of peers in the room
-public class RoomFragment extends Fragment implements AbsListView.OnItemClickListener, ConnectionInfoListener {
+public class RoomFragment extends Fragment implements AbsListView.OnItemClickListener {
 
     public static final String TAG = "fragment3";
 
@@ -117,27 +114,6 @@ public class RoomFragment extends Fragment implements AbsListView.OnItemClickLis
             // fragment is attached to one) that an item has been selected.
             //listener_.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
         }
-    }
-
-    /**
-     *  onConnectionInfoAvailable() callback will notify you when the state of the connection changes.
-     *  In cases where multiple devices are going to be connected to a single device (like a game with 3 or more players, or a chat app),
-     *  one device will be designated the "group owner".
-     *  Callback from requestConnectionInfo
-     */
-    @Override
-    public void onConnectionInfoAvailable(final WifiP2pInfo info) {
-        // After group negotiation, we can determine the group owner
-        if (info.groupFormed && info.isGroupOwner) {
-            // Do whatever tasks are specific to the group owner.
-            // One common case is creating a server thread and accepting
-            // incoming connections.
-        } else if (info.groupFormed) {
-            // The other device acts as the client. In this case,
-            // you'll want to create a client thread that connects to the group
-            // owner.
-        }
-
     }
 
     /**

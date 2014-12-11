@@ -7,4 +7,4 @@
     android:dividerHeight="0dp"
     android:background="@color/dark_primary"
     android:listSelector="@drawable/activated_background_drawer"
-    tools:context="com.mobile.marc.talkoo.NavigationDrawerFragment" />
+    tools:context="com.mobile.marc.talkoo.Fragments.NavigationDrawerFragment" />

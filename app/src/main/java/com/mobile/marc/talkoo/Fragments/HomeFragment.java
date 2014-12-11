@@ -1,13 +1,15 @@
-package com.mobile.marc.talkoo;
+package com.mobile.marc.talkoo.Fragments;
 
 import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.mobile.marc.talkoo.NavigatorActivity;
+import com.mobile.marc.talkoo.R;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -64,13 +66,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         ((Button)rootView.findViewById(R.id.button_home_find_peers)).setOnClickListener(this);
 
         return rootView;
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            //mListener.onHomeFragmentInteraction(uri);
-        }
     }
 
     @Override

@@ -12,6 +12,7 @@ import android.content.IntentFilter;
 import android.net.wifi.WpsInfo;
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
+import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
 import android.os.Bundle;
@@ -22,13 +23,17 @@ import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.Toast;
 
-import com.mobile.marc.talkoo.PeersFragment.PeersListener;
-import com.mobile.marc.talkoo.SettingsFragment.SettingsListener;
-import com.mobile.marc.talkoo.HomeFragment.HomeListener;
-import com.mobile.marc.talkoo.NavigationDrawerFragment.NavigationDrawerCallbacks;
-import com.mobile.marc.talkoo.WifiDirectBroadcastReceiver.WifiDirectBroadcastListener;
-import com.mobile.marc.talkoo.RoomFragment.RoomListener;
-import java.util.Stack;
+import com.mobile.marc.talkoo.BroadcastReceiver.WifiDirectBroadcastReceiver;
+import com.mobile.marc.talkoo.Fragments.FragmentFactory;
+import com.mobile.marc.talkoo.Fragments.NavigationDrawerFragment;
+import com.mobile.marc.talkoo.Fragments.PeersFragment;
+import com.mobile.marc.talkoo.Fragments.PeersFragment.PeersListener;
+import com.mobile.marc.talkoo.Fragments.SettingsFragment.SettingsListener;
+import com.mobile.marc.talkoo.Fragments.HomeFragment.HomeListener;
+import com.mobile.marc.talkoo.Fragments.NavigationDrawerFragment.NavigationDrawerCallbacks;
+import com.mobile.marc.talkoo.BroadcastReceiver.WifiDirectBroadcastReceiver.WifiDirectBroadcastListener;
+import com.mobile.marc.talkoo.Fragments.RoomFragment.RoomListener;
+import com.mobile.marc.talkoo.Services.WifiDirectLocalService;
 
 /**
  * TODO: Detect when a connection is refused
@@ -50,7 +55,7 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
     private BroadcastReceiver       receiver_;
     private IntentFilter            intent_filter_;
     public  boolean                 discovering_peers_progress = false;
-    private WifiDirectLocalService  service_;
+    private WifiDirectLocalService service_;
     public boolean                  wifiEnabled;
 
     /**
@@ -86,7 +91,7 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
     @Override
     protected void onResume() {
         super.onResume();
-        receiver_ = new WifiDirectBroadcastReceiver(manager_, channel_, this);
+        receiver_ = new WifiDirectBroadcastReceiver(manager_, this);
         registerReceiver(receiver_, intent_filter_);
     }
 
@@ -293,15 +298,28 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
     @Override
     public void onDeviceConnectedToPeers() {
         dismissProgressDialog();
-        // Go to the room fragment
-        RoomFragment fragment = (RoomFragment)goToFragment(3, null);
-        // Send a connection info request to fetch connection details
-        manager_.requestConnectionInfo(channel_, fragment);
-    }
+        manager_.requestConnectionInfo(channel_, new WifiP2pManager.ConnectionInfoListener() {
+            /**
+             *  onConnectionInfoAvailable() callback will notify you when the state of the connection changes.
+             *  In cases where multiple devices are going to be connected to a single device (like a game with 3 or more players, or a chat app),
+             *  one device will be designated the "group owner".
+             *  Callback from requestConnectionInfo
+             */
+            @Override
+            public void onConnectionInfoAvailable(final WifiP2pInfo info) {
+                // After group negotiation, we can determine the group owner
+                if (info.groupFormed && info.isGroupOwner) {
+                    // Do whatever tasks are specific to the group owner.
+                    // One common case is creating a server thread and accepting
+                    // incoming connections.
+                } else if (info.groupFormed) {
+                    // The other device acts as the client. In this case,
+                    // you'll want to create a client thread that connects to the group
+                    // owner.
+                }
 
-    @Override
-    public void onDeviceDisconnectedToPeers() {
-        // Back to the Navigator Activity
+            }
+        });
     }
 
     /**

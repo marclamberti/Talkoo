@@ -1,8 +1,12 @@
-package com.mobile.marc.talkoo;
+package com.mobile.marc.talkoo.Fragments;
 
 import android.app.Fragment;
-import android.os.Bundle;
 import android.os.Parcelable;
+
+import com.mobile.marc.talkoo.Fragments.HomeFragment;
+import com.mobile.marc.talkoo.Fragments.PeersFragment;
+import com.mobile.marc.talkoo.Fragments.RoomFragment;
+import com.mobile.marc.talkoo.Fragments.SettingsFragment;
 
 /**
  * Created by Marc on 21/10/14.
@@ -12,10 +16,6 @@ public class FragmentFactory {
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static Fragment newInstance(int sectionNumber) {
-        return newInstance(sectionNumber, null);
-    }
-
     public static Fragment newInstance(int sectionNumber, Parcelable object) {
         Fragment fragment = null;
         switch (sectionNumber){

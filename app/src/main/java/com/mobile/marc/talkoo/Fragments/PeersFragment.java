@@ -1,7 +1,6 @@
-package com.mobile.marc.talkoo;
+package com.mobile.marc.talkoo.Fragments;
 
 import android.app.Activity;
-import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,11 +11,11 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.net.wifi.p2p.WifiP2pDevice;
-import android.net.wifi.p2p.WifiP2pManager.PeerListListener;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
+import com.mobile.marc.talkoo.NavigatorActivity;
+import com.mobile.marc.talkoo.Adapters.PeersAdapter;
+import com.mobile.marc.talkoo.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -168,7 +167,7 @@ public class PeersFragment extends Fragment implements AbsListView.OnItemClickLi
     /**
      * Refresh in action bar
      */
-    void stopRefreshActionBar() {
+    public void stopRefreshActionBar() {
         // Stop the action refresh in the action action bar
         if (menu_item_action_refresh_ != null) {
             menu_item_action_refresh_.collapseActionView();
@@ -180,7 +179,7 @@ public class PeersFragment extends Fragment implements AbsListView.OnItemClickLi
     /**
      * Displaying the list's empty view
      */
-    void displayEmptyView() {
+    public void displayEmptyView() {
         if (peers_.size() == 0) {
             list_view_.getEmptyView().setVisibility(View.VISIBLE);
         } else {

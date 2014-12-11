@@ -1,4 +1,4 @@
-package com.mobile.marc.talkoo;
+package com.mobile.marc.talkoo.Adapters;
 
 import android.content.Context;
 import android.database.DataSetObserver;
@@ -8,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.mobile.marc.talkoo.R;
+
 import java.util.List;
 import java.util.Objects;
 

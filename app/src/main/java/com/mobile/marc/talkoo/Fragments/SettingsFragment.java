@@ -1,4 +1,4 @@
-package com.mobile.marc.talkoo;
+package com.mobile.marc.talkoo.Fragments;
 
 import android.app.Activity;
 import android.net.Uri;
@@ -7,6 +7,9 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.mobile.marc.talkoo.NavigatorActivity;
+import com.mobile.marc.talkoo.R;
 
 
 /**

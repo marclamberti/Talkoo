@@ -1,4 +1,4 @@
-package com.mobile.marc.talkoo;
+package com.mobile.marc.talkoo.Services;
 
 /**
  * Created by Marc on 23/10/14.
@@ -11,7 +11,9 @@ import android.net.wifi.p2p.WifiP2pManager.Channel;
 import android.net.wifi.p2p.WifiP2pManager.DnsSdTxtRecordListener;
 import android.net.wifi.p2p.WifiP2pManager.DnsSdServiceResponseListener;
 import android.net.wifi.p2p.nsd.WifiP2pDnsSdServiceRequest;
-import android.widget.Toast;
+
+import com.mobile.marc.talkoo.Fragments.PeersFragment;
+import com.mobile.marc.talkoo.NavigatorActivity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +31,7 @@ public class WifiDirectLocalService implements DnsSdTxtRecordListener, DnsSdServ
 
     private WifiP2pManager          manager_;
     private Channel                 channel_;
-    private NavigatorActivity       activity_;
+    private NavigatorActivity activity_;
     private String                  login_;
     private WifiP2pDnsSdServiceInfo service_info_;
     public final HashMap<String, String>    peers = new HashMap<String, String>();
@@ -104,7 +106,7 @@ public class WifiDirectLocalService implements DnsSdTxtRecordListener, DnsSdServ
         }
 
         // Add to the peer list fragment
-        PeersFragment   fragment = (PeersFragment)activity_.getFragmentManager().findFragmentByTag(PeersFragment.TAG);
+        PeersFragment fragment = (PeersFragment)activity_.getFragmentManager().findFragmentByTag(PeersFragment.TAG);
         if (fragment != null) {
             fragment.addPeerToList(peer);
         }

@@ -26,7 +26,7 @@
         android:layout_width="@dimen/navigation_drawer_width"
         android:layout_height="match_parent"
         android:layout_gravity="left"
-        android:name="com.mobile.marc.talkoo.NavigationDrawerFragment"
+        android:name="com.mobile.marc.talkoo.Fragments.NavigationDrawerFragment"
         tools:layout="@layout/fragment_navigation_drawer" />
 
 

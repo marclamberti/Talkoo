@@ -10,7 +10,6 @@ import com.cengalabs.flatui.FlatUI;
 
 public class LoginActivity extends Activity {
     public final static String EXTRA_LOGIN = "com.mobile.marc.talkoo.LOGIN";
-
     private final int APP_THEME = R.array.dark;
 
     @Override
