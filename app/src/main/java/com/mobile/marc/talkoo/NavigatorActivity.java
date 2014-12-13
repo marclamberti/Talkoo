@@ -324,7 +324,6 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
     public void onDeviceConnectedToPeers() {
         dismissProgressDialog();
         service_.stopDiscoveryRequest();
-        service_.removeLocalService();
         manager_.requestConnectionInfo(channel_, new WifiP2pManager.ConnectionInfoListener() {
             /**
              *  onConnectionInfoAvailable() callback will notify you when the state of the connection changes.
