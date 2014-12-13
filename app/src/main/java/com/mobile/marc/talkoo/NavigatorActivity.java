@@ -1,3 +1,6 @@
+//# CSIT 6000B    # Jordy Ngenze Domingos       20243311        jndomingos@ust.hk
+//# CSIT 6000B    # Marc Lamberti               20243311        mlamberti@ust.hk
+
 package com.mobile.marc.talkoo;
 
 import android.app.ActionBar;
@@ -56,7 +59,7 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
     private BroadcastReceiver       receiver_;
     private IntentFilter            intent_filter_;
     public  boolean                 discovering_peers_progress = false;
-    private WifiDirectLocalService service_;
+    private WifiDirectLocalService  service_;
     public boolean                  wifiEnabled;
 
     /**

@@ -1,5 +1,7 @@
-package com.mobile.marc.talkoo.Fragments;
+//# CSIT 6000B    # Jordy Ngenze Domingos       20243311        jndomingos@ust.hk
+//# CSIT 6000B    # Marc Lamberti               20243311        mlamberti@ust.hk
 
+package com.mobile.marc.talkoo.Fragments;
 
 import android.app.Activity;
 import android.app.ActionBar;
