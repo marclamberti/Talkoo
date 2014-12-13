@@ -9,28 +9,37 @@ import java.io.ObjectInputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.List;
 
+import android.app.ActivityManager;
 import android.content.Context;
+
+import com.mobile.marc.talkoo.Models.Message;
+import com.mobile.marc.talkoo.NavigatorActivity;
+import com.mobile.marc.talkoo.RoomActivity;
 
 /*
 ** Handle the messages received by the group owner.
  */
-public class GroupOwnerReceiver extends NotificationHandler {
-    private static final String TAG = "GroupOwnerReceiver";
-    private static final int SERVER_PORT = 4242;
+public class Receiver extends NotificationHandler {
+    private static final String TAG = "Receiver";
+    private static final int SERVER_PORT = 4445;
+    private static final int CLIENT_PORT = 4447;
+    private boolean is_server_;
     private Context context_;
     private ServerSocket server_socket_;
 
     /**
      *  Constructor.
      */
-    public GroupOwnerReceiver(Context context) {
+    public Receiver(Context context, boolean is_server) {
         context_ = context;
+        is_server_ = is_server;
     }
 
-    private Message extractMessageFromClientSocket(Socket client_socket) {
+    private Message extractMessageFromSocket(Socket socket) {
         try {
-            InputStream inputStream = client_socket.getInputStream();
+            InputStream inputStream = socket.getInputStream();
             ObjectInputStream objectIS = new ObjectInputStream(inputStream);
             return (Message) objectIS.readObject();
         } catch (IOException exception) {
@@ -47,19 +56,24 @@ public class GroupOwnerReceiver extends NotificationHandler {
      */
     private Void runServer() {
         try {
-            server_socket_ = new ServerSocket(SERVER_PORT);
+            if (is_server_)
+                server_socket_ = new ServerSocket(SERVER_PORT);
+            else
+                server_socket_ = new ServerSocket(CLIENT_PORT);
+
             while (true) {
-                Socket client_socket = server_socket_.accept();
+                Socket socket = server_socket_.accept();
 //
-                Message client_message = extractMessageFromClientSocket(client_socket);
+                Message client_message = extractMessageFromSocket(socket);
                 if (client_message == null)
                     continue;
 
                 //Add the InetAdress of the sender to the message
-                InetAddress sender_address = client_socket.getInetAddress();
-                client_message.setSenderAddress(sender_address);
-
-                client_socket.close();
+                if (is_server_) {
+                    InetAddress sender_address = socket.getInetAddress();
+                    client_message.setSenderAddress(sender_address);
+                }
+                socket.close();
                 publishProgress(client_message);
             }
         } catch (IOException exception) {
@@ -96,6 +110,27 @@ public class GroupOwnerReceiver extends NotificationHandler {
             values[0].saveByteArrayToFile(context_);
         }
 
-       // new SendMessageServer(mContext, false).executeOnExecutor(THREAD_POOL_EXECUTOR, values);
+        if (is_server_)
+            new GroupOwnerSender(context_, false).executeOnExecutor(THREAD_POOL_EXECUTOR, values);
+        else {
+            if(isActivityRunning(NavigatorActivity.class))
+                RoomActivity.updateMessages(values[0], false);
+        }
+    }
+
+    /*
+    ** http://stackoverflow.com/questions/5446565/android-how-do-i-check-if-activity-is-running
+    */
+    public Boolean isActivityRunning(Class activityClass) {
+        ActivityManager activityManager =
+                (ActivityManager) context_.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> tasks = activityManager.getRunningTasks(Integer.MAX_VALUE);
+
+        for (ActivityManager.RunningTaskInfo task : tasks) {
+            if (activityClass.getCanonicalName().equalsIgnoreCase(task.baseActivity.getClassName()))
+                return true;
+        }
+
+        return false;
     }
 }

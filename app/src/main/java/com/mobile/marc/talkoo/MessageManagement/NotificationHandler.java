@@ -14,6 +14,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 
+import com.mobile.marc.talkoo.Models.Message;
 import com.mobile.marc.talkoo.NavigatorActivity;
 
 /*

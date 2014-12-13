@@ -36,7 +36,11 @@ import com.mobile.marc.talkoo.Fragments.SettingsFragment.SettingsListener;
 import com.mobile.marc.talkoo.Fragments.HomeFragment.HomeListener;
 import com.mobile.marc.talkoo.Fragments.NavigationDrawerFragment.NavigationDrawerCallbacks;
 import com.mobile.marc.talkoo.BroadcastReceiver.WifiDirectBroadcastReceiver.WifiDirectBroadcastListener;
+import com.mobile.marc.talkoo.MessageManagement.Thread.ClientInit;
+import com.mobile.marc.talkoo.MessageManagement.Thread.ServerInit;
 import com.mobile.marc.talkoo.Services.WifiDirectLocalService;
+
+import java.net.InetAddress;
 
 /**
  * TODO: Detect when a connection is refused
@@ -61,6 +65,11 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
     private WifiDirectLocalService          service_;
     public boolean                          wifi_enabled;
     private String                          login_;
+    // TODO: HAS TO BE CHANGED
+    public static ServerInit server;
+    public static boolean isOwner = false;
+    public static boolean isClient = false;
+    public static InetAddress owner_address;
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -337,11 +346,20 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
                 // After group negotiation, we can determine the group owner
                 if (info.groupFormed && info.isGroupOwner) {
                     System.out.println("Group owner");
+                    isClient = false;
+                    isOwner = true;
+                    server = new ServerInit();
+                    server.start();
                     // Do whatever tasks are specific to the group owner.
                     // One common case is creating a server thread and accepting
                     // incoming connections.
                 } else if (info.groupFormed) {
                     System.out.println("Group client");
+                    isOwner = false;
+                    isClient = true;
+                    owner_address = info.groupOwnerAddress;
+                    ClientInit client = new ClientInit(owner_address);
+                    client.start();
                     // The other device acts as the client. In this case,
                     // you'll want to create a client thread that connects to the group
                     // owner.

@@ -6,28 +6,27 @@ package com.mobile.marc.talkoo;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mobile.marc.talkoo.Adapters.RoomAdapter;
 import com.mobile.marc.talkoo.BroadcastReceiver.WifiDirectBroadcastReceiver;
-import com.mobile.marc.talkoo.MessageManagement.Message;
-import com.mobile.marc.talkoo.Services.WifiDirectLocalService;
+import com.mobile.marc.talkoo.MessageManagement.ClientSender;
+import com.mobile.marc.talkoo.MessageManagement.GroupOwnerSender;
+import com.mobile.marc.talkoo.Models.Message;
 import com.mobile.marc.talkoo.BroadcastReceiver.WifiDirectBroadcastReceiver.WifiDirectBroadcastListener;
-import java.nio.channels.Channel;
+import com.mobile.marc.talkoo.Services.DataService;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,14 +35,15 @@ import java.util.List;
 // TODO: kept the previous login at the first discovery
 public class RoomActivity extends Activity implements WifiDirectBroadcastListener {
 
-    private RoomAdapter                     room_adapter_;
-    private List<Message>                   messages_;
+    static private RoomAdapter              room_adapter_;
+    static private List<Message>            messages_;
     private WifiP2pManager                  manager_;
     private WifiP2pManager.Channel          channel_;
     private WifiDirectBroadcastReceiver     receiver_;
     private IntentFilter                    intent_filter_;
     public boolean                          wifi_enabled;
     private String                          login_;
+    private static ListView                 message_list_view_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +64,9 @@ public class RoomActivity extends Activity implements WifiDirectBroadcastListene
 
         // Adapter initialization
         initAdapter();
+
+        // Start Data service
+        startService(new Intent(this, DataService.class));
     }
 
     /**
@@ -92,8 +95,8 @@ public class RoomActivity extends Activity implements WifiDirectBroadcastListene
     private void initAdapter() {
         messages_ = new ArrayList<Message>();
         room_adapter_ = new RoomAdapter(messages_, this);
-        ListView message_list_view = (ListView)findViewById(R.id.message_list_view);
-        message_list_view.setAdapter(room_adapter_);
+        message_list_view_ = (ListView)findViewById(R.id.message_list_view);
+        message_list_view_.setAdapter(room_adapter_);
     }
 
     @Override
@@ -139,8 +142,11 @@ public class RoomActivity extends Activity implements WifiDirectBroadcastListene
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 disconnectFromGroup();
+                // TODO: HAS TO BE CHANGED
+                if (NavigatorActivity.server != null) {
+                    NavigatorActivity.server.interrupt();
+                }
                 finish();
-                // TODO: If server or client, it would be stop as well
             }
         });
         builder.setNegativeButton(R.string.room_alert_dialog_disconnect_no, new DialogInterface.OnClickListener() {
@@ -174,8 +180,13 @@ public class RoomActivity extends Activity implements WifiDirectBroadcastListene
             System.out.println("Null");
         }
         if (room_message_edit_text != null && room_message_edit_text.getText().length() != 0) {
-            Toast.makeText(this, "message: " + room_message_edit_text.getText(), Toast.LENGTH_SHORT).show();
-            // Send message here
+            Message message = new Message(Message.MESSAGE_TEXT, room_message_edit_text.getText().toString(), null, login_, 0);
+            // TODO: HAS TO BE CHANGED
+            if (NavigatorActivity.isOwner) {
+                new GroupOwnerSender(this, true).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, message);
+            } else if (NavigatorActivity.isClient) {
+                new ClientSender(this, NavigatorActivity.owner_address).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, message);
+            }
             System.out.println(room_message_edit_text.getText());
         }
     }
@@ -184,15 +195,12 @@ public class RoomActivity extends Activity implements WifiDirectBroadcastListene
      * Used to update the message list
      * It is called from async task when we receive a message
      */
-    public void updateMessages(Message message, boolean owner) {
+    static public void updateMessages(Message message, boolean owner) {
         message.setOwner(owner);
-
-        /*
         messages_.add(message);
         room_adapter_.notifyDataSetChanged();
-        ListView message_list_view = (ListView)findViewById(R.id.message_list_view);
-        message_list_view.setSelection(messages_.size() - 1);
-         */
+        message_list_view_.setSelection(messages_.size() - 1);
+        System.out.println("updateMessages");
     }
 
     /**
