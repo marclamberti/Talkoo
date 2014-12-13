@@ -2,6 +2,9 @@
 <items version="2" >
 
     <item
+<<<<<<< HEAD
+        jar="/Users/Marc/Documents/Android/talkoo/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.0/libs/internal_impl-21.0.0.jar"
+=======
         jar="/Users/Dyjor/Documents/HKUST/Semester1/Android/Talkoo/app/build/intermediates/exploded-aar/com.github.eluleci/flatui/3.0.0/classes.jar"
         jumboMode="false"
         revision="20.0.0"
@@ -10,6 +13,7 @@
     </item>
     <item
         jar="/Users/Dyjor/Documents/HKUST/Semester1/Android/Talkoo/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.0/libs/internal_impl-21.0.0.jar"
+>>>>>>> 1ad2e6e3ff63f969b9f4d5e322359aaf59e74ade
         jumboMode="false"
         revision="20.0.0"
         sha1="1609e6d42d0480b0f4188e2c29f75388fa12a8f0">
@@ -28,6 +32,13 @@
         revision="20.0.0"
         sha1="1a578b9607b36266c63d43a4fa0ab5664dbe911e">
         <dex dex="/Users/Dyjor/Documents/HKUST/Semester1/Android/Talkoo/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.0-08e88a31883d6b42d540be04902ca039435ee4de.jar" />
+    </item>
+    <item
+        jar="/Users/Marc/Documents/Android/talkoo/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.0/classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="686344a780033e4ba22b926cd225f8d4941247e6">
+        <dex dex="/Users/Marc/Documents/Android/talkoo/app/build/intermediates/pre-dexed/debug/classes-bef9e25f87d6aad7b267f8577193bc7d5bf01008.jar" />
     </item>
 
 </items>
