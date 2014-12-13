@@ -40,17 +40,17 @@ public class Message implements Serializable {
     private String fileName;
     private long fileSize;
     private String filePath;
-    private boolean isMine;
+    private boolean isOwner;
 
     //Getters and Setters
     public int getMessageType() { return messageType; }
     public void setMessageType(int messageType) { this.messageType = messageType; }
     public String getMessageText() { return messageText; }
     public void setMessageText(String messageText) { this.messageText = messageText; }
-    public String getChatName() { return chatName; }
-    public void setChatName(String chatName) { this.chatName = chatName; }
-    public int getChatId() { return chatId; }
-    public void setChatId(int chatId) { this.chatId = chatId; }
+    public String getRoomLogin() { return chatName; }
+    public void setRoomLogin(String chatName) { this.chatName = chatName; }
+    public int getRoomId() { return chatId; }
+    public void setRoomId(int chatId) { this.chatId = chatId; }
     public byte[] getByteArray() { return byteArray; }
     public void setByteArray(byte[] byteArray) { this.byteArray = byteArray; }
     public InetAddress getSenderAddress() { return senderAddress; }
@@ -61,8 +61,8 @@ public class Message implements Serializable {
     public void setFileSize(long fileSize) { this.fileSize = fileSize; }
     public String getFilePath() { return filePath; }
     public void setFilePath(String filePath) { this.filePath = filePath; }
-    public boolean isMine() { return isMine; }
-    public void setMine(boolean isMine) { this.isMine = isMine; }
+    public boolean isOwner() { return isOwner; }
+    public void setOwner(boolean isOwner) { this.isOwner = isOwner; }
 
     public Message(int type, String text, InetAddress sender, String name, int chat_id){
         messageType = type;

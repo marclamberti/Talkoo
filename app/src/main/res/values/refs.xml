@@ -9,6 +9,5 @@
     http://developer.android.com/training/multiscreen/screensizes.html#TaskUseAliasFilters
     -->
     <item name="fragment_peers" type="layout">@layout/fragment_peers_list</item>
-    <item name="fragment_room" type="layout">@layout/fragment_room_list</item>
 
 </resources>

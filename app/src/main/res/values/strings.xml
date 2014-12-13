@@ -37,7 +37,9 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_room">Room</string>
 
-    <!-- Room Fragment -->
-    <string name="room_title">Room</string>
-
+    <!-- Room Activity -->
+    <string name="room_activity_edit_text_send_message">Type your message...</string>
+    <string name="room_activity_send_button">Send</string>
+    <string name="room_alert_dialog_disconnect_yes">Confirm</string>
+    <string name="room_alert_dialog_disconnect_no">Cancel</string>
 </resources>

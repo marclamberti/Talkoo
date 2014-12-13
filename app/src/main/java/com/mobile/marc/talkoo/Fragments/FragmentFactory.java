@@ -6,11 +6,6 @@ package com.mobile.marc.talkoo.Fragments;
 import android.app.Fragment;
 import android.os.Parcelable;
 
-import com.mobile.marc.talkoo.Fragments.HomeFragment;
-import com.mobile.marc.talkoo.Fragments.PeersFragment;
-import com.mobile.marc.talkoo.Fragments.RoomFragment;
-import com.mobile.marc.talkoo.Fragments.SettingsFragment;
-
 /**
  * Created by Marc on 21/10/14.
  */
@@ -30,9 +25,6 @@ public class FragmentFactory {
                 break;
             case 2:
                 fragment = SettingsFragment.newInstance(sectionNumber);
-                break;
-            case 3:
-                fragment = RoomFragment.newInstance(sectionNumber);
                 break;
             default:
                 fragment = HomeFragment.newInstance(sectionNumber);

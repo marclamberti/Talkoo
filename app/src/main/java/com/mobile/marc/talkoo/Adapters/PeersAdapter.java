@@ -66,17 +66,13 @@ public class PeersAdapter extends ArrayAdapter<WifiP2pDevice> {
             view = LayoutInflater.from(getContext()).inflate(R.layout.item_peer, parent, false);
         }
 
-        // Fill the view
+        // Update the row
         WifiP2pDevice   peer = getItem(position);
         if (peer != null) {
             TextView    name = (TextView)view.findViewById(R.id.item_peer_name);
             TextView    details = (TextView)view.findViewById(R.id.item_peer_details);
-            if (name != null) {
-                name.setText(peer.deviceName);
-            }
-            if (details != null) {
-                details.setText(getPeerStatus(peer.status));
-            }
+            name.setText(peer.deviceName);
+            details.setText(getPeerStatus(peer.status));
         }
         return view;
     }

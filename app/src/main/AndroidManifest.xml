@@ -32,6 +32,14 @@
             android:label="@string/navigator_activity"
             android:theme="@style/HomeActivityTheme" >
         </activity>
+        <activity
+            android:name=".RoomActivity"
+            android:label="@string/title_activity_room"
+            android:parentActivityName=".NavigatorActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.mobile.marc.talkoo.NavigatorActivity" />
+        </activity>
     </application>
 
 </manifest>

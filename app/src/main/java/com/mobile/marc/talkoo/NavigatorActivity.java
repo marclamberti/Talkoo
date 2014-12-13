@@ -36,7 +36,6 @@ import com.mobile.marc.talkoo.Fragments.SettingsFragment.SettingsListener;
 import com.mobile.marc.talkoo.Fragments.HomeFragment.HomeListener;
 import com.mobile.marc.talkoo.Fragments.NavigationDrawerFragment.NavigationDrawerCallbacks;
 import com.mobile.marc.talkoo.BroadcastReceiver.WifiDirectBroadcastReceiver.WifiDirectBroadcastListener;
-import com.mobile.marc.talkoo.Fragments.RoomFragment.RoomListener;
 import com.mobile.marc.talkoo.Services.WifiDirectLocalService;
 
 /**
@@ -44,7 +43,7 @@ import com.mobile.marc.talkoo.Services.WifiDirectLocalService;
  * TODO: Actualize the list on device periodically
  */
 public class NavigatorActivity extends FragmentActivity implements HomeListener, PeersListener, SettingsListener,
-        NavigationDrawerCallbacks, WifiDirectBroadcastListener, RoomListener {
+        NavigationDrawerCallbacks, WifiDirectBroadcastListener {
 
     /**
      * Progress dialog
@@ -54,13 +53,14 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
     /**
      * Wifi P2P
      */
-    private WifiP2pManager          manager_;
-    private Channel                 channel_;
-    private BroadcastReceiver       receiver_;
-    private IntentFilter            intent_filter_;
-    public  boolean                 discovering_peers_progress = false;
-    private WifiDirectLocalService  service_;
-    public boolean                  wifiEnabled;
+    private WifiP2pManager                  manager_;
+    private Channel                         channel_;
+    private WifiDirectBroadcastReceiver     receiver_;
+    private IntentFilter                    intent_filter_;
+    public  boolean                         discovering_peers_progress = false;
+    private WifiDirectLocalService          service_;
+    public boolean                          wifi_enabled;
+    private String                          login_;
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -81,21 +81,42 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
         title_ = getTitle();
 
         // Set up the drawer.
-        navigation_drawer_fragment_.setUp(
-                R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
+        navigation_drawer_fragment_.setUp(R.id.navigation_drawer, (DrawerLayout)findViewById(R.id.drawer_layout));
 
         // Get the intent and the login parameter
         Intent intent = getIntent();
-        String login = intent.getStringExtra(LoginActivity.EXTRA_LOGIN);
+        login_ = intent.getStringExtra(LoginActivity.EXTRA_LOGIN);
 
-        initWifiDirect(login);
+        // Wifi direct initialization
+        initWifiDirect();
+    }
+
+    /**
+     * Wifi P2P initialization
+     */
+    private void initWifiDirect() {
+        manager_ = (WifiP2pManager)getSystemService(Context.WIFI_P2P_SERVICE);
+        channel_ = manager_.initialize(this, getMainLooper(), null);
+
+        // Broadcast
+        receiver_ = WifiDirectBroadcastReceiver.createInstance();
+        receiver_.manager(manager_);
+        receiver_.listener(this);
+
+        // Intent filter
+        intent_filter_ = new IntentFilter();
+        intent_filter_.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
+        intent_filter_.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
+        intent_filter_.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
+        intent_filter_.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
+
+        // Init local service
+        service_ = new WifiDirectLocalService(manager_, channel_, this, login_);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        receiver_ = new WifiDirectBroadcastReceiver(manager_, this);
         registerReceiver(receiver_, intent_filter_);
     }
 
@@ -127,9 +148,6 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
                 break;
             case 2:
                 title_ = getString(R.string.settings_title);
-                break;
-            case 3:
-                title_ = getString(R.string.room_title);
                 break;
         }
     }
@@ -190,24 +208,6 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
         }
     }
 
-    /**
-     * Wifi P2P functions
-     */
-    private void initWifiDirect(String login) {
-        manager_ = (WifiP2pManager)getSystemService(Context.WIFI_P2P_SERVICE);
-        channel_ = manager_.initialize(this, getMainLooper(), null);
-
-        // Intent filter
-        intent_filter_ = new IntentFilter();
-        intent_filter_.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
-        intent_filter_.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
-        intent_filter_.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
-        intent_filter_.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
-
-        // Init local service
-        service_ = new WifiDirectLocalService(manager_, channel_, this, login);
-    }
-
     private String errorCode(int code) {
         switch (code) {
             case WifiP2pManager.BUSY:
@@ -246,7 +246,7 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
 
     @Override
     public boolean onIsWifiConnected() {
-        return wifiEnabled;
+        return wifi_enabled;
     }
 
     @Override
@@ -295,7 +295,7 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
 
     @Override
     public void onIsWifiEnabled(boolean wifi) {
-        wifiEnabled = wifi;
+        wifi_enabled = wifi;
     }
 
     @Override
@@ -323,11 +323,11 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
                     // owner.
                 }
 
+                //Open the Room Activity
+                Intent intent = new Intent(getApplicationContext(), RoomActivity.class);
+                intent.putExtra(LoginActivity.EXTRA_LOGIN, login_);
+                startActivity(intent);
             }
         });
     }
-
-    /**
-     * Methods implemented from OnRoomListener
-     */
 }

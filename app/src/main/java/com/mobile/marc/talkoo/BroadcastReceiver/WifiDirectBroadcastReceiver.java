@@ -10,21 +10,34 @@ import android.net.NetworkInfo;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.util.Log;
 
+import java.nio.channels.Channel;
+
 /**
  * Created by Marc on 21/10/14.
  */
 public class WifiDirectBroadcastReceiver extends BroadcastReceiver {
     private static final String TAG = "WifiDirectBroadcastReceiver";
+    private static WifiDirectBroadcastReceiver instance_;
 
     // Used for getting intent
-    private WifiP2pManager      manager_;
+    private WifiP2pManager  manager_;
     // Activity dealing with intent
     private WifiDirectBroadcastListener   listener_;
 
-    public WifiDirectBroadcastReceiver(WifiP2pManager manager, WifiDirectBroadcastListener listener) {
+    public WifiDirectBroadcastReceiver() {
         super();
-        manager_ = manager;
-        listener_ = listener;
+    }
+
+    /**
+     * Singleton pattern used to avoid multiple instances of it
+     * @return
+     */
+    public static WifiDirectBroadcastReceiver createInstance(){
+        if(instance_ != null) {
+            return instance_;
+        }
+        instance_ = new WifiDirectBroadcastReceiver();
+        return instance_;
     }
 
     @Override
@@ -37,11 +50,12 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver {
         if (WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION.equals(action)) {
             Log.v(TAG, "WIFI_P2P_STATE_CHANGED_ACTION");
             int state = intent.getIntExtra(WifiP2pManager.EXTRA_WIFI_STATE, -1);
-            if (state == WifiP2pManager.WIFI_P2P_STATE_ENABLED) {
-                listener_.onIsWifiEnabled(true);
-            }
-            else if (state == WifiP2pManager.WIFI_P2P_STATE_DISABLED) {
-                listener_.onIsWifiEnabled(false);
+            if (listener_ != null) {
+                if (state == WifiP2pManager.WIFI_P2P_STATE_ENABLED) {
+                    listener_.onIsWifiEnabled(true);
+                } else if (state == WifiP2pManager.WIFI_P2P_STATE_DISABLED) {
+                    listener_.onIsWifiEnabled(false);
+                }
             }
         }
 
@@ -59,7 +73,7 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver {
 
             Log.v(TAG, "WIFI_P2P_CONNECTION_CHANGED_ACTION");
 
-            if (manager_ == null) {
+            if (manager_ == null || listener_ == null) {
                 return;
             }
             // Check if we are connected with a peer
@@ -76,6 +90,17 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver {
         else if (WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION.equals(action)) {
             Log.v(TAG, "WIFI_P2P_THIS_DEVICE_CHANGED_ACTION");
         }
+    }
+
+    /**
+     * Setters
+     */
+    public void manager(WifiP2pManager manager) {
+        manager_ = manager;
+    }
+
+    public void listener(WifiDirectBroadcastListener listener) {
+        listener_ = listener;
     }
 
     /**
