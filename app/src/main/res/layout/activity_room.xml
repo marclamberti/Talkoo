@@ -28,21 +28,22 @@
         android:layout_height="50dp"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:background="@color/snow_primary" >
+        android:background="@color/dark_dark" >
 
         <EditText
             android:id="@+id/room_edit_message"
             android:layout_width="0dp"
-            android:layout_weight="5"
             android:layout_height="match_parent"
             android:inputType="textMultiLine|textCapSentences"
             android:maxLines="4"
+            android:layout_weight="1"
+            android:paddingLeft="5dp"
+            android:background="@color/snow_primary"
             android:hint="@string/room_activity_edit_text_send_message"/>
 
         <com.cengalabs.flatui.views.FlatButton
             android:id="@+id/room_button_send_message"
-            android:layout_width="0dp"
-            android:layout_weight="2"
+            android:layout_width="100dp"
             android:layout_height="match_parent"
             android:text="@string/room_activity_send_button"
             android:onClick="sendMessageEvent"

@@ -128,11 +128,7 @@ public class PeersFragment extends Fragment implements AbsListView.OnItemClickLi
         if (listener_ != null) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-            if (listener_.onIsWifiConnected()) {
-                listener_.onConnectToPeer((WifiP2pDevice) adapter_.getItem(position));
-            } else {
-                Toast.makeText(getActivity(), "Your wifi seems to be disabled", Toast.LENGTH_SHORT).show();
-            }
+            listener_.onConnectToPeer((WifiP2pDevice) adapter_.getItem(position));
         }
     }
 

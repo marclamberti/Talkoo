@@ -233,8 +233,17 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
      * Methods implemented from PeersListener
      */
 
+    /**
+     * Call when we want to discover the peers around us from the peers list view.
+     * If the wifi is turned off we do nothing since the action will be taken from
+     * the callback implemented onWifiIsEnabled called by the broadcast
+     */
     @Override
     public void onDiscoveringPeersRequest() {
+        if (!wifi_enabled) {
+            onIsWifiEnabled(wifi_enabled);
+            return;
+        }
         discovering_peers_progress = true;
         service_.discoveryRequest();
     }
@@ -251,6 +260,11 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
 
     @Override
     public void onConnectToPeer(WifiP2pDevice peer) {
+        if (!wifi_enabled) {
+            onIsWifiEnabled(wifi_enabled);
+            return;
+        }
+
         WifiP2pConfig   config = new WifiP2pConfig();
         config.deviceAddress = peer.deviceAddress;
         config.wps.setup = WpsInfo.PBC;
@@ -296,11 +310,21 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
     @Override
     public void onIsWifiEnabled(boolean wifi) {
         wifi_enabled = wifi;
+        if (!wifi_enabled) {
+            Toast.makeText(NavigatorActivity.this, "Your wifi seems to be turned off", Toast.LENGTH_LONG).show();
+            onDiscoveringPeersRequestDone();
+            PeersFragment fragment = ((PeersFragment)getFragmentManager().findFragmentByTag(PeersFragment.TAG));
+            if (fragment != null) {
+                fragment.stopRefreshActionBar();
+            }
+        }
     }
 
     @Override
     public void onDeviceConnectedToPeers() {
         dismissProgressDialog();
+        service_.stopDiscoveryRequest();
+        service_.removeLocalService();
         manager_.requestConnectionInfo(channel_, new WifiP2pManager.ConnectionInfoListener() {
             /**
              *  onConnectionInfoAvailable() callback will notify you when the state of the connection changes.
@@ -310,6 +334,7 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
              */
             @Override
             public void onConnectionInfoAvailable(final WifiP2pInfo info) {
+                System.out.println("onConnectionInfoAvailable called");
                 // After group negotiation, we can determine the group owner
                 if (info.groupFormed && info.isGroupOwner) {
                     System.out.println("Group owner");
