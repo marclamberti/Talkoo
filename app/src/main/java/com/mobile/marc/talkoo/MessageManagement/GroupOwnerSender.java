@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.mobile.marc.talkoo.NavigatorActivity;
+import com.mobile.marc.talkoo.RoomActivity;
+import com.mobile.marc.talkoo.MessageManagement.Thread.ServerInit;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -46,6 +48,7 @@ public class GroupOwnerSender extends AsyncTask<Message, Message, Message> {
             e.printStackTrace();
             Log.e(TAG, "Erreur d'envoie du message");
         }
+        return null;
     }
 
     @Override
@@ -72,9 +75,8 @@ public class GroupOwnerSender extends AsyncTask<Message, Message, Message> {
     protected void onProgressUpdate(Message... values) {
         super.onProgressUpdate(values);
 
-       // if(isActivityRunning(NavigatorActivity.class)){
-         //   ChatActivity.refreshList(values[0], isMine);
-        //}
+        if(isActivityRunning(NavigatorActivity.class))
+            RoomActivity.updateMessages(values[0], false);
     }
 
     @Override
@@ -83,18 +85,16 @@ public class GroupOwnerSender extends AsyncTask<Message, Message, Message> {
         super.onPostExecute(result);
     }
 
+    @SuppressWarnings("rawtypes")
+    public Boolean isActivityRunning(Class activityClass) {
+        ActivityManager activityManager = (ActivityManager) context_.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> tasks = activityManager.getRunningTasks(Integer.MAX_VALUE);
 
-//    @SuppressWarnings("rawtypes")
-//    public Boolean isActivityRunning(Class activityClass)
-//    {
-//        ActivityManager activityManager = (ActivityManager) context_.getSystemService(Context.ACTIVITY_SERVICE);
-//        List<ActivityManager.RunningTaskInfo> tasks = activityManager.getRunningTasks(Integer.MAX_VALUE);
+        for (ActivityManager.RunningTaskInfo task : tasks) {
+            if (activityClass.getCanonicalName().equalsIgnoreCase(task.baseActivity.getClassName()))
+                return true;
+        }
 
-//        for (ActivityManager.RunningTaskInfo task : tasks) {
-//            if (activityClass.getCanonicalName().equalsIgnoreCase(task.baseActivity.getClassName()))
-//                return true;
-//        }
-
-//        return false;
-//    }
+        return false;
+    }
 }

@@ -96,6 +96,6 @@ public class GroupOwnerReceiver extends NotificationHandler {
             values[0].saveByteArrayToFile(context_);
         }
 
-       // new SendMessageServer(mContext, false).executeOnExecutor(THREAD_POOL_EXECUTOR, values);
+        new GroupOwnerSender(context_, false).executeOnExecutor(THREAD_POOL_EXECUTOR, values);
     }
 }

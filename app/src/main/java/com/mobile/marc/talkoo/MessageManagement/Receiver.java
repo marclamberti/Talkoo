@@ -15,6 +15,7 @@ import android.app.ActivityManager;
 import android.content.Context;
 
 import com.mobile.marc.talkoo.NavigatorActivity;
+import com.mobile.marc.talkoo.RoomActivity;
 
 /*
 ** Handle the messages received by the group owner.
@@ -108,12 +109,12 @@ public class Receiver extends NotificationHandler {
             values[0].saveByteArrayToFile(context_);
         }
 
-        //if (is_server_) {}
-        // new SendMessageServer(mContext, false).executeOnExecutor(THREAD_POOL_EXECUTOR, values);
-        //else {
-        //if(isActivityRunning(NavigatorActivity.class)){
-          //  ChatActivity.refreshList(values[0], false);
-        //}
+        if (is_server_)
+            new GroupOwnerSender(context_, false).executeOnExecutor(THREAD_POOL_EXECUTOR, values);
+        else {
+            if(isActivityRunning(NavigatorActivity.class))
+                RoomActivity.updateMessages(values[0], false);
+        }
     }
 
     /*

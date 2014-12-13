@@ -79,8 +79,14 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver {
             // Check if we are connected with a peer
             NetworkInfo network_info = intent.getParcelableExtra(WifiP2pManager.EXTRA_NETWORK_INFO);
             if (network_info.isConnected()) {
-                System.out.println("Connection ok");
+                System.out.println("Connected");
                 listener_.onDeviceConnectedToPeers();
+            } else if (network_info.getState() == NetworkInfo.State.DISCONNECTED){
+                System.out.println("Disconnected");
+            } else if (network_info.getState() == NetworkInfo.State.CONNECTING) {
+                System.out.println("Connecting...");
+            } else if (network_info.getState() == NetworkInfo.State.DISCONNECTING) {
+                System.out.println("Disconnecting");
             }
         }
 

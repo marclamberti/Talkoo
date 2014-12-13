@@ -43,7 +43,7 @@ public class ClientSender extends AsyncTask<Message, Message, Message> {
         } catch (IOException e) {
             e.printStackTrace();
             Log.e(TAG, "Erreur d'envoie du message");
-        } finally{
+        } finally {
             if (socket != null) {
                 if (socket.isConnected()) {
                     try {
@@ -54,6 +54,7 @@ public class ClientSender extends AsyncTask<Message, Message, Message> {
                 }
             }
         }
+        return null;
     }
 
     @Override
@@ -93,7 +94,6 @@ public class ClientSender extends AsyncTask<Message, Message, Message> {
             if (activityClass.getCanonicalName().equalsIgnoreCase(task.baseActivity.getClassName()))
                return true;
         }
-
         return false;
     }
 }
