@@ -2,13 +2,6 @@
 <items version="2" >
 
     <item
-        jar="/Users/Marc/Documents/Android/talkoo/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.0/classes.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="686344a780033e4ba22b926cd225f8d4941247e6">
-        <dex dex="/Users/Marc/Documents/Android/talkoo/app/build/intermediates/pre-dexed/debug/classes-bef9e25f87d6aad7b267f8577193bc7d5bf01008.jar" />
-    </item>
-    <item
         jar="/Users/Marc/Documents/Android/talkoo/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.0/libs/internal_impl-21.0.0.jar"
         jumboMode="false"
         revision="20.0.0"
@@ -28,6 +21,13 @@
         revision="20.0.0"
         sha1="d1089efa4a24767294278997764bea2fda31ccca">
         <dex dex="/Users/Marc/Documents/Android/talkoo/app/build/intermediates/pre-dexed/debug/classes-53a0afe4e9e508548fc7e2f4518618af8880ad76.jar" />
+    </item>
+    <item
+        jar="/Users/Marc/Documents/Android/talkoo/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.0/classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="686344a780033e4ba22b926cd225f8d4941247e6">
+        <dex dex="/Users/Marc/Documents/Android/talkoo/app/build/intermediates/pre-dexed/debug/classes-bef9e25f87d6aad7b267f8577193bc7d5bf01008.jar" />
     </item>
 
 </items>

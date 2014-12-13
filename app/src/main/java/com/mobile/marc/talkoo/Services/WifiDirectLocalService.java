@@ -29,11 +29,11 @@ public class WifiDirectLocalService implements DnsSdTxtRecordListener, DnsSdServ
     public static final String INSTANCE_NAME = "_talkoo";
     private static final int SERVER_PORT = 4242;
 
-    private WifiP2pManager          manager_;
-    private Channel                 channel_;
-    private NavigatorActivity activity_;
-    private String                  login_;
-    private WifiP2pDnsSdServiceInfo service_info_;
+    private WifiP2pManager                  manager_;
+    private Channel                         channel_;
+    private NavigatorActivity               activity_;
+    private String                          login_;
+    private WifiP2pDnsSdServiceInfo         service_info_;
     public final HashMap<String, String>    peers = new HashMap<String, String>();
 
     public WifiDirectLocalService(WifiP2pManager manager, Channel channel, NavigatorActivity activity, String login) {
@@ -71,7 +71,6 @@ public class WifiDirectLocalService implements DnsSdTxtRecordListener, DnsSdServ
             @Override
             public void onFailure(int i) {
                 System.out.println("Local service registration failed: " + errorCode(i));
-
             }
         });
     }
@@ -114,7 +113,7 @@ public class WifiDirectLocalService implements DnsSdTxtRecordListener, DnsSdServ
     }
 
     public void discoveryRequest() {
-        WifiP2pDnsSdServiceRequest  request = WifiP2pDnsSdServiceRequest.newInstance();
+        WifiP2pDnsSdServiceRequest request = WifiP2pDnsSdServiceRequest.newInstance();
         manager_.addServiceRequest(channel_, request, new WifiP2pManager.ActionListener() {
             @Override
             public void onSuccess() {
@@ -124,6 +123,10 @@ public class WifiDirectLocalService implements DnsSdTxtRecordListener, DnsSdServ
             @Override
             public void onFailure(int i) {
                 System.out.println("Add service request failed: " + errorCode(i));
+                PeersFragment fragment = (PeersFragment)activity_.getFragmentManager().findFragmentByTag(PeersFragment.TAG);
+                if (fragment != null) {
+                    fragment.stopRefreshActionBar();
+                }
             }
         });
     }
@@ -137,6 +140,7 @@ public class WifiDirectLocalService implements DnsSdTxtRecordListener, DnsSdServ
 
             @Override
             public void onFailure(int i) {
+                stopDiscoveryRequest();
                 System.out.println("Discovery services failed: " + errorCode(i));
                 PeersFragment fragment = (PeersFragment)activity_.getFragmentManager().findFragmentByTag(PeersFragment.TAG);
                 if (fragment != null) {
@@ -148,10 +152,43 @@ public class WifiDirectLocalService implements DnsSdTxtRecordListener, DnsSdServ
 
     public void removeLocalService() {
         System.out.println("Local service removed");
+        stopDiscoveryRequest();
         manager_.removeLocalService(channel_, service_info_, null);
     }
 
+    public void stopDiscoveryRequest() {
+        manager_.stopPeerDiscovery(channel_, new WifiP2pManager.ActionListener() {
+            @Override
+            public void onSuccess() {
+                System.out.println("Stop peer discovery succeed");
+                clearServiceRequest();
+            }
+            @Override
+            public void onFailure(int i) {
+                // failure
+                System.out.println("Stop peer discovery fail");
+            }
+        });
+    }
+
+    public void clearServiceRequest() {
+        manager_.clearServiceRequests(channel_, new WifiP2pManager.ActionListener() {
+            @Override
+            public void onSuccess() {
+                // success
+                System.out.println("clear service request succeed");
+            }
+
+            @Override
+            public void onFailure(int i) {
+                // failure
+                System.out.println("fail service request succeed");
+            }
+        });
+    }
+
     private String errorCode(int i) {
+        System.out.println("code: " + i);
         switch (i){
             case WifiP2pManager.P2P_UNSUPPORTED:
                 return "P2P is not supported";
@@ -159,6 +196,8 @@ public class WifiDirectLocalService implements DnsSdTxtRecordListener, DnsSdServ
                 return "BUSY";
             case WifiP2pManager.ERROR:
                 return "ERROR";
+            case WifiP2pManager.NO_SERVICE_REQUESTS:
+                return "NO SERVICE REQUESTS";
             default:
                 return "Unknown";
         }

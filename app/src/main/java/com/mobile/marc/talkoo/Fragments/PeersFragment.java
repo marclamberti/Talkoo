@@ -88,14 +88,11 @@ public class PeersFragment extends Fragment implements AbsListView.OnItemClickLi
         // Set OnItemClickListener so we can be notified on item clicks
         list_view_.setOnItemClickListener(this);
 
-        // Initiate peer discovery
-        listener_.onDiscoveringPeersRequest();
-
         // Set empty view
         list_view_.setEmptyView(view.findViewById(R.id.empty_peers_list));
 
         // Hide the empty view
-        list_view_.getEmptyView().setVisibility(View.INVISIBLE);
+        list_view_.getEmptyView().setVisibility(View.VISIBLE);
 
         return view;
     }
@@ -104,7 +101,7 @@ public class PeersFragment extends Fragment implements AbsListView.OnItemClickLi
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            listener_ = (PeersListener) activity;
+            listener_ = (PeersListener)activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                 + " must implement OnFragmentInteractionListener");
@@ -118,6 +115,10 @@ public class PeersFragment extends Fragment implements AbsListView.OnItemClickLi
         listener_ = null;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -133,13 +134,19 @@ public class PeersFragment extends Fragment implements AbsListView.OnItemClickLi
     }
 
     /**
-     * Called when a peer is available
+     * Called when a peer is available and update it if it was already existing,
+     * otherwise it is added
      */
     public void addPeerToList(WifiP2pDevice peer) {
         stopRefreshActionBar();
-        // Clear old peers add news and update the list view
-        peers_.clear();
-        peers_.add(peer);
+        int peer_index = -1;
+        if ((peer_index = peers_.indexOf(peer)) != -1) {
+            peers_.get(peer_index).deviceName = peer.deviceName;
+            peers_.get(peer_index).deviceAddress = peer.deviceAddress;
+            peers_.get(peer_index).status = peer.status;
+        } else {
+            peers_.add(peer);
+        }
         displayEmptyView();
         System.out.println("Peers found");
         ((PeersAdapter)adapter_).update();
@@ -158,6 +165,7 @@ public class PeersFragment extends Fragment implements AbsListView.OnItemClickLi
      * Refresh peers list
      */
     public void refreshPeersList(MenuItem item) {
+        clearPeers();
         menu_item_action_refresh_ = item;
         menu_item_action_refresh_.setActionView(R.layout.action_refresh_progress_bar);
         menu_item_action_refresh_.expandActionView();

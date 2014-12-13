@@ -18,6 +18,7 @@ import android.net.wifi.p2p.WifiP2pManager.Channel;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
@@ -251,21 +252,21 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
         config.deviceAddress = peer.deviceAddress;
         config.wps.setup = WpsInfo.PBC;
         dismissProgressDialog();
+        service_.clearServiceRequest();
 
         // Progress dialog waiting for a connection
-        // If the user press back, we cancel the connection
-        progress_dialog_ = ProgressDialog.show(NavigatorActivity.this, "Press back to cancel", "Connection to: " + peer.deviceName, true, true, new DialogInterface.OnCancelListener(){
+        progress_dialog_ = ProgressDialog.show(NavigatorActivity.this, "Connection", "Connection to: " + peer.deviceName, true, true, new DialogInterface.OnCancelListener() {
             @Override
-            public void onCancel(DialogInterface dialog) {
+            public void onCancel(DialogInterface dialogInterface) {
                 manager_.cancelConnect(channel_, new WifiP2pManager.ActionListener() {
                     @Override
                     public void onSuccess() {
-                        Toast.makeText(NavigatorActivity.this, "Connection aborted", Toast.LENGTH_SHORT).show();
+
                     }
 
                     @Override
                     public void onFailure(int i) {
-                        Toast.makeText(NavigatorActivity.this, "Connect abort request failed: " + errorCode(i), Toast.LENGTH_SHORT).show();
+
                     }
                 });
             }
@@ -283,7 +284,6 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
                 Toast.makeText(NavigatorActivity.this, "Connection failed: " + errorCode(i), Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     /**
@@ -309,10 +309,12 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
             public void onConnectionInfoAvailable(final WifiP2pInfo info) {
                 // After group negotiation, we can determine the group owner
                 if (info.groupFormed && info.isGroupOwner) {
+                    System.out.println("Group owner");
                     // Do whatever tasks are specific to the group owner.
                     // One common case is creating a server thread and accepting
                     // incoming connections.
                 } else if (info.groupFormed) {
+                    System.out.println("Group client");
                     // The other device acts as the client. In this case,
                     // you'll want to create a client thread that connects to the group
                     // owner.
