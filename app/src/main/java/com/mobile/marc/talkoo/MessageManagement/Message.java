@@ -18,9 +18,24 @@ import java.net.InetAddress;
  *  Message definition.
  */
 public class Message implements Serializable {
+    /**
+     *  Used for debug logs.
+     */
     private static final String TAG = "Message";
 
-    // The enumeration of the different message types.
+    /**
+     *  Basic header information.
+     */
+    private int message_type_;
+    private String message_text_;
+    private String login_;
+    private int chat_id_;
+    private InetAddress sender_address_;
+    private boolean is_owner_;
+
+    /**
+     *  The different message types.
+     */
     public static final int MESSAGE_TEXT = 1;
     public static final int MESSAGE_IMAGE = 2;
     public static final int MESSAGE_VIDEO = 4;
@@ -28,105 +43,105 @@ public class Message implements Serializable {
     public static final int MESSAGE_FILE = 16;
     public static final int MESSAGE_INVITATION = 32;
 
-    // Basic header information.
-    private int messageType;
-    private String messageText;
-    private String chatName;
-    private int chatId;
-    private InetAddress senderAddress;
+    /**
+     *  These field are used is the message contains multimedia content.
+     */
+    private String file_name_;
+    private long file_length_;
+    private String file_path_;
+    private byte[] data_array_;
+//    private boolean is_mine_;
 
-    // These field are empty for text and invitation messages.
-    private byte[] byteArray;
-    private String fileName;
-    private long fileSize;
-    private String filePath;
-    private boolean isOwner;
-
-    //Getters and Setters
-    public int getMessageType() { return messageType; }
-    public void setMessageType(int messageType) { this.messageType = messageType; }
-    public String getMessageText() { return messageText; }
-    public void setMessageText(String messageText) { this.messageText = messageText; }
-    public String getRoomLogin() { return chatName; }
-    public void setRoomLogin(String chatName) { this.chatName = chatName; }
-    public int getRoomId() { return chatId; }
-    public void setRoomId(int chatId) { this.chatId = chatId; }
-    public byte[] getByteArray() { return byteArray; }
-    public void setByteArray(byte[] byteArray) { this.byteArray = byteArray; }
-    public InetAddress getSenderAddress() { return senderAddress; }
-    public void setSenderAddress(InetAddress senderAddress) { this.senderAddress = senderAddress; }
-    public String getFileName() { return fileName; }
-    public void setFileName(String fileName) { this.fileName = fileName; }
-    public long getFileSize() { return fileSize; }
-    public void setFileSize(long fileSize) { this.fileSize = fileSize; }
-    public String getFilePath() { return filePath; }
-    public void setFilePath(String filePath) { this.filePath = filePath; }
-    public boolean isOwner() { return isOwner; }
-    public void setOwner(boolean isOwner) { this.isOwner = isOwner; }
-
-    public Message(int type, String text, InetAddress sender, String name, int chat_id){
-        messageType = type;
-        messageText = text;
-        senderAddress = sender;
-        chatName = name;
-        chatId = chat_id;
+    /**
+     *  Constructor.
+     */
+    public Message(int message_type, String message_text, InetAddress sender_address,
+                   String group_name, int chat_id) {
+        message_type_ = message_type;
+        message_text_ = message_text;
+        sender_address_ = sender_address;
+        login_ = group_name;
+        chat_id_ = chat_id;
     }
 
-    public Bitmap byteArrayToBitmap(byte[] b){
-        Log.v(TAG, "Convert byte array to image (bitmap)");
-        return BitmapFactory.decodeByteArray(b, 0, b.length);
+    /**
+     *  Getters and Setters.
+     */
+    public int getMessageType() { return message_type_; }
+    public void setMessageType(int message_type) { this.message_type_ = message_type; }
+    public String getMessageText() { return message_text_; }
+    public void setMessageText(String message_text) { this.message_text_ = message_text; }
+    public String getRoomLogin() { return login_; }
+    public void setRoomLogin(String login) { this.login_ = login; }
+    public int getChatId() { return chat_id_; }
+    public void setChatId(int chat_id) { this.chat_id_ = chat_id; }
+    public InetAddress getSenderAddress() { return sender_address_; }
+    public void setSenderAddress(InetAddress senderAddress) { this.sender_address_ = senderAddress; }
+    public byte[] getDataArray() { return data_array_; }
+    public void setDataArray(byte[] byteArray) { this.data_array_ = byteArray; }
+    public String getFileName() { return file_name_; }
+    public void setFileName(String fileName) { this.file_name_ = fileName; }
+    public long getFileLength() { return file_length_; }
+    public void setFileLength(long fileLength) { this.file_length_ = fileLength; }
+    public String getFilePath() { return file_path_; }
+    public void setFilePath(String filePath) { this.file_path_ = filePath; }
+    public boolean isOwner() { return is_owner_; }
+    public void setOwner(boolean isOwner) { this.is_owner_ = isOwner; }
+
+
+//    public Bitmap byteArrayToBitmap(byte[] b) {
+//        Log.v(TAG, "Convert byte array to image (bitmap)");
+//        return BitmapFactory.decodeByteArray(b, 0, b.length);
+//    }
+
+    /**
+     *  Put the content of bytes_array_ to a file.
+     */
+    public void saveByteArrayToFile(Context context) {
+        setFilePath(context);
+        createFileAndWriteByteArray();
     }
 
-    // Create the filePath to .
+    /**
+     *  Create the file path using the environment directory and the file name.
+     */
     public void setFilePath(Context context) {
-        switch(messageType){
+        switch(message_type_){
+            case Message.MESSAGE_FILE:
+                file_path_ = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
+                        .getAbsolutePath() + "/" + file_name_;
+                break;
             case Message.MESSAGE_AUDIO:
-                filePath = context.getExternalFilesDir(Environment.DIRECTORY_MUSIC).getAbsolutePath()+"/"+fileName;
+                file_path_ = context.getExternalFilesDir(Environment.DIRECTORY_MUSIC)
+                        .getAbsolutePath() + "/" + file_name_;
                 break;
             case Message.MESSAGE_VIDEO:
-                filePath = context.getExternalFilesDir(Environment.DIRECTORY_MOVIES).getAbsolutePath()+"/"+fileName;
-                break;
-            case Message.MESSAGE_FILE:
-                filePath = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath()+"/"+fileName;
+                file_path_ = context.getExternalFilesDir(Environment.DIRECTORY_MOVIES)
+                        .getAbsolutePath() + "/" + file_name_;
                 break;
         }
     }
 
-    public void createFileAndWriteBytes() {
-        File file = new File(filePath);
+    /**
+     *  Creates a file and fills it with the content of data_array_.
+     */
+    public void createFileAndWriteByteArray() {
+        File file = new File(file_path_);
 
         if (file.exists()) {
             file.delete();
         }
 
         try {
-            FileOutputStream fos=new FileOutputStream(file.getPath());
+            FileOutputStream fos = new FileOutputStream(file.getPath());
 
-            fos.write(byteArray);
+            fos.write(data_array_);
             fos.close();
-            Log.v(TAG, "Write byte array to file DONE !");
+            Log.v(TAG, "Byte array written in file.");
         }
         catch (java.io.IOException e) {
             e.printStackTrace();
-            Log.e(TAG, "Write byte array to file FAILED !");
+            Log.e(TAG, "Cannot write byte array to file.");
         }
-    }
-
-    public void saveByteArrayToFile(Context context){
-//        Log.v(TAG, "Save byte array to file");
-        setFilePath(context);
-        createFileAndWriteBytes();
-//        switch(mType){
-//            case Message.MESSAGE_AUDIO:
-//                filePath = context.getExternalFilesDir(Environment.DIRECTORY_MUSIC).getAbsolutePath()+"/"+fileName;
-//                break;
-//            case Message.MESSAGE_VIDEO:
-//                filePath = context.getExternalFilesDir(Environment.DIRECTORY_MOVIES).getAbsolutePath()+"/"+fileName;
-//                break;
-//            case Message.MESSAGE_FILE:
-//                filePath = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath()+"/"+fileName;
-//                break;
- //       }
-
     }
 }
