@@ -6,9 +6,6 @@ package com.mobile.marc.talkoo.Fragments;
 import android.app.Fragment;
 import android.os.Parcelable;
 
-/**
- * Created by Marc on 21/10/14.
- */
 public class FragmentFactory {
     /**
      * Returns a new instance of this fragment for the given section

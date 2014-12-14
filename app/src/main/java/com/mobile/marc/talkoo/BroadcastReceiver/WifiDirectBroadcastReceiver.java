@@ -12,9 +12,6 @@ import android.util.Log;
 
 import java.nio.channels.Channel;
 
-/**
- * Created by Marc on 21/10/14.
- */
 public class WifiDirectBroadcastReceiver extends BroadcastReceiver {
     private static final String TAG = "WifiDirectBroadcastReceiver";
     private static WifiDirectBroadcastReceiver instance_;

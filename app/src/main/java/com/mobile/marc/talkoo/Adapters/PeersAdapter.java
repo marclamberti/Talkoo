@@ -18,9 +18,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Created by Marc on 22/10/14.
- * PeersAdapter, used to describe the process of converting the Java object
- * to a view.
+ * PeersAdapter, used to describe the process of converting the Java object to a view.
  * This approach doesn't use view caching.
  */
 public class PeersAdapter extends ArrayAdapter<WifiP2pDevice> {

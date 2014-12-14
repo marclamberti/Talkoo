@@ -16,9 +16,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-/**
- * Created by Marc on 13/12/14.
- */
 public class RoomAdapter extends BaseAdapter {
 
     // List of messages
