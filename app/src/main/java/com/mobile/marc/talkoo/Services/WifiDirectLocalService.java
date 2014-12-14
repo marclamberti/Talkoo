@@ -11,6 +11,7 @@ import android.net.wifi.p2p.WifiP2pManager.Channel;
 import android.net.wifi.p2p.WifiP2pManager.DnsSdTxtRecordListener;
 import android.net.wifi.p2p.WifiP2pManager.DnsSdServiceResponseListener;
 import android.net.wifi.p2p.nsd.WifiP2pDnsSdServiceRequest;
+import android.widget.Toast;
 
 import com.mobile.marc.talkoo.Fragments.PeersFragment;
 import com.mobile.marc.talkoo.NavigatorActivity;
@@ -145,6 +146,7 @@ public class WifiDirectLocalService implements DnsSdTxtRecordListener, DnsSdServ
                 PeersFragment fragment = (PeersFragment)activity_.getFragmentManager().findFragmentByTag(PeersFragment.TAG);
                 if (fragment != null) {
                     fragment.stopRefreshActionBar();
+                    activity_.onErrorFromLocalService("Discovery services failed: " + errorCode(i));
                 }
             }
         });
@@ -201,5 +203,9 @@ public class WifiDirectLocalService implements DnsSdTxtRecordListener, DnsSdServ
             default:
                 return "Unknown";
         }
+    }
+
+    public interface LocalServiceListener {
+        public void onErrorFromLocalService(String error);
     }
 }

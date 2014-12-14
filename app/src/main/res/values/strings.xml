@@ -17,8 +17,7 @@
 
     <!-- Home Fragment -->
     <string name="home_title">Home</string>
-    <string name="button_home_create_group">Create group</string>
-    <string name="button_home_find_peers">Find peers</string>
+    <string name="home_text">Welcome in Talkoo, we are happy to see you</string>
 
     <!-- Peers Fragment -->
     <string name="peers_title">Peers</string>
@@ -29,7 +28,9 @@
 
     <!-- Settings Fragment -->
     <string name="settings_title">Settings</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="setting_login_text">Enter a new login</string>
+    <string name="setting_wifi_text">Enable/Disable Wifi</string>
+    <string name="setting_button_save_text">Save Modifications</string>
 
     <!-- Peer Details Fragment -->
     <string name="peer_details_title">Details</string>

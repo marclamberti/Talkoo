@@ -106,8 +106,7 @@ public class Receiver extends NotificationHandler {
 
         //If the message contains a video or an audio, we saved this file to the external storage
         int type = messages[0].getMessageType();
-        if (type == Message.MESSAGE_AUDIO || type == Message.MESSAGE_VIDEO
-                || type == Message.MESSAGE_FILE) {
+        if (type == Message.MESSAGE_AUDIO || type == Message.MESSAGE_VIDEO || type == Message.MESSAGE_FILE) {
             messages[0].saveByteArrayToFile(context_);
         }
 

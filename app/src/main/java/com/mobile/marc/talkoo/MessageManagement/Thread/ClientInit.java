@@ -20,11 +20,22 @@ public class ClientInit extends Thread {
 
     @Override
     public void run() {
+        int count = 0;
+        int maxTries = 3;
         Socket socket = new Socket();
         try {
             socket.bind(null);
             while (!socket.isConnected()) {
-                socket.connect(new InetSocketAddress(server_address_, SERVER_PORT), 500);
+                try {
+                    System.out.println("TRY CONNECTING...");
+                    socket.connect(new InetSocketAddress(server_address_, SERVER_PORT));
+                    System.out.println("Connected...");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    if (++count == maxTries) {
+                        throw e;
+                    }
+                }
             }
             socket.close();
         } catch (IOException e) {

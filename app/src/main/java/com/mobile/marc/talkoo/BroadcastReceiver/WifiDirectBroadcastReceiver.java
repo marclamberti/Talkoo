@@ -64,7 +64,7 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver {
          */
         else if (WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION.equals(action)) {
             Log.v(TAG, "WIFI_P2P_PEERS_CHANGED_ACTION");
-            listener_.onPeersChangedAction();
+            //listener_.onPeersChangedAction();
         }
 
         /**
@@ -83,8 +83,8 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver {
                 System.out.println("Connected");
                 listener_.onDeviceConnectedToPeers();
             } else if (network_info.getState() == NetworkInfo.State.DISCONNECTED){
-                listener_.onDisconnected();
                 System.out.println("Disconnected");
+                listener_.onDisconnected();
             } else if (network_info.getState() == NetworkInfo.State.CONNECTING) {
                 System.out.println("Connecting...");
             } else if (network_info.getState() == NetworkInfo.State.DISCONNECTING) {

@@ -1,17 +1,75 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:flatui="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.mobile.marc.talkoo.NavigatorActivity$PlaceholderFragment">
+    tools:context="com.mobile.marc.talkoo.NavigatorActivity$SettingsFragment">
 
-    <TextView
-        android:id="@+id/settings_title"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/settings_title"/>
+        android:layout_marginTop="10dp">
 
+        <com.cengalabs.flatui.views.FlatTextView
+            android:id="@+id/setting_login_text_view"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dip"
+            android:textSize="20sp"
+            android:text="@string/setting_login_text"
+            flatui:fl_textColor="fl_main"
+            flatui:fl_theme="@array/grass" />
+
+    <com.cengalabs.flatui.views.FlatEditText
+        android:id="@+id/settings_edit_text_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:maxLines="1"
+        android:textCursorDrawable="@null"
+        android:textColor="@android:color/white"
+        android:gravity="center_horizontal"
+        android:hint="@string/welcome_hint_sign_up_login"
+        android:includeFontPadding="true"
+        flatui:fl_fieldStyle="fl_flat"
+        flatui:fl_theme="@array/grass" />
+
+        <com.cengalabs.flatui.views.FlatTextView
+            android:id="@+id/setting_wifi_text_view"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dip"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:text="@string/setting_wifi_text"
+            flatui:fl_textColor="fl_main"
+            flatui:fl_theme="@array/grass" />
+
+        <com.cengalabs.flatui.views.FlatToggleButton
+                android:id="@+id/setting_toggle_wifi"
+                android:layout_width="72dp"
+                android:layout_height="36dp"
+                flatui:fl_theme="@array/grass"
+                flatui:fl_space="14dp"
+                flatui:fl_cornerRadius="18dp"
+                android:layout_marginBottom="10dp"
+            />
+
+        <com.cengalabs.flatui.views.FlatButton
+            android:id="@+id/setting_button_save"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:text="@string/setting_button_save_text"
+            android:layout_margin="5dp"
+            flatui:fl_theme="@array/candy"
+            flatui:fl_blockButtonEffectHeight="3dp"
+            />
+    </LinearLayout>
 </RelativeLayout>

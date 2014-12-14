@@ -159,6 +159,7 @@ public class RoomActivity extends Activity implements WifiDirectBroadcastListene
         if (NavigatorActivity.server != null) {
             NavigatorActivity.server.interrupt();
         }
+        manager_.cancelConnect(channel_, null);
         finish();
     }
 
@@ -180,9 +181,6 @@ public class RoomActivity extends Activity implements WifiDirectBroadcastListene
     // OnClick event on send button
     public void sendMessageEvent(View view) {
         EditText room_message_edit_text = (EditText)findViewById(R.id.room_edit_message);
-        if (room_message_edit_text == null) {
-            System.out.println("Null");
-        }
         if (room_message_edit_text != null && room_message_edit_text.getText().length() != 0) {
             Message message = new Message(Message.MESSAGE_TEXT, room_message_edit_text.getText().toString(), null, login_, 0);
             // TODO: HAS TO BE CHANGED
@@ -191,7 +189,6 @@ public class RoomActivity extends Activity implements WifiDirectBroadcastListene
             } else if (NavigatorActivity.isClient) {
                 new ClientSender(this, NavigatorActivity.owner_address).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, message);
             }
-            System.out.println(room_message_edit_text.getText());
         }
     }
 

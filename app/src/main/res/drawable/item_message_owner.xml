@@ -11,4 +11,5 @@
 
     <!-- Background -->
     <solid android:color="@color/grass_primary"></solid>
+
 </shape>

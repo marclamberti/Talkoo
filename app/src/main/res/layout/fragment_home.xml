@@ -14,25 +14,18 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.cengalabs.flatui.views.FlatButton
-            android:id="@+id/button_home_create_group"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:text="@string/button_home_create_group"
-            android:layout_margin="5dp"
-            flatui:fl_theme="@array/candy"
-            flatui:fl_blockButtonEffectHeight="3dp"
-            />
-
-        <com.cengalabs.flatui.views.FlatButton
-            android:id="@+id/button_home_find_peers"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:text="@string/button_home_find_peers"
-            android:layout_margin="5dp"
-            flatui:fl_theme="@array/candy"
-            flatui:fl_blockButtonEffectHeight="3dp"
-            />
+        <com.cengalabs.flatui.views.FlatTextView
+            android:id="@+id/home_text_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dip"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:gravity="top|center"
+            android:text="@string/home_text"
+            flatui:fl_textColor="fl_main"
+            flatui:fl_theme="@array/grass" />
 
     </LinearLayout>
 
