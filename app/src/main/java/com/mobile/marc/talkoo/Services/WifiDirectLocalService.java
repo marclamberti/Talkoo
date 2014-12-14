@@ -1,8 +1,7 @@
-package com.mobile.marc.talkoo.Services;
+//# CSIT 6000B    # Jordy Ngenze Domingos       20243311        jndomingos@ust.hk
+//# CSIT 6000B    # Marc Lamberti               20243622        mlamberti@ust.hk
 
-/**
- * Created by Marc on 23/10/14.
- */
+package com.mobile.marc.talkoo.Services;
 
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pManager;

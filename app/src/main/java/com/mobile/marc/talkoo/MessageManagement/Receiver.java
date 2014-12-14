@@ -1,5 +1,5 @@
 //# CSIT 6000B    # Jordy Ngenze Domingos       20243311        jndomingos@ust.hk
-//# CSIT 6000B    # Marc Lamberti               20243311        mlamberti@ust.hk
+//# CSIT 6000B    # Marc Lamberti               20243622        mlamberti@ust.hk
 
 package com.mobile.marc.talkoo.MessageManagement;
 
@@ -110,7 +110,7 @@ public class Receiver extends NotificationHandler {
         int type = messages[0].getMessageType();
         if (type == Message.MESSAGE_AUDIO || type == Message.MESSAGE_VIDEO
                 || type == Message.MESSAGE_FILE) {
-            messages[0].saveByteArrayToFile(context_);
+           // messages[0].saveByteArrayToFile(context_);
         }
 
         if (is_server_) {
