@@ -10,7 +10,6 @@ import android.net.wifi.p2p.WifiP2pManager.Channel;
 import android.net.wifi.p2p.WifiP2pManager.DnsSdTxtRecordListener;
 import android.net.wifi.p2p.WifiP2pManager.DnsSdServiceResponseListener;
 import android.net.wifi.p2p.nsd.WifiP2pDnsSdServiceRequest;
-import android.widget.Toast;
 
 import com.mobile.marc.talkoo.Fragments.PeersFragment;
 import com.mobile.marc.talkoo.NavigatorActivity;

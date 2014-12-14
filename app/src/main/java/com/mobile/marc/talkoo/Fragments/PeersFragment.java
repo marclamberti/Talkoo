@@ -14,7 +14,6 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.net.wifi.p2p.WifiP2pDevice;
-import android.widget.Toast;
 
 import com.mobile.marc.talkoo.NavigatorActivity;
 import com.mobile.marc.talkoo.Adapters.PeersAdapter;

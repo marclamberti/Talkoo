@@ -8,7 +8,6 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.mobile.marc.talkoo.NavigatorActivity;
 import com.mobile.marc.talkoo.R;
@@ -73,7 +72,7 @@ public class HomeFragment extends Fragment {
             mListener = (HomeListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement HomeListener");
         }
         ((NavigatorActivity) activity).onSectionAttached(getArguments().getInt(ARG_SECTION_NUMBER));
     }
