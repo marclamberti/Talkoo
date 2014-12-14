@@ -45,13 +45,11 @@ public class ClientSender extends AsyncTask<Message, Message, Message> {
             e.printStackTrace();
             Log.e(TAG, "Message sending failed");
         } finally {
-            if (socket != null) {
-                if (socket.isConnected()) {
-                    try {
-                        socket.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+            if (socket != null && socket.isConnected()) {
+                try {
+                    socket.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         }

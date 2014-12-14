@@ -57,9 +57,9 @@ public class Receiver extends NotificationHandler {
     private Void runServer() {
         try {
             if (is_server_)
-                server_socket_ = new ServerSocket(SERVER_PORT);
-            else
                 server_socket_ = new ServerSocket(CLIENT_PORT);
+            else
+                server_socket_ = new ServerSocket(SERVER_PORT);
 
             while (true) {
                 Socket socket = server_socket_.accept();
