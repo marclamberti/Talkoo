@@ -1,8 +1,9 @@
-package com.mobile.marc.talkoo.MessageManagement.Test;
+//# CSIT 6000B    # Jordy Ngenze Domingos       20243311        jndomingos@ust.hk
+//# CSIT 6000B    # Marc Lamberti               20243622        mlamberti@ust.hk
+
+package com.mobile.marc.talkoo.Models.Test;
 
 import android.test.InstrumentationTestCase;
-
-import junit.framework.TestCase;
 
 /**
  * Created by Dyjor on 14/12/14.

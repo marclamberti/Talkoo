@@ -1,3 +1,6 @@
+//# CSIT 6000B    # Jordy Ngenze Domingos       20243311        jndomingos@ust.hk
+//# CSIT 6000B    # Marc Lamberti               20243622        mlamberti@ust.hk
+
 package com.mobile.marc.talkoo.MessageManagement;
 
 import android.app.ActivityManager;
@@ -21,28 +24,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GroupOwnerSender extends AsyncTask<Message, Message, Message> {
-    private static final String TAG = "GroupOwnerSender";
-    private Context context_;
-    private static final int SERVER_PORT = 4447;
-    private boolean is_owner_;
+    private static final String     TAG = "GroupOwnerSender";
+    private Context                 context_;
+    private static final int        SERVER_PORT = 4447;
+    private boolean                 is_owner_;
+    private ArrayList<Socket>       sockets;
 
     public GroupOwnerSender(Context context, boolean owner){
         context_ = context;
         is_owner_ = owner;
     }
 
-    protected Void sendMessageToClient(InetAddress addr, Message message) {
+    protected Void sendMessageToClient(InetAddress address, Message message) {
         try {
             Socket socket = new Socket();
             socket.setReuseAddress(true);
             socket.bind(null);
-            Log.v(TAG,"Connect to client: " + addr.getHostAddress());
-            socket.connect(new InetSocketAddress(addr, SERVER_PORT));
-            Log.v(TAG, "doInBackground: connect to "+ addr.getHostAddress() +" succeeded");
+
+            Log.v(TAG,"Connect to client: " + address.getHostAddress());
+            socket.connect(new InetSocketAddress(address, SERVER_PORT));
+            Log.v(TAG, "doInBackground: connect to "+ address.getHostAddress() +" succeeded");
+
             OutputStream outputStream = socket.getOutputStream();
             new ObjectOutputStream(outputStream).writeObject(message);
 
-            Log.v(TAG, "doInBackground: write to "+ addr.getHostAddress() +" succeeded");
+            Log.v(TAG, "doInBackground: write to "+ address.getHostAddress() +" succeeded");
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -60,8 +66,10 @@ public class GroupOwnerSender extends AsyncTask<Message, Message, Message> {
 
         //Send the message to clients
         ArrayList<InetAddress> listClients = ServerInit.clients;
-        for(InetAddress address : listClients){
-            if(message[0].getSenderAddress()!= null && address.getHostAddress().equals(message[0].getSenderAddress().getHostAddress())){
+
+        for (InetAddress address : listClients){
+            if (message[0].getSenderAddress()!= null &&
+                    address.getHostAddress().equals(message[0].getSenderAddress().getHostAddress())){
                 return message[0];
             }
             sendMessageToClient(address, message[0]);

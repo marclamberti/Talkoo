@@ -1,3 +1,6 @@
+//# CSIT 6000B    # Jordy Ngenze Domingos       20243311        jndomingos@ust.hk
+//# CSIT 6000B    # Marc Lamberti               20243622        mlamberti@ust.hk
+
 package com.mobile.marc.talkoo.MessageManagement.Thread;
 
 import android.util.Log;
@@ -14,8 +17,8 @@ public class ClientInit extends Thread {
     private static final int SERVER_PORT = 4444;
     private InetAddress server_address_;
 
-    public ClientInit(InetAddress serverAddress){
-        server_address_ = serverAddress;
+    public ClientInit(InetAddress server_address){
+        server_address_ = server_address;
     }
 
     @Override
