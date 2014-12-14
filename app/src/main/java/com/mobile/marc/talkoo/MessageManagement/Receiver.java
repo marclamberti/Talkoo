@@ -68,7 +68,9 @@ public class Receiver extends NotificationHandler {
             while (true) {
                 Socket socket = server_socket_.accept();
                 Message client_message = extractMessageFromSocket(socket);
-                //Add the InetAdress of the sender to the message
+                /*
+                ** Add the InetAdress of the sender to the message
+                */
                 if (is_server_) {
                     InetAddress sender_address = socket.getInetAddress();
                     client_message.setSenderAddress(sender_address);

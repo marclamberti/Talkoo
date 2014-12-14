@@ -5,12 +5,12 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
-public class ClientInit extends Thread{
+public class ClientInit extends Thread {
     private static final int SERVER_PORT = 4444;
     private InetAddress server_address_;
 
-    public ClientInit(InetAddress serverAddr){
-        server_address_ = serverAddr;
+    public ClientInit(InetAddress server_address){
+        server_address_ = server_address;
     }
 
     @Override

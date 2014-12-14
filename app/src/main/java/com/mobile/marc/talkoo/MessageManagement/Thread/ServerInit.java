@@ -12,7 +12,7 @@ public class ServerInit extends Thread{
     private static final String TAG = "ServerInit";
     private static final int SERVER_PORT = 4444;
     public static ArrayList<InetAddress> clients;
-    private ServerSocket serverSocket;
+    private ServerSocket server_socket_;
 
     public ServerInit(){
         clients = new ArrayList<InetAddress>();
@@ -23,10 +23,10 @@ public class ServerInit extends Thread{
         clients.clear();
 
         try {
-            serverSocket = new ServerSocket(SERVER_PORT);
+            server_socket_ = new ServerSocket(SERVER_PORT);
             // Collect client ip's
             while(true) {
-                Socket clientSocket = serverSocket.accept();
+                Socket clientSocket = server_socket_.accept();
                 if(!clients.contains(clientSocket.getInetAddress())){
                     clients.add(clientSocket.getInetAddress());
                     Log.v(TAG, "New client: " + clientSocket.getInetAddress().getHostAddress());
@@ -43,7 +43,7 @@ public class ServerInit extends Thread{
     public void interrupt() {
         super.interrupt();
         try {
-            serverSocket.close();
+            server_socket_.close();
             Log.v(TAG, "Server init process interrupted");
         } catch (IOException e) {
             e.printStackTrace();

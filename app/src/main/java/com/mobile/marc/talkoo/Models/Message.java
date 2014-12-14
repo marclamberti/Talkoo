@@ -24,12 +24,12 @@ public class Message implements Serializable {
     /**
      *  Basic header information.
      */
-    private int message_type_;
-    private String message_text_;
-    private String login_;
-    private int chat_id_;
+    private int         message_type_;
+    private String      message_text_;
+    private String      login_;
+    private int         chat_id_;
     private InetAddress sender_address_;
-    private boolean is_owner_;
+    private boolean     is_owner_;
 
     /**
      *  The different message types.
@@ -44,11 +44,10 @@ public class Message implements Serializable {
     /**
      *  These field are used is the message contains multimedia content.
      */
-    private String file_name_;
-    private long file_length_;
-    private String file_path_;
-    private byte[] data_array_;
-//    private boolean is_mine_;
+    private String      file_name_;
+    private long        file_length_;
+    private String      file_path_;
+    private byte[]      data_array_;
 
     /**
      *  Constructor.
