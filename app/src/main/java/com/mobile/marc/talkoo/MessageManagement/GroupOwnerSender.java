@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.mobile.marc.talkoo.LoginActivity;
 import com.mobile.marc.talkoo.Models.Message;
 import com.mobile.marc.talkoo.NavigatorActivity;
 import com.mobile.marc.talkoo.RoomActivity;
@@ -22,7 +23,7 @@ import java.util.List;
 public class GroupOwnerSender extends AsyncTask<Message, Message, Message> {
     private static final String TAG = "GroupOwnerSender";
     private Context context_;
-    private static final int CLIENT_PORT = 4447;
+    private static final int SERVER_PORT = 4447;
     private boolean is_owner_;
 
     public GroupOwnerSender(Context context, boolean owner){
@@ -36,7 +37,7 @@ public class GroupOwnerSender extends AsyncTask<Message, Message, Message> {
             socket.setReuseAddress(true);
             socket.bind(null);
             Log.v(TAG,"Connect to client: " + addr.getHostAddress());
-            socket.connect(new InetSocketAddress(addr, CLIENT_PORT));
+            socket.connect(new InetSocketAddress(addr, SERVER_PORT));
             Log.v(TAG, "doInBackground: connect to "+ addr.getHostAddress() +" succeeded");
 
             OutputStream outputStream = socket.getOutputStream();
@@ -62,9 +63,7 @@ public class GroupOwnerSender extends AsyncTask<Message, Message, Message> {
         //Send the message to clients
         ArrayList<InetAddress> listClients = ServerInit.clients;
         for(InetAddress addr : listClients){
-
-            if(message[0].getSenderAddress()!=null && addr.getHostAddress().equals(message[0].
-                    getSenderAddress().getHostAddress())){
+            if(message[0].getSenderAddress()!=null && addr.getHostAddress().equals(message[0].getSenderAddress().getHostAddress())){
                 return message[0];
             }
             sendMessageToClient(addr, message[0]);
@@ -75,9 +74,7 @@ public class GroupOwnerSender extends AsyncTask<Message, Message, Message> {
     @Override
     protected void onProgressUpdate(Message... values) {
         super.onProgressUpdate(values);
-
-        if(isActivityRunning(RoomActivity.class)) {
-            Log.v(TAG, "onProgressUpdate Owner");
+        if (isActivityRunning(LoginActivity.class)) {
             RoomActivity.updateMessages(values[0], false);
         }
     }
@@ -97,7 +94,6 @@ public class GroupOwnerSender extends AsyncTask<Message, Message, Message> {
             if (activityClass.getCanonicalName().equalsIgnoreCase(task.baseActivity.getClassName()))
                 return true;
         }
-
         return false;
     }
 }

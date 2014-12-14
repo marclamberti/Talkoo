@@ -372,4 +372,8 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
             }
         });
     }
+
+    @Override
+    public void onDisconnected() {
+    }
 }

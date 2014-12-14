@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.mobile.marc.talkoo.LoginActivity;
 import com.mobile.marc.talkoo.Models.Message;
 import com.mobile.marc.talkoo.NavigatorActivity;
 import com.mobile.marc.talkoo.RoomActivity;
@@ -72,9 +73,7 @@ public class ClientSender extends AsyncTask<Message, Message, Message> {
     @Override
     protected void onProgressUpdate(Message... msg) {
         super.onProgressUpdate(msg);
-        System.out.println("onProgressUpdate Client 1");
-        if(isActivityRunning(RoomActivity.class)){
-            System.out.println("onProgressUpdate Client 2");
+        if(isActivityRunning(LoginActivity.class)){
             RoomActivity.updateMessages(msg[0], true);
         }
     }

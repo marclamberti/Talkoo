@@ -56,7 +56,6 @@ public class RoomAdapter extends BaseAdapter {
             room_login.setText(message.getRoomLogin());
             room_message.setText(message.getMessageText());
         }
-
         return view;
     }
 

@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.mobile.marc.talkoo.Adapters.RoomAdapter;
 import com.mobile.marc.talkoo.BroadcastReceiver.WifiDirectBroadcastReceiver;
@@ -141,12 +142,7 @@ public class RoomActivity extends Activity implements WifiDirectBroadcastListene
         builder.setPositiveButton(R.string.room_alert_dialog_disconnect_yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                disconnectFromGroup();
-                // TODO: HAS TO BE CHANGED
-                if (NavigatorActivity.server != null) {
-                    NavigatorActivity.server.interrupt();
-                }
-                finish();
+                endRoom();
             }
         });
         builder.setNegativeButton(R.string.room_alert_dialog_disconnect_no, new DialogInterface.OnClickListener() {
@@ -156,6 +152,14 @@ public class RoomActivity extends Activity implements WifiDirectBroadcastListene
             }
         });
         builder.show();
+    }
+
+    private void endRoom() {
+        disconnectFromGroup();
+        if (NavigatorActivity.server != null) {
+            NavigatorActivity.server.interrupt();
+        }
+        finish();
     }
 
     // Disconnect from the group
@@ -213,5 +217,15 @@ public class RoomActivity extends Activity implements WifiDirectBroadcastListene
 
     @Override
     public void onDeviceConnectedToPeers() {
+    }
+
+    @Override
+    public void onDisconnected() {
+        Toast.makeText(RoomActivity.this, "Your have been disconnected", Toast.LENGTH_LONG).show();
+        disconnectFromGroup();
+        if (NavigatorActivity.server != null) {
+            NavigatorActivity.server.interrupt();
+        }
+        finish();
     }
 }

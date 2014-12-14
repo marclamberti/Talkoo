@@ -82,6 +82,7 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver {
                 System.out.println("Connected");
                 listener_.onDeviceConnectedToPeers();
             } else if (network_info.getState() == NetworkInfo.State.DISCONNECTED){
+                listener_.onDisconnected();
                 System.out.println("Disconnected");
             } else if (network_info.getState() == NetworkInfo.State.CONNECTING) {
                 System.out.println("Connecting...");
@@ -115,5 +116,6 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver {
     public interface WifiDirectBroadcastListener {
         public void onIsWifiEnabled(boolean wifi);
         public void onDeviceConnectedToPeers();
+        public void onDisconnected();
     }
 }

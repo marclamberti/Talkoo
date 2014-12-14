@@ -3,6 +3,7 @@
 
 package com.mobile.marc.talkoo.MessageManagement;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -14,6 +15,7 @@ import java.util.List;
 import android.app.ActivityManager;
 import android.content.Context;
 
+import com.mobile.marc.talkoo.LoginActivity;
 import com.mobile.marc.talkoo.Models.Message;
 import com.mobile.marc.talkoo.NavigatorActivity;
 import com.mobile.marc.talkoo.RoomActivity;
@@ -40,7 +42,8 @@ public class Receiver extends NotificationHandler {
     private Message extractMessageFromSocket(Socket socket) {
         try {
             InputStream inputStream = socket.getInputStream();
-            ObjectInputStream objectIS = new ObjectInputStream(inputStream);
+            BufferedInputStream buffer = new BufferedInputStream(inputStream);
+            ObjectInputStream objectIS = new ObjectInputStream(buffer);
             return (Message) objectIS.readObject();
         } catch (IOException exception) {
             exception.printStackTrace();
@@ -56,25 +59,24 @@ public class Receiver extends NotificationHandler {
      */
     private Void runServer() {
         try {
-            if (is_server_)
-                server_socket_ = new ServerSocket(CLIENT_PORT);
-            else
+            if (is_server_) {
                 server_socket_ = new ServerSocket(SERVER_PORT);
+            } else {
+                server_socket_ = new ServerSocket(CLIENT_PORT);
+            }
 
             while (true) {
                 Socket socket = server_socket_.accept();
-//
                 Message client_message = extractMessageFromSocket(socket);
-                if (client_message == null)
-                    continue;
-
                 //Add the InetAdress of the sender to the message
                 if (is_server_) {
                     InetAddress sender_address = socket.getInetAddress();
                     client_message.setSenderAddress(sender_address);
                 }
                 socket.close();
-                publishProgress(client_message);
+                if (client_message != null) {
+                    publishProgress(client_message);
+                }
             }
         } catch (IOException exception) {
             exception.printStackTrace();
@@ -84,8 +86,7 @@ public class Receiver extends NotificationHandler {
 
     @Override
     protected Void doInBackground(Void... params) {
-        runServer();
-        return null;
+        return runServer();
     }
 
     @Override
@@ -99,22 +100,21 @@ public class Receiver extends NotificationHandler {
     }
 
     @Override
-    protected void onProgressUpdate(Message... values) {
-        super.onProgressUpdate(values);
-        Notify(context_, values[0]);
+    protected void onProgressUpdate(Message... messages) {
+        super.onProgressUpdate(messages);
+        Notify(context_, messages[0]);
 
         //If the message contains a video or an audio, we saved this file to the external storage
-        int type = values[0].getMessageType();
+        int type = messages[0].getMessageType();
         if (type == Message.MESSAGE_AUDIO || type == Message.MESSAGE_VIDEO
                 || type == Message.MESSAGE_FILE) {
-            values[0].saveByteArrayToFile(context_);
+            messages[0].saveByteArrayToFile(context_);
         }
 
-        if (is_server_)
-            new GroupOwnerSender(context_, false).executeOnExecutor(THREAD_POOL_EXECUTOR, values);
-        else {
-            if (isActivityRunning(NavigatorActivity.class))
-                RoomActivity.updateMessages(values[0], false);
+        if (is_server_) {
+            new GroupOwnerSender(context_, false).executeOnExecutor(THREAD_POOL_EXECUTOR, messages);
+        } else if (isActivityRunning(LoginActivity.class)) {
+            RoomActivity.updateMessages(messages[0], false);
         }
     }
 
