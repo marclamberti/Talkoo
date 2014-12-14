@@ -19,16 +19,15 @@ public class DataService extends Service {
     public IBinder onBind(Intent arg0) {
         return null;
     }
-    // TODO: HAS TO BE CHANGED
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         System.out.println("onStartCommand");
         //Start the AsyncTask for the server to receive messages
-        if (NavigatorActivity.isOwner){
+        if (NavigatorActivity.isOwner) {
             System.out.println("Start the AsyncTask for the server to receive messages");
             new Receiver(getApplicationContext(), true).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, (Void[])null);
         }
-        else if (NavigatorActivity.isClient){
+        else if (NavigatorActivity.isClient) {
             System.out.println("Start the AsyncTask for the client to receive messages");
             new Receiver(getApplicationContext(), false).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, (Void[])null);
         }

@@ -21,7 +21,6 @@ public class ServerInit extends Thread{
     @Override
     public void run() {
         clients.clear();
-
         try {
             server_socket_ = new ServerSocket(SERVER_PORT);
             // Collect client ip's
@@ -31,7 +30,6 @@ public class ServerInit extends Thread{
                     clients.add(clientSocket.getInetAddress());
                     Log.v(TAG, "New client: " + clientSocket.getInetAddress().getHostAddress());
                 }
-
                 clientSocket.close();
             }
         } catch (IOException e) {

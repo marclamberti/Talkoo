@@ -21,11 +21,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GroupOwnerSender extends AsyncTask<Message, Message, Message> {
-    private static final String TAG = "GroupOwnerSender";
-    private Context context_;
-    private static final int SERVER_PORT = 4447;
-    private boolean is_owner_;
-    private ArrayList<Socket> sockets;
+    private static final String     TAG = "GroupOwnerSender";
+    private Context                 context_;
+    private static final int        SERVER_PORT = 4447;
+    private boolean                 is_owner_;
+    private ArrayList<Socket>       sockets;
 
     public GroupOwnerSender(Context context, boolean owner){
         context_ = context;
@@ -63,11 +63,13 @@ public class GroupOwnerSender extends AsyncTask<Message, Message, Message> {
 
         //Send the message to clients
         ArrayList<InetAddress> listClients = ServerInit.clients;
-        for (InetAddress addr : listClients){
-            if (message[0].getSenderAddress()!= null && addr.getHostAddress().equals(message[0].getSenderAddress().getHostAddress())){
+
+        for (InetAddress address : listClients){
+            if (message[0].getSenderAddress()!= null &&
+                    address.getHostAddress().equals(message[0].getSenderAddress().getHostAddress())){
                 return message[0];
             }
-            sendMessageToClient(addr, message[0]);
+            sendMessageToClient(address, message[0]);
         }
         return message[0];
     }

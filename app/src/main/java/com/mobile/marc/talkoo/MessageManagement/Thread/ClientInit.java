@@ -1,5 +1,10 @@
 package com.mobile.marc.talkoo.MessageManagement.Thread;
 
+import android.util.Log;
+import android.widget.Toast;
+
+import com.mobile.marc.talkoo.NavigatorActivity;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -18,7 +23,9 @@ public class ClientInit extends Thread {
         Socket socket = new Socket();
         try {
             socket.bind(null);
-            socket.connect(new InetSocketAddress(server_address_, SERVER_PORT));
+            while (!socket.isConnected()) {
+                socket.connect(new InetSocketAddress(server_address_, SERVER_PORT), 500);
+            }
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();
