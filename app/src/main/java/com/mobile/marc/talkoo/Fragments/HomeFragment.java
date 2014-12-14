@@ -22,7 +22,7 @@ import com.mobile.marc.talkoo.R;
  * create an instance of this fragment.
  *
  */
-public class HomeFragment extends Fragment implements View.OnClickListener {
+public class HomeFragment extends Fragment {
     public static final String TAG = "fragment0";
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -63,10 +63,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
-        // Register button events
-        ((Button)rootView.findViewById(R.id.button_home_create_group)).setOnClickListener(this);
-        ((Button)rootView.findViewById(R.id.button_home_find_peers)).setOnClickListener(this);
-
         return rootView;
     }
 
@@ -86,29 +82,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    /**
-     * Callbacks buttons
-     */
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.button_home_create_group:
-                createGroup(view);
-                break;
-            case R.id.button_home_find_peers:
-                findPeers(view);
-                break;
-        }
-    }
-
-    public void createGroup(View view)  {
-        System.out.println("Create group");
-    }
-
-    public void findPeers(View view) {
-        System.out.println("Find peers");
     }
 
     /**

@@ -44,7 +44,7 @@ public class Receiver extends NotificationHandler {
             InputStream inputStream = socket.getInputStream();
             BufferedInputStream buffer = new BufferedInputStream(inputStream);
             ObjectInputStream objectIS = new ObjectInputStream(buffer);
-            return (Message) objectIS.readObject();
+            return (Message)objectIS.readObject();
         } catch (IOException exception) {
             exception.printStackTrace();
         } catch (ClassNotFoundException exception) {
@@ -108,9 +108,8 @@ public class Receiver extends NotificationHandler {
 
         //If the message contains a video or an audio, we saved this file to the external storage
         int type = messages[0].getMessageType();
-        if (type == Message.MESSAGE_AUDIO || type == Message.MESSAGE_VIDEO
-                || type == Message.MESSAGE_FILE) {
-           // messages[0].saveByteArrayToFile(context_);
+        if (type == Message.MESSAGE_AUDIO || type == Message.MESSAGE_VIDEO || type == Message.MESSAGE_FILE) {
+            //messages[0].saveByteArrayToFile(context_);
         }
 
         if (is_server_) {

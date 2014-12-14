@@ -12,9 +12,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.app.Fragment;
 import android.content.IntentFilter;
+import android.net.wifi.WifiManager;
 import android.net.wifi.WpsInfo;
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
+import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
@@ -25,6 +27,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
+import android.view.View;
 import android.widget.Toast;
 
 import com.mobile.marc.talkoo.BroadcastReceiver.WifiDirectBroadcastReceiver;
@@ -38,6 +41,7 @@ import com.mobile.marc.talkoo.Fragments.NavigationDrawerFragment.NavigationDrawe
 import com.mobile.marc.talkoo.BroadcastReceiver.WifiDirectBroadcastReceiver.WifiDirectBroadcastListener;
 import com.mobile.marc.talkoo.MessageManagement.Thread.ClientInit;
 import com.mobile.marc.talkoo.MessageManagement.Thread.ServerInit;
+import com.mobile.marc.talkoo.Services.WifiDirectLocalService.LocalServiceListener;
 import com.mobile.marc.talkoo.Services.WifiDirectLocalService;
 
 import java.net.InetAddress;
@@ -47,7 +51,7 @@ import java.net.InetAddress;
  * TODO: Actualize the list on device periodically
  */
 public class NavigatorActivity extends FragmentActivity implements HomeListener, PeersListener, SettingsListener,
-        NavigationDrawerCallbacks, WifiDirectBroadcastListener {
+        NavigationDrawerCallbacks, WifiDirectBroadcastListener, LocalServiceListener {
 
     /**
      * Progress dialog
@@ -277,6 +281,7 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
         WifiP2pConfig   config = new WifiP2pConfig();
         config.deviceAddress = peer.deviceAddress;
         config.wps.setup = WpsInfo.PBC;
+        config.groupOwnerIntent = 0;
         dismissProgressDialog();
         service_.clearServiceRequest();
 
@@ -344,29 +349,36 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
             public void onConnectionInfoAvailable(final WifiP2pInfo info) {
                 System.out.println("onConnectionInfoAvailable called");
                 // After group negotiation, we can determine the group owner
-                if (info.groupFormed && info.isGroupOwner) {
-                    System.out.println("Group owner");
-                    isClient = false;
-                    isOwner = true;
-                    server = new ServerInit();
-                    server.start();
-                    // Do whatever tasks are specific to the group owner.
-                    // One common case is creating a server thread and accepting
-                    // incoming connections.
-                } else if (info.groupFormed) {
-                    System.out.println("Group client");
-                    isOwner = false;
-                    isClient = true;
+                if (info.groupFormed) {
                     owner_address = info.groupOwnerAddress;
-                    ClientInit client = new ClientInit(owner_address);
-                    client.start();
-                    // The other device acts as the client. In this case,
-                    // you'll want to create a client thread that connects to the group
-                    // owner.
+                    if (info.isGroupOwner) {
+                        System.out.println("Group owner");
+                        isClient = false;
+                        isOwner = true;
+                        server = new ServerInit();
+                        server.start();
+                        // Do whatever tasks are specific to the group owner.
+                        // One common case is creating a server thread and accepting
+                        // incoming connections.
+                    } else {
+                        System.out.println("Group client");
+                        isOwner = false;
+                        isClient = true;
+                        ClientInit client = new ClientInit(info.groupOwnerAddress);
+                        client.start();
+                        // The other device acts as the client. In this case,
+                        // you'll want to create a client thread that connects to the group
+                        // owner.
+                    }
+                }
+                // Clear list of peers
+                PeersFragment fragment = ((PeersFragment)getFragmentManager().findFragmentByTag(PeersFragment.TAG));
+                if (fragment != null) {
+                    fragment.clearPeers();
                 }
 
                 //Open the Room Activity
-                Intent intent = new Intent(getApplicationContext(), RoomActivity.class);
+                Intent intent = new Intent(NavigatorActivity.this, RoomActivity.class);
                 intent.putExtra(LoginActivity.EXTRA_LOGIN, login_);
                 startActivity(intent);
             }
@@ -375,10 +387,35 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
 
     @Override
     public void onPeersChangedAction() {
-
     }
 
     @Override
     public void onDisconnected() {
+        dismissProgressDialog();
+    }
+
+    /**
+     * Settings Interface
+     */
+
+    @Override
+    public void onChangeWifiState(boolean state) {
+        System.out.println("onChangeWifiState");
+        WifiManager wifi = (WifiManager)getSystemService(Context.WIFI_SERVICE);
+        wifi.setWifiEnabled(state);
+    }
+
+    @Override
+    public void onChangeLogin(String login){
+        login_ = login;
+    }
+
+    /**
+     * Local service interface
+     */
+
+    @Override
+    public void onErrorFromLocalService(String error) {
+        Toast.makeText(this, "Local service error: " + error, Toast.LENGTH_LONG).show();
     }
 }

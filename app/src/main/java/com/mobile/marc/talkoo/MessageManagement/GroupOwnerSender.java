@@ -40,12 +40,12 @@ public class GroupOwnerSender extends AsyncTask<Message, Message, Message> {
             Socket socket = new Socket();
             socket.setReuseAddress(true);
             socket.bind(null);
+
             Log.v(TAG,"Connect to client: " + address.getHostAddress());
             socket.connect(new InetSocketAddress(address, SERVER_PORT));
             Log.v(TAG, "doInBackground: connect to "+ address.getHostAddress() +" succeeded");
 
             OutputStream outputStream = socket.getOutputStream();
-
             new ObjectOutputStream(outputStream).writeObject(message);
 
             Log.v(TAG, "doInBackground: write to "+ address.getHostAddress() +" succeeded");
@@ -81,7 +81,7 @@ public class GroupOwnerSender extends AsyncTask<Message, Message, Message> {
     protected void onProgressUpdate(Message... values) {
         super.onProgressUpdate(values);
         if (isActivityRunning(LoginActivity.class)) {
-            RoomActivity.updateMessages(values[0], false);
+            RoomActivity.updateMessages(values[0], !values[0].isOwner());
         }
     }
 

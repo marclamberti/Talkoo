@@ -5,12 +5,18 @@ package com.mobile.marc.talkoo.Fragments;
 
 import android.app.Activity;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ToggleButton;
 
+import com.cengalabs.flatui.views.FlatTextView;
+import com.cengalabs.flatui.views.FlatToggleButton;
 import com.mobile.marc.talkoo.NavigatorActivity;
 import com.mobile.marc.talkoo.R;
 
@@ -24,7 +30,7 @@ import com.mobile.marc.talkoo.R;
  * create an instance of this fragment.
  *
  */
-public class SettingsFragment extends Fragment {
+public class SettingsFragment extends Fragment implements View.OnClickListener {
     public static final String TAG = "fragment2";
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -32,7 +38,7 @@ public class SettingsFragment extends Fragment {
 
     private int section_number;
 
-    private SettingsListener mListener;
+    private SettingsListener listener_;
 
     /**
      * Use this factory method to create a new instance of
@@ -65,21 +71,22 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
+
+        ((Button)rootView.findViewById(R.id.setting_button_save)).setOnClickListener(this);
+
         return rootView;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            //mListener.onSettingsFragmentInteraction(uri);
-        }
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (SettingsListener) activity;
+            listener_ = (SettingsListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -90,7 +97,27 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        listener_ = null;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.setting_button_save:
+                settingsSaved(view);
+                break;
+        }
+    }
+
+    public void settingsSaved(View view) {
+        FlatTextView edit_text_login = (FlatTextView)getView().findViewById(R.id.setting_login_text_view);
+        if (edit_text_login != null && edit_text_login.getText().length() > 0) {
+            listener_.onChangeLogin(edit_text_login.getText().toString());
+        }
+        FlatToggleButton button = (FlatToggleButton)getView().findViewById(R.id.setting_toggle_wifi);
+        if (button != null) {
+            listener_.onChangeWifiState(button.isChecked());
+        }
     }
 
     /**
@@ -104,6 +131,8 @@ public class SettingsFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface SettingsListener {
+        public void onChangeWifiState(boolean state);
+        public void onChangeLogin(String login);
     }
 
 }
