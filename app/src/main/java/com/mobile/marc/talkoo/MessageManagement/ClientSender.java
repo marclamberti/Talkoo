@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.mobile.marc.talkoo.Models.Message;
 import com.mobile.marc.talkoo.NavigatorActivity;
 import com.mobile.marc.talkoo.RoomActivity;
 
@@ -42,7 +43,7 @@ public class ClientSender extends AsyncTask<Message, Message, Message> {
             Log.v(TAG, "doInBackground: send message succeeded");
         } catch (IOException e) {
             e.printStackTrace();
-            Log.e(TAG, "Erreur d'envoie du message");
+            Log.e(TAG, "Message sending failed");
         } finally {
             if (socket != null) {
                 if (socket.isConnected()) {
@@ -73,8 +74,9 @@ public class ClientSender extends AsyncTask<Message, Message, Message> {
     @Override
     protected void onProgressUpdate(Message... msg) {
         super.onProgressUpdate(msg);
-
-        if(isActivityRunning(NavigatorActivity.class)){
+        System.out.println("onProgressUpdate Client 1");
+        if(isActivityRunning(RoomActivity.class)){
+            System.out.println("onProgressUpdate Client 2");
             RoomActivity.updateMessages(msg[0], true);
         }
     }

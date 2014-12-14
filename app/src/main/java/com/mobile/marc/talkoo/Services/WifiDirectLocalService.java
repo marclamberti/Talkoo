@@ -27,7 +27,7 @@ import java.util.Map;
 public class WifiDirectLocalService implements DnsSdTxtRecordListener, DnsSdServiceResponseListener {
 
     public static final String INSTANCE_NAME = "_talkoo";
-    private static final int SERVER_PORT = 4242;
+    private static final int SERVER_PORT = 4445;
 
     private WifiP2pManager                  manager_;
     private Channel                         channel_;

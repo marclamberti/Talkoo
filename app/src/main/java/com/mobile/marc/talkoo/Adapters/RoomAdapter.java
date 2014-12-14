@@ -9,14 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.mobile.marc.talkoo.MessageManagement.Message;
+import com.mobile.marc.talkoo.Models.Message;
 import com.mobile.marc.talkoo.R;
 
-import android.view.LayoutInflater;
 import android.widget.TextView;
 
 import java.util.List;
-import java.util.zip.Inflater;
 
 /**
  * Created by Marc on 13/12/14.

@@ -14,6 +14,7 @@ import java.util.List;
 import android.app.ActivityManager;
 import android.content.Context;
 
+import com.mobile.marc.talkoo.Models.Message;
 import com.mobile.marc.talkoo.NavigatorActivity;
 import com.mobile.marc.talkoo.RoomActivity;
 
@@ -22,8 +23,8 @@ import com.mobile.marc.talkoo.RoomActivity;
  */
 public class Receiver extends NotificationHandler {
     private static final String TAG = "Receiver";
-    private static final int SERVER_PORT = 4242;
-    private static final int CLIENT_PORT = 4243;
+    private static final int SERVER_PORT = 4445;
+    private static final int CLIENT_PORT = 4447;
     private boolean is_server_;
     private Context context_;
     private ServerSocket server_socket_;
@@ -112,7 +113,7 @@ public class Receiver extends NotificationHandler {
         if (is_server_)
             new GroupOwnerSender(context_, false).executeOnExecutor(THREAD_POOL_EXECUTOR, values);
         else {
-            if(isActivityRunning(NavigatorActivity.class))
+            if (isActivityRunning(NavigatorActivity.class))
                 RoomActivity.updateMessages(values[0], false);
         }
     }

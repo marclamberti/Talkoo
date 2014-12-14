@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.mobile.marc.talkoo.Models.Message;
 import com.mobile.marc.talkoo.NavigatorActivity;
 import com.mobile.marc.talkoo.RoomActivity;
 import com.mobile.marc.talkoo.MessageManagement.Thread.ServerInit;
@@ -21,12 +22,12 @@ import java.util.List;
 public class GroupOwnerSender extends AsyncTask<Message, Message, Message> {
     private static final String TAG = "GroupOwnerSender";
     private Context context_;
-    private static final int CLIENT_PORT = 4446;
-    private boolean isMine;
+    private static final int CLIENT_PORT = 4447;
+    private boolean is_owner_;
 
-    public GroupOwnerSender(Context context, boolean mine){
+    public GroupOwnerSender(Context context, boolean owner){
         context_ = context;
-        isMine = mine;
+        is_owner_ = owner;
     }
 
     protected Void sendMessageToClient(InetAddress addr, Message message) {
@@ -46,7 +47,7 @@ public class GroupOwnerSender extends AsyncTask<Message, Message, Message> {
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();
-            Log.e(TAG, "Erreur d'envoie du message");
+            Log.e(TAG, "Message sending failed");
         }
         return null;
     }
@@ -75,8 +76,10 @@ public class GroupOwnerSender extends AsyncTask<Message, Message, Message> {
     protected void onProgressUpdate(Message... values) {
         super.onProgressUpdate(values);
 
-        if(isActivityRunning(NavigatorActivity.class))
+        if(isActivityRunning(RoomActivity.class)) {
+            Log.v(TAG, "onProgressUpdate Owner");
             RoomActivity.updateMessages(values[0], false);
+        }
     }
 
     @Override

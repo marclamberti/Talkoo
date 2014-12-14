@@ -1,11 +1,9 @@
 //# CSIT 6000B    # Jordy Ngenze Domingos       20243311        jndomingos@ust.hk
 //# CSIT 6000B    # Marc Lamberti               20243311        mlamberti@ust.hk
 
-package com.mobile.marc.talkoo.MessageManagement;
+package com.mobile.marc.talkoo.Models;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.util.Log;
 
