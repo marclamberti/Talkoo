@@ -374,6 +374,11 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
     }
 
     @Override
+    public void onPeersChangedAction() {
+
+    }
+
+    @Override
     public void onDisconnected() {
     }
 }

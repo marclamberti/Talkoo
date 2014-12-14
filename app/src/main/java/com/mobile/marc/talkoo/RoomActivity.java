@@ -228,4 +228,10 @@ public class RoomActivity extends Activity implements WifiDirectBroadcastListene
         }
         finish();
     }
+
+    @Override
+    public void onPeersChangedAction() {
+
+    }
+
 }

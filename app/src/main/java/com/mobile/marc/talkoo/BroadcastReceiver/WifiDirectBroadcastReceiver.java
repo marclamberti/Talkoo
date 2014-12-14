@@ -64,6 +64,7 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver {
          */
         else if (WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION.equals(action)) {
             Log.v(TAG, "WIFI_P2P_PEERS_CHANGED_ACTION");
+            listener_.onPeersChangedAction();
         }
 
         /**
@@ -117,5 +118,6 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver {
         public void onIsWifiEnabled(boolean wifi);
         public void onDeviceConnectedToPeers();
         public void onDisconnected();
+        public void onPeersChangedAction();
     }
 }

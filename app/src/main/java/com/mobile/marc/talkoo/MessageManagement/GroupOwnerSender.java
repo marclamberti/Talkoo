@@ -62,11 +62,11 @@ public class GroupOwnerSender extends AsyncTask<Message, Message, Message> {
 
         //Send the message to clients
         ArrayList<InetAddress> listClients = ServerInit.clients;
-        for(InetAddress addr : listClients){
-            if(message[0].getSenderAddress()!=null && addr.getHostAddress().equals(message[0].getSenderAddress().getHostAddress())){
+        for(InetAddress address : listClients){
+            if(message[0].getSenderAddress()!= null && address.getHostAddress().equals(message[0].getSenderAddress().getHostAddress())){
                 return message[0];
             }
-            sendMessageToClient(addr, message[0]);
+            sendMessageToClient(address, message[0]);
         }
         return message[0];
     }
