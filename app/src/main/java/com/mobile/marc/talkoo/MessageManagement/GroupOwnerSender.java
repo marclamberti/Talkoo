@@ -6,13 +6,11 @@ package com.mobile.marc.talkoo.MessageManagement;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.mobile.marc.talkoo.LoginActivity;
+import com.mobile.marc.talkoo.MessageManagement.Thread.ServerThread;
 import com.mobile.marc.talkoo.Models.Message;
-import com.mobile.marc.talkoo.NavigatorActivity;
 import com.mobile.marc.talkoo.RoomActivity;
-import com.mobile.marc.talkoo.MessageManagement.Thread.ServerInit;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -40,37 +38,29 @@ public class GroupOwnerSender extends AsyncTask<Message, Message, Message> {
             Socket socket = new Socket();
             socket.setReuseAddress(true);
             socket.bind(null);
-
-     //       Log.v(TAG,"Connect to client: " + address.getHostAddress());
             socket.connect(new InetSocketAddress(address, SERVER_PORT));
-    //        Log.v(TAG, "doInBackground: connect to "+ address.getHostAddress() +" succeeded");
-
             OutputStream outputStream = socket.getOutputStream();
             new ObjectOutputStream(outputStream).writeObject(message);
-
-    //        Log.v(TAG, "doInBackground: write to "+ address.getHostAddress() +" succeeded");
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();
-    //        Log.e(TAG, "Message sending failed");
         }
         return null;
     }
 
+    /**
+     * Display the message on the sender before sending it
+     * and send it to the clients
+     * @param message
+     * @return
+     */
     @Override
     protected Message doInBackground(Message... message) {
-    //    Log.v(TAG, "doInBackground");
-
-        //Display le message on the sender before sending it
         publishProgress(message);
-
-        //Send the message to clients
-        ArrayList<InetAddress> listClients = ServerInit.clients;
+        ArrayList<InetAddress> listClients = ServerThread.clients;
 
         for (InetAddress address : listClients){
-            if (message[0].getSenderAddress()!= null &&
-                    address.getHostAddress().equals(
-                            message[0].getSenderAddress().getHostAddress())) {
+            if (message[0].getSenderAddress()!= null && address.getHostAddress().equals(message[0].getSenderAddress().getHostAddress())) {
                 return message[0];
             }
             sendMessageToClient(address, message[0]);
@@ -88,7 +78,6 @@ public class GroupOwnerSender extends AsyncTask<Message, Message, Message> {
 
     @Override
     protected void onPostExecute(Message result) {
-    //    Log.v(TAG, "onPostExecute");
         super.onPostExecute(result);
     }
 

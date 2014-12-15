@@ -35,8 +35,8 @@ import com.mobile.marc.talkoo.Fragments.SettingsFragment.SettingsListener;
 import com.mobile.marc.talkoo.Fragments.HomeFragment.HomeListener;
 import com.mobile.marc.talkoo.Fragments.NavigationDrawerFragment.NavigationDrawerCallbacks;
 import com.mobile.marc.talkoo.BroadcastReceiver.WifiDirectBroadcastReceiver.WifiDirectBroadcastListener;
-import com.mobile.marc.talkoo.MessageManagement.Thread.ClientInit;
-import com.mobile.marc.talkoo.MessageManagement.Thread.ServerInit;
+import com.mobile.marc.talkoo.MessageManagement.Thread.ClientThread;
+import com.mobile.marc.talkoo.MessageManagement.Thread.ServerThread;
 import com.mobile.marc.talkoo.Services.WifiDirectLocalService.LocalServiceListener;
 import com.mobile.marc.talkoo.Services.WifiDirectLocalService;
 
@@ -67,7 +67,7 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
     public boolean                          wifi_enabled;
     private String                          login_;
 
-    public static ServerInit                server;
+    public static ServerThread server;
     public static boolean                   isOwner = false;
     public static boolean                   isClient = false;
     public static InetAddress               owner_address;
@@ -305,6 +305,12 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
         return wifi_enabled;
     }
 
+    /**
+     * Call when the user click on a discovered peer from the Peers list
+     * A progress dialog is shown to the user waiting the peer acceptation
+     * to form a group
+     * @param peer
+     */
     @Override
     public void onConnectToPeer(WifiP2pDevice peer) {
         if (!wifi_enabled) {
@@ -357,6 +363,10 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
      * Methods implemented from WifiDirectBroadcastListener
      */
 
+    /**
+     * Called by the broadcast when the wifi is turned off/on
+     * @param wifi
+     */
     @Override
     public void onIsWifiEnabled(boolean wifi) {
         wifi_enabled = wifi;
@@ -370,6 +380,12 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
         }
     }
 
+    /**
+     * When a device is connected with another one, depending on which one is the server or the client
+     * we stop the discovery requests and start the server or the client thread.
+     * Then we start the RoomActivity with StartActivityForResult because we will use the result from it
+     * to clean the wifi direct
+     */
     @Override
     public void onDeviceConnectedToPeers() {
         dismissProgressDialog();
@@ -391,7 +407,7 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
                         System.out.println("Group owner");
                         isClient = false;
                         isOwner = true;
-                        server = new ServerInit();
+                        server = new ServerThread();
                         server.start();
                         // Do whatever tasks are specific to the group owner.
                         // One common case is creating a server thread and accepting
@@ -400,7 +416,7 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
                         System.out.println("Group client");
                         isOwner = false;
                         isClient = true;
-                        ClientInit client = new ClientInit(info.groupOwnerAddress);
+                        ClientThread client = new ClientThread(info.groupOwnerAddress);
                         client.start();
                         // The other device acts as the client. In this case,
                         // you'll want to create a client thread that connects to the group
@@ -424,8 +440,12 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
 
     @Override
     public void onPeersChangedAction() {
+        // ...
     }
 
+    /**
+     * Called by the broadcast to warn the user that he has been disconnected
+     */
     @Override
     public void onDisconnected() {
         dismissProgressDialog();
@@ -435,6 +455,10 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
      * Settings Interface
      */
 
+    /**
+     * Called by the toggle button from setting fragment to turn on/off the wifi
+     * @param state
+     */
     @Override
     public void onChangeWifiState(boolean state) {
         System.out.println("onChangeWifiState");
@@ -443,6 +467,9 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
     }
 
     @Override
+    /**
+     * Called when the login is changed from the setting fragment
+     */
     public void onChangeLogin(String login){
         login_ = login;
     }
@@ -451,8 +478,11 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
      * Local service interface
      */
 
+    /**
+     * Used to inform the user that an error occurred
+     * @param error
+     */
     @Override
     public void onErrorFromLocalService(String error) {
-        Toast.makeText(this, "Local service error: " + error, Toast.LENGTH_LONG).show();
     }
 }

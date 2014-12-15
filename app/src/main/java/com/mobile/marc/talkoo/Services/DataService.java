@@ -15,7 +15,9 @@ import com.mobile.marc.talkoo.NavigatorActivity;
 import com.mobile.marc.talkoo.MessageManagement.Receiver;
 
 /**
- * Created by Marc on 14/12/14.
+ * This service is running in background of the application to inform the application
+ * when a message is receive. Run a receiver according to if the current use is the owner
+ * or a client
  */
 public class DataService extends Service {
     /*
@@ -29,17 +31,13 @@ public class DataService extends Service {
         return null;
     }
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId /*, boolean test*/) {
-        System.out.println("onStartCommand");
-        //Start the AsyncTask for the server to receive messages
+    public int onStartCommand(Intent intent, int flags, int startId) {
         if (NavigatorActivity.isOwner) {
-            System.out.println("Start the AsyncTask for the server to receive messages");
             new Receiver(getApplicationContext(), true)
                     .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, (Void[])null);
             server_created = true;
         }
         else if (NavigatorActivity.isClient) {
-            System.out.println("Start the AsyncTask for the client to receive messages");
             new Receiver(getApplicationContext(), false)
                     .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, (Void[])null);
             client_created = true;

@@ -17,9 +17,8 @@ import android.preference.PreferenceManager;
 import com.mobile.marc.talkoo.Models.Message;
 import com.mobile.marc.talkoo.NavigatorActivity;
 
-/*
-** This is an Abstract class that manages the notifications sent to users when he receives
-** a message.
+/**
+ * Manages the notifications sent to users when he receives a message
  */
 public class NotificationHandler extends AsyncTask<Void, Message, Void> {
 
@@ -28,12 +27,12 @@ public class NotificationHandler extends AsyncTask<Void, Message, Void> {
         return null;
     }
 
-    /*
-    ** Creates a notification using buildNotification method and send it to the
-    ** notification service.
+    /**
+     * Use buildNotification to create a notification
+     * @param context
+     * @param message
      */
     protected void Notify(Context context, Message message) {
-
         Notification message_notification = buildNotification(context, message);
         NotificationManager notification_manager =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -45,27 +44,25 @@ public class NotificationHandler extends AsyncTask<Void, Message, Void> {
         }
     }
 
-    /*
-    ** Creates the notification to be sent to the notification service.
+    /**
+     * Create a notification which will be sent to the notification service
+     * and bring the app to the front
+     * @param context
+     * @param message
+     * @return
      */
     protected Notification buildNotification(Context context, Message message) {
-
-        // This brings back the app to the front.
         Intent intent = new Intent(context, NavigatorActivity.class);
         intent.setAction(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
-
         PendingIntent pending_intent = PendingIntent.getActivity(context, 0, intent, 0);
-
         Uri notification_uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-
         Notification notification = new Notification.Builder(context)
                 .setContentTitle(message.getRoomLogin())
                 .setContentText(message.getMessageText())
                 .setContentIntent(pending_intent)
                 .setSound(notification_uri)
                 .build();
-
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
         notification.defaults |= Notification.DEFAULT_VIBRATE;
         return notification;

@@ -43,7 +43,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
      * @param section_number Parameter 1.
      * @return A new instance of fragment SettingsFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static SettingsFragment newInstance(int section_number) {
         SettingsFragment fragment = new SettingsFragment();
         Bundle args = new Bundle();

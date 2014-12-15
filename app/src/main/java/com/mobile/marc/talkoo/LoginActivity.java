@@ -39,7 +39,11 @@ public class LoginActivity extends Activity {
         super.onPause();
     }
 
-    // OnClick event for sign in button
+    /**
+     * Called when the user click on the sign in button
+     * Start the NavigatorActivity and put the login in an Intent
+     * @param view
+     */
     public void signIn(View view) {
         Intent intent = new Intent(this, NavigatorActivity.class);
 

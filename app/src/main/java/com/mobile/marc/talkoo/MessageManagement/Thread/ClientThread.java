@@ -13,11 +13,11 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
-public class ClientInit extends Thread {
+public class ClientThread extends Thread {
     private static final int SERVER_PORT = 4444;
     private InetAddress server_address_;
 
-    public ClientInit(InetAddress server_address){
+    public ClientThread(InetAddress server_address){
         server_address_ = server_address;
     }
 

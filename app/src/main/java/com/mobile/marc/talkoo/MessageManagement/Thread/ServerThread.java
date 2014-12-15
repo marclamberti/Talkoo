@@ -11,13 +11,12 @@ import java.util.ArrayList;
 
 import android.util.Log;
 
-public class ServerInit extends Thread{
-    private static final String TAG = "ServerInit";
+public class ServerThread extends Thread{
     private static final int SERVER_PORT = 4444;
     public static ArrayList<InetAddress> clients;
     private ServerSocket server_socket_;
 
-    public ServerInit(){
+    public ServerThread(){
         clients = new ArrayList<InetAddress>();
     }
 
@@ -31,7 +30,6 @@ public class ServerInit extends Thread{
                 Socket clientSocket = server_socket_.accept();
                 if(!clients.contains(clientSocket.getInetAddress())){
                     clients.add(clientSocket.getInetAddress());
-                    //Log.v(TAG, "New client: " + clientSocket.getInetAddress().getHostAddress());
                 }
                 clientSocket.close();
             }

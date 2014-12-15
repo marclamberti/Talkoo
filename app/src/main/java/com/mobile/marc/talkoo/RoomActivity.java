@@ -153,6 +153,9 @@ public class RoomActivity extends Activity implements WifiDirectBroadcastListene
         builder.show();
     }
 
+    /**
+     * Call when a user want to be disconnected from the group by pressing back
+     */
     private void endRoom() {
         disconnectFromGroup();
         if (NavigatorActivity.server != null) {
@@ -165,7 +168,9 @@ public class RoomActivity extends Activity implements WifiDirectBroadcastListene
         finish();
     }
 
-    // Disconnect from the group
+    /**
+     * Close the group formed by Wifi Direct between peers
+     */
     private void disconnectFromGroup() {
         manager_.removeGroup(channel_, new WifiP2pManager.ActionListener() {
             @Override
@@ -180,19 +185,19 @@ public class RoomActivity extends Activity implements WifiDirectBroadcastListene
         });
     }
 
-    // OnClick event on send button
+    /**
+     * Used when the use click on the send button
+     * @param view
+     */
     public void sendMessageEvent(View view) {
         EditText room_message_edit_text = (EditText)findViewById(R.id.room_edit_message);
         if (room_message_edit_text != null && room_message_edit_text.getText().length() != 0) {
             Message message = new Message(Message.MESSAGE_TEXT,
                     room_message_edit_text.getText().toString(), null, login_, 0);
-            // TODO: HAS TO BE CHANGED
             if (NavigatorActivity.isOwner) {
-                new GroupOwnerSender(this, true)
-                        .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, message);
+                new GroupOwnerSender(this, true).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, message);
             } else if (NavigatorActivity.isClient) {
-                new ClientSender(this, NavigatorActivity.owner_address)
-                        .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, message);
+                new ClientSender(this, NavigatorActivity.owner_address).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, message);
             }
             room_message_edit_text.setText("");
         }
@@ -242,7 +247,7 @@ public class RoomActivity extends Activity implements WifiDirectBroadcastListene
 
     @Override
     public void onPeersChangedAction() {
-
+        // ...
     }
 
 }

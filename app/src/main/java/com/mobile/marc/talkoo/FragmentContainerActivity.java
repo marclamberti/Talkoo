@@ -13,6 +13,9 @@ import android.widget.FrameLayout;
 import com.mobile.marc.talkoo.Fragments.HomeFragment;
 import com.mobile.marc.talkoo.R;
 
+/**
+ * This class is just used to do the unit test with the Fragment
+ */
 public class  FragmentContainerActivity extends FragmentActivity implements HomeFragment.HomeListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

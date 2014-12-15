@@ -38,16 +38,10 @@ public class ClientSender extends AsyncTask<Message, Message, Message> {
             socket.setReuseAddress(true);
             socket.bind(null);
             socket.connect(new InetSocketAddress(server_address_, SERVER_PORT));
-//            Log.v(TAG, "doInBackground: connect succeeded");
-
             OutputStream outputStream = socket.getOutputStream();
-
             new ObjectOutputStream(outputStream).writeObject(message);
-
- //           Log.v(TAG, "doInBackground: send message succeeded");
         } catch (IOException e) {
             e.printStackTrace();
- //           Log.e(TAG, "Message sending failed");
         } finally {
             if (socket != null && socket.isConnected()) {
                 try {
@@ -60,17 +54,13 @@ public class ClientSender extends AsyncTask<Message, Message, Message> {
         return null;
     }
 
+    /**
+     *  Update the sender message view before sending it.
+     */
     @Override
     protected Message doInBackground(Message... msg) {
-//        Log.v(TAG, "doInBackground");
-
-        /**
-         *  Update the sender message view before sending it.
-         */
         publishProgress(msg);
-
         sendMessageToServer(msg[0]);
-
         return msg[0];
     }
 
@@ -84,7 +74,6 @@ public class ClientSender extends AsyncTask<Message, Message, Message> {
 
     @Override
     protected void onPostExecute(Message result) {
-    //    Log.v(TAG, "onPostExecute");
         super.onPostExecute(result);
     }
 

@@ -95,6 +95,15 @@ public class WifiDirectLocalService implements DnsSdTxtRecordListener,
         peers.put(device.deviceAddress, peer.get("peer_name").toString());
     }
 
+    /**
+     * Called when a peer is discovered
+     * Firstly, check if the device is running talkoo
+     * Secondly, if the peers was already in the peers list, when change its deviceName by its login
+     * Thirdly, add the peer to the peers list from the Peer fragment
+     * @param instance_name
+     * @param registration_type
+     * @param peer
+     */
     @Override
     public void onDnsSdServiceAvailable(String instance_name, String registration_type,
                                         WifiP2pDevice peer) {
@@ -117,6 +126,9 @@ public class WifiDirectLocalService implements DnsSdTxtRecordListener,
         System.out.println("onBonjourServiceAvailable " + instance_name);
     }
 
+    /**
+     * Start a discovery request to discover who is near from the user
+     */
     public void discoveryRequest() {
         WifiP2pDnsSdServiceRequest request = WifiP2pDnsSdServiceRequest.newInstance();
         manager_.addServiceRequest(channel_, request, new WifiP2pManager.ActionListener() {
@@ -138,6 +150,9 @@ public class WifiDirectLocalService implements DnsSdTxtRecordListener,
         });
     }
 
+    /**
+     * Called by the discoveryRequest when it succeed
+     */
     private void discoveryServices() {
         manager_.discoverServices(channel_, new WifiP2pManager.ActionListener() {
             @Override
