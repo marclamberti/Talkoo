@@ -42,10 +42,6 @@ import com.mobile.marc.talkoo.Services.WifiDirectLocalService;
 
 import java.net.InetAddress;
 
-/**
- * TODO: Detect when a connection is refused
- * TODO: Actualize the list on device periodically
- */
 public class NavigatorActivity extends FragmentActivity implements HomeListener, PeersListener,
         SettingsListener, NavigationDrawerCallbacks, WifiDirectBroadcastListener,
         LocalServiceListener {

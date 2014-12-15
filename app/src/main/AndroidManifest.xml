@@ -43,10 +43,6 @@
             android:launchMode="singleTop"
             android:theme="@style/HomeActivityTheme">
         </activity>
-        <!-- Just for unit test -->
-        <activity
-            android:name=".FragmentContainerActivity" >
-        </activity>
     </application>
 
 </manifest>

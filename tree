@@ -1,0 +1,729 @@
+.
+├── README.md
+├── app
+│   ├── app.iml
+│   ├── build
+│   │   ├── generated
+│   │   │   ├── res
+│   │   │   │   └── rs
+│   │   │   │       ├── debug
+│   │   │   │       └── test
+│   │   │   │           └── debug
+│   │   │   └── source
+│   │   │       ├── aidl
+│   │   │       │   ├── debug
+│   │   │       │   └── test
+│   │   │       │       └── debug
+│   │   │       ├── buildConfig
+│   │   │       │   ├── debug
+│   │   │       │   │   └── com
+│   │   │       │   │       └── mobile
+│   │   │       │   │           └── marc
+│   │   │       │   │               └── talkoo
+│   │   │       │   │                   └── BuildConfig.java
+│   │   │       │   └── test
+│   │   │       │       └── debug
+│   │   │       │           └── com
+│   │   │       │               └── mobile
+│   │   │       │                   └── marc
+│   │   │       │                       └── talkoo
+│   │   │       │                           └── test
+│   │   │       │                               └── BuildConfig.java
+│   │   │       ├── r
+│   │   │       │   ├── debug
+│   │   │       │   │   └── com
+│   │   │       │   │       ├── cengalabs
+│   │   │       │   │       │   └── flatui
+│   │   │       │   │       │       └── R.java
+│   │   │       │   │       └── mobile
+│   │   │       │   │           └── marc
+│   │   │       │   │               └── talkoo
+│   │   │       │   │                   └── R.java
+│   │   │       │   └── test
+│   │   │       │       └── debug
+│   │   │       └── rs
+│   │   │           ├── debug
+│   │   │           └── test
+│   │   │               └── debug
+│   │   ├── intermediates
+│   │   │   ├── assets
+│   │   │   │   ├── debug
+│   │   │   │   │   └── fonts
+│   │   │   │   │       ├── opensans_bold.ttf
+│   │   │   │   │       ├── opensans_extrabold.ttf
+│   │   │   │   │       ├── opensans_extralight.ttf
+│   │   │   │   │       ├── opensans_light.ttf
+│   │   │   │   │       ├── opensans_regular.ttf
+│   │   │   │   │       ├── roboto_bold.ttf
+│   │   │   │   │       ├── roboto_extrabold.ttf
+│   │   │   │   │       ├── roboto_extralight.ttf
+│   │   │   │   │       ├── roboto_light.ttf
+│   │   │   │   │       └── roboto_regular.ttf
+│   │   │   │   └── test
+│   │   │   │       └── debug
+│   │   │   ├── classes
+│   │   │   │   ├── debug
+│   │   │   │   │   └── com
+│   │   │   │   │       ├── cengalabs
+│   │   │   │   │       │   └── flatui
+│   │   │   │   │       │       ├── R$array.class
+│   │   │   │   │       │       ├── R$attr.class
+│   │   │   │   │       │       ├── R$color.class
+│   │   │   │   │       │       ├── R$id.class
+│   │   │   │   │       │       ├── R$string.class
+│   │   │   │   │       │       ├── R$styleable.class
+│   │   │   │   │       │       └── R.class
+│   │   │   │   │       └── mobile
+│   │   │   │   │           └── marc
+│   │   │   │   │               └── talkoo
+│   │   │   │   │                   ├── Adapters
+│   │   │   │   │                   │   ├── PeersAdapter.class
+│   │   │   │   │                   │   └── RoomAdapter.class
+│   │   │   │   │                   ├── BroadcastReceiver
+│   │   │   │   │                   │   ├── WifiDirectBroadcastReceiver$WifiDirectBroadcastListener.class
+│   │   │   │   │                   │   └── WifiDirectBroadcastReceiver.class
+│   │   │   │   │                   ├── BuildConfig.class
+│   │   │   │   │                   ├── Fragments
+│   │   │   │   │                   │   ├── FragmentFactory.class
+│   │   │   │   │                   │   ├── HomeFragment$HomeListener.class
+│   │   │   │   │                   │   ├── HomeFragment.class
+│   │   │   │   │                   │   ├── NavigationDrawerFragment$1.class
+│   │   │   │   │                   │   ├── NavigationDrawerFragment$2.class
+│   │   │   │   │                   │   ├── NavigationDrawerFragment$3.class
+│   │   │   │   │                   │   ├── NavigationDrawerFragment$NavigationDrawerCallbacks.class
+│   │   │   │   │                   │   ├── NavigationDrawerFragment.class
+│   │   │   │   │                   │   ├── PeersFragment$PeersListener.class
+│   │   │   │   │                   │   ├── PeersFragment.class
+│   │   │   │   │                   │   ├── SettingsFragment$SettingsListener.class
+│   │   │   │   │                   │   └── SettingsFragment.class
+│   │   │   │   │                   ├── LoginActivity.class
+│   │   │   │   │                   ├── MessageManagement
+│   │   │   │   │                   │   ├── ClientSender.class
+│   │   │   │   │                   │   ├── GroupOwnerSender.class
+│   │   │   │   │                   │   ├── NotificationHandler.class
+│   │   │   │   │                   │   ├── Receiver.class
+│   │   │   │   │                   │   └── Thread
+│   │   │   │   │                   │       ├── ClientThread.class
+│   │   │   │   │                   │       └── ServerThread.class
+│   │   │   │   │                   ├── Models
+│   │   │   │   │                   │   ├── Message.class
+│   │   │   │   │                   │   └── Test
+│   │   │   │   │                   ├── NavigatorActivity$1$1.class
+│   │   │   │   │                   ├── NavigatorActivity$1.class
+│   │   │   │   │                   ├── NavigatorActivity$2.class
+│   │   │   │   │                   ├── NavigatorActivity$3.class
+│   │   │   │   │                   ├── NavigatorActivity.class
+│   │   │   │   │                   ├── R$array.class
+│   │   │   │   │                   ├── R$attr.class
+│   │   │   │   │                   ├── R$color.class
+│   │   │   │   │                   ├── R$dimen.class
+│   │   │   │   │                   ├── R$drawable.class
+│   │   │   │   │                   ├── R$id.class
+│   │   │   │   │                   ├── R$layout.class
+│   │   │   │   │                   ├── R$menu.class
+│   │   │   │   │                   ├── R$string.class
+│   │   │   │   │                   ├── R$style.class
+│   │   │   │   │                   ├── R$styleable.class
+│   │   │   │   │                   ├── R.class
+│   │   │   │   │                   ├── RoomActivity$1.class
+│   │   │   │   │                   ├── RoomActivity$2.class
+│   │   │   │   │                   ├── RoomActivity$3.class
+│   │   │   │   │                   ├── RoomActivity.class
+│   │   │   │   │                   └── Services
+│   │   │   │   │                       ├── DataService.class
+│   │   │   │   │                       ├── WifiDirectLocalService$1.class
+│   │   │   │   │                       ├── WifiDirectLocalService$2.class
+│   │   │   │   │                       ├── WifiDirectLocalService$3.class
+│   │   │   │   │                       ├── WifiDirectLocalService$4.class
+│   │   │   │   │                       ├── WifiDirectLocalService$5.class
+│   │   │   │   │                       ├── WifiDirectLocalService$LocalServiceListener.class
+│   │   │   │   │                       └── WifiDirectLocalService.class
+│   │   │   │   └── test
+│   │   │   │       └── debug
+│   │   │   │           └── com
+│   │   │   │               └── mobile
+│   │   │   │                   └── marc
+│   │   │   │                       └── talkoo
+│   │   │   │                           ├── Activities
+│   │   │   │                           │   ├── TestLoginActivity.class
+│   │   │   │                           │   ├── TestNavigatorActivity$1.class
+│   │   │   │                           │   ├── TestNavigatorActivity$2.class
+│   │   │   │                           │   ├── TestNavigatorActivity$3.class
+│   │   │   │                           │   ├── TestNavigatorActivity$4.class
+│   │   │   │                           │   ├── TestNavigatorActivity$5.class
+│   │   │   │                           │   └── TestNavigatorActivity.class
+│   │   │   │                           ├── Adapters
+│   │   │   │                           │   ├── TestPeersAdapter$1.class
+│   │   │   │                           │   ├── TestPeersAdapter$MyMockContext.class
+│   │   │   │                           │   ├── TestPeersAdapter.class
+│   │   │   │                           │   ├── TestRoomAdapter$1.class
+│   │   │   │                           │   ├── TestRoomAdapter$MyMockContext.class
+│   │   │   │                           │   └── TestRoomAdapter.class
+│   │   │   │                           ├── ApplicationTest.class
+│   │   │   │                           ├── BroadcastReceiver
+│   │   │   │                           │   ├── TestBroadcastReceiver$1.class
+│   │   │   │                           │   ├── TestBroadcastReceiver$MockIntent.class
+│   │   │   │                           │   ├── TestBroadcastReceiver$MockWifiDirectBroadcastListener.class
+│   │   │   │                           │   ├── TestBroadcastReceiver$MyMockContext.class
+│   │   │   │                           │   └── TestBroadcastReceiver.class
+│   │   │   │                           ├── Fragments
+│   │   │   │                           ├── Models
+│   │   │   │                           │   └── TestMessage.class
+│   │   │   │                           ├── Services
+│   │   │   │                           │   └── TestDataService.class
+│   │   │   │                           └── test
+│   │   │   │                               └── BuildConfig.class
+│   │   │   ├── dependency-cache
+│   │   │   │   ├── debug
+│   │   │   │   └── test
+│   │   │   │       └── debug
+│   │   │   ├── dex
+│   │   │   │   ├── debug
+│   │   │   │   │   └── classes.dex
+│   │   │   │   └── test
+│   │   │   │       └── debug
+│   │   │   │           └── classes.dex
+│   │   │   ├── exploded-aar
+│   │   │   │   ├── com.android.support
+│   │   │   │   │   └── support-v4
+│   │   │   │   │       └── 21.0.0
+│   │   │   │   │           ├── AndroidManifest.xml
+│   │   │   │   │           ├── aidl
+│   │   │   │   │           │   └── android
+│   │   │   │   │           │       └── support
+│   │   │   │   │           │           └── v4
+│   │   │   │   │           │               ├── accessibilityservice
+│   │   │   │   │           │               ├── app
+│   │   │   │   │           │               │   └── INotificationSideChannel.aidl
+│   │   │   │   │           │               ├── content
+│   │   │   │   │           │               │   ├── pm
+│   │   │   │   │           │               │   └── res
+│   │   │   │   │           │               ├── database
+│   │   │   │   │           │               ├── graphics
+│   │   │   │   │           │               │   └── drawable
+│   │   │   │   │           │               ├── hardware
+│   │   │   │   │           │               │   └── display
+│   │   │   │   │           │               ├── internal
+│   │   │   │   │           │               │   └── view
+│   │   │   │   │           │               ├── media
+│   │   │   │   │           │               │   └── session
+│   │   │   │   │           │               ├── net
+│   │   │   │   │           │               ├── os
+│   │   │   │   │           │               ├── print
+│   │   │   │   │           │               ├── provider
+│   │   │   │   │           │               ├── text
+│   │   │   │   │           │               ├── util
+│   │   │   │   │           │               ├── view
+│   │   │   │   │           │               │   └── accessibility
+│   │   │   │   │           │               └── widget
+│   │   │   │   │           ├── assets
+│   │   │   │   │           ├── classes.jar
+│   │   │   │   │           ├── libs
+│   │   │   │   │           │   └── internal_impl-21.0.0.jar
+│   │   │   │   │           └── res
+│   │   │   │   └── com.github.eluleci
+│   │   │   │       └── flatui
+│   │   │   │           └── 3.0.0
+│   │   │   │               ├── AndroidManifest.xml
+│   │   │   │               ├── R.txt
+│   │   │   │               ├── aidl
+│   │   │   │               ├── assets
+│   │   │   │               │   └── fonts
+│   │   │   │               │       ├── opensans_bold.ttf
+│   │   │   │               │       ├── opensans_extrabold.ttf
+│   │   │   │               │       ├── opensans_extralight.ttf
+│   │   │   │               │       ├── opensans_light.ttf
+│   │   │   │               │       ├── opensans_regular.ttf
+│   │   │   │               │       ├── roboto_bold.ttf
+│   │   │   │               │       ├── roboto_extrabold.ttf
+│   │   │   │               │       ├── roboto_extralight.ttf
+│   │   │   │               │       ├── roboto_light.ttf
+│   │   │   │               │       └── roboto_regular.ttf
+│   │   │   │               ├── classes.jar
+│   │   │   │               └── res
+│   │   │   │                   └── values
+│   │   │   │                       └── values.xml
+│   │   │   ├── incremental
+│   │   │   │   ├── aidl
+│   │   │   │   │   ├── debug
+│   │   │   │   │   │   └── dependency.store
+│   │   │   │   │   └── test
+│   │   │   │   │       └── debug
+│   │   │   │   │           └── dependency.store
+│   │   │   │   ├── mergeAssets
+│   │   │   │   │   ├── debug
+│   │   │   │   │   │   └── merger.xml
+│   │   │   │   │   └── test
+│   │   │   │   │       └── debug
+│   │   │   │   │           └── merger.xml
+│   │   │   │   └── mergeResources
+│   │   │   │       ├── debug
+│   │   │   │       │   └── merger.xml
+│   │   │   │       └── test
+│   │   │   │           └── debug
+│   │   │   │               └── merger.xml
+│   │   │   ├── manifests
+│   │   │   │   ├── full
+│   │   │   │   │   └── debug
+│   │   │   │   │       └── AndroidManifest.xml
+│   │   │   │   ├── test
+│   │   │   │   │   └── debug
+│   │   │   │   │       └── AndroidManifest.xml
+│   │   │   │   └── tmp
+│   │   │   ├── ndk
+│   │   │   │   ├── debug
+│   │   │   │   │   ├── lib
+│   │   │   │   │   └── obj
+│   │   │   │   └── test
+│   │   │   │       └── debug
+│   │   │   │           ├── lib
+│   │   │   │           └── obj
+│   │   │   ├── pre-dexed
+│   │   │   │   ├── debug
+│   │   │   │   │   ├── classes-53a0afe4e9e508548fc7e2f4518618af8880ad76.jar
+│   │   │   │   │   ├── classes-bef9e25f87d6aad7b267f8577193bc7d5bf01008.jar
+│   │   │   │   │   ├── internal_impl-21.0.0-540d2c8f7833630beb5d837c26bd82ee4d744b8e.jar
+│   │   │   │   │   └── support-annotations-21.0.0-e8ba7e8fd3805b72e6c571304af0dce9592d4615.jar
+│   │   │   │   └── test
+│   │   │   │       └── debug
+│   │   │   ├── res
+│   │   │   │   ├── debug
+│   │   │   │   │   ├── drawable
+│   │   │   │   │   │   ├── activated_background_drawer.xml
+│   │   │   │   │   │   ├── background_action_bar.xml
+│   │   │   │   │   │   ├── item_message.xml
+│   │   │   │   │   │   ├── item_message_owner.xml
+│   │   │   │   │   │   ├── item_peer.xml
+│   │   │   │   │   │   └── progress_bar.xml
+│   │   │   │   │   ├── drawable-hdpi-v4
+│   │   │   │   │   │   ├── drawer_shadow.9.png
+│   │   │   │   │   │   ├── ic_action_refresh.png
+│   │   │   │   │   │   ├── ic_drawer.png
+│   │   │   │   │   │   └── ic_launcher.png
+│   │   │   │   │   ├── drawable-mdpi-v4
+│   │   │   │   │   │   ├── drawer_shadow.9.png
+│   │   │   │   │   │   ├── ic_action_refresh.png
+│   │   │   │   │   │   ├── ic_drawer.png
+│   │   │   │   │   │   └── ic_launcher.png
+│   │   │   │   │   ├── drawable-xhdpi-v4
+│   │   │   │   │   │   ├── drawer_shadow.9.png
+│   │   │   │   │   │   ├── ic_action_refresh.png
+│   │   │   │   │   │   ├── ic_drawer.png
+│   │   │   │   │   │   └── ic_launcher.png
+│   │   │   │   │   ├── drawable-xxhdpi-v4
+│   │   │   │   │   │   ├── drawer_shadow.9.png
+│   │   │   │   │   │   ├── ic_action_refresh.png
+│   │   │   │   │   │   ├── ic_drawer.png
+│   │   │   │   │   │   └── ic_launcher.png
+│   │   │   │   │   ├── layout
+│   │   │   │   │   │   ├── action_refresh_progress_bar.xml
+│   │   │   │   │   │   ├── activity_login.xml
+│   │   │   │   │   │   ├── activity_navigator.xml
+│   │   │   │   │   │   ├── activity_room.xml
+│   │   │   │   │   │   ├── custom_row_drawer.xml
+│   │   │   │   │   │   ├── fragment_home.xml
+│   │   │   │   │   │   ├── fragment_navigation_drawer.xml
+│   │   │   │   │   │   ├── fragment_peers_grid.xml
+│   │   │   │   │   │   ├── fragment_peers_list.xml
+│   │   │   │   │   │   ├── fragment_settings.xml
+│   │   │   │   │   │   ├── item_message.xml
+│   │   │   │   │   │   └── item_peer.xml
+│   │   │   │   │   ├── menu
+│   │   │   │   │   │   ├── global.xml
+│   │   │   │   │   │   ├── home.xml
+│   │   │   │   │   │   ├── main.xml
+│   │   │   │   │   │   └── menu_room.xml
+│   │   │   │   │   ├── values
+│   │   │   │   │   │   └── values.xml
+│   │   │   │   │   ├── values-large-v4
+│   │   │   │   │   │   └── values.xml
+│   │   │   │   │   ├── values-sw600dp-v13
+│   │   │   │   │   │   └── values.xml
+│   │   │   │   │   └── values-w820dp-v13
+│   │   │   │   │       └── values.xml
+│   │   │   │   ├── resources-debug-test.ap_
+│   │   │   │   ├── resources-debug.ap_
+│   │   │   │   └── test
+│   │   │   │       └── debug
+│   │   │   ├── rs
+│   │   │   │   ├── debug
+│   │   │   │   │   ├── lib
+│   │   │   │   │   └── obj
+│   │   │   │   └── test
+│   │   │   │       └── debug
+│   │   │   │           ├── lib
+│   │   │   │           └── obj
+│   │   │   ├── symbols
+│   │   │   │   ├── debug
+│   │   │   │   │   └── R.txt
+│   │   │   │   └── test
+│   │   │   │       └── debug
+│   │   │   └── tmp
+│   │   │       └── dex
+│   │   │           ├── debug
+│   │   │           └── test
+│   │   │               └── debug
+│   │   ├── outputs
+│   │   │   └── apk
+│   │   │       ├── app-debug-test-unaligned.apk
+│   │   │       ├── app-debug-unaligned.apk
+│   │   │       ├── app-debug.apk
+│   │   │       └── manifest-merger-debug-report.txt
+│   │   └── tmp
+│   │       ├── compileDebugJava
+│   │       └── compileDebugTestJava
+│   ├── build.gradle
+│   ├── libs
+│   ├── proguard-rules.pro
+│   └── src
+│       ├── androidTest
+│       │   └── java
+│       │       └── com
+│       │           └── mobile
+│       │               └── marc
+│       │                   └── talkoo
+│       │                       ├── Activities
+│       │                       │   ├── TestLoginActivity.java
+│       │                       │   └── TestNavigatorActivity.java
+│       │                       ├── Adapters
+│       │                       │   ├── TestPeersAdapter.java
+│       │                       │   └── TestRoomAdapter.java
+│       │                       ├── ApplicationTest.java
+│       │                       ├── BroadcastReceiver
+│       │                       │   └── TestBroadcastReceiver.java
+│       │                       └── Services
+│       │                           └── TestDataService.java
+│       └── main
+│           ├── AndroidManifest.xml
+│           ├── java
+│           │   └── com
+│           │       └── mobile
+│           │           └── marc
+│           │               └── talkoo
+│           │                   ├── Adapters
+│           │                   │   ├── PeersAdapter.java
+│           │                   │   └── RoomAdapter.java
+│           │                   ├── BroadcastReceiver
+│           │                   │   └── WifiDirectBroadcastReceiver.java
+│           │                   ├── Fragments
+│           │                   │   ├── FragmentFactory.java
+│           │                   │   ├── HomeFragment.java
+│           │                   │   ├── NavigationDrawerFragment.java
+│           │                   │   ├── PeersFragment.java
+│           │                   │   └── SettingsFragment.java
+│           │                   ├── LoginActivity.java
+│           │                   ├── MessageManagement
+│           │                   │   ├── ClientSender.java
+│           │                   │   ├── GroupOwnerSender.java
+│           │                   │   ├── NotificationHandler.java
+│           │                   │   ├── Receiver.java
+│           │                   │   └── Thread
+│           │                   │       ├── ClientThread.java
+│           │                   │       └── ServerThread.java
+│           │                   ├── Models
+│           │                   │   └── Message.java
+│           │                   ├── NavigatorActivity.java
+│           │                   ├── RoomActivity.java
+│           │                   └── Services
+│           │                       ├── DataService.java
+│           │                       └── WifiDirectLocalService.java
+│           └── res
+│               ├── drawable
+│               │   ├── activated_background_drawer.xml
+│               │   ├── background_action_bar.xml
+│               │   ├── item_message.xml
+│               │   ├── item_message_owner.xml
+│               │   ├── item_peer.xml
+│               │   └── progress_bar.xml
+│               ├── drawable-hdpi
+│               │   ├── drawer_shadow.9.png
+│               │   ├── ic_action_refresh.png
+│               │   ├── ic_drawer.png
+│               │   └── ic_launcher.png
+│               ├── drawable-mdpi
+│               │   ├── drawer_shadow.9.png
+│               │   ├── ic_action_refresh.png
+│               │   ├── ic_drawer.png
+│               │   └── ic_launcher.png
+│               ├── drawable-xhdpi
+│               │   ├── drawer_shadow.9.png
+│               │   ├── ic_action_refresh.png
+│               │   ├── ic_drawer.png
+│               │   └── ic_launcher.png
+│               ├── drawable-xxhdpi
+│               │   ├── drawer_shadow.9.png
+│               │   ├── ic_action_refresh.png
+│               │   ├── ic_drawer.png
+│               │   └── ic_launcher.png
+│               ├── layout
+│               │   ├── action_refresh_progress_bar.xml
+│               │   ├── activity_login.xml
+│               │   ├── activity_navigator.xml
+│               │   ├── activity_room.xml
+│               │   ├── custom_row_drawer.xml
+│               │   ├── fragment_home.xml
+│               │   ├── fragment_navigation_drawer.xml
+│               │   ├── fragment_peers_grid.xml
+│               │   ├── fragment_peers_list.xml
+│               │   ├── fragment_settings.xml
+│               │   ├── item_message.xml
+│               │   └── item_peer.xml
+│               ├── menu
+│               │   ├── global.xml
+│               │   ├── home.xml
+│               │   ├── main.xml
+│               │   └── menu_room.xml
+│               ├── values
+│               │   ├── colors.xml
+│               │   ├── dimens.xml
+│               │   ├── ids.xml
+│               │   ├── refs.xml
+│               │   ├── strings.xml
+│               │   ├── styles.xml
+│               │   └── themes.xml
+│               ├── values-large
+│               │   └── refs.xml
+│               ├── values-sw600dp
+│               │   └── refs.xml
+│               └── values-w820dp
+│                   └── dimens.xml
+├── build
+│   └── intermediates
+│       ├── dex-cache
+│       │   └── cache.xml
+│       └── model_data.bin
+├── build.gradle
+├── flat_library
+│   └── flat_library.iml
+├── gradle
+│   ├── gradle
+│   │   └── wrapper
+│   │       ├── gradle-wrapper.jar
+│   │       └── gradle-wrapper.properties
+│   ├── gradle.iml
+│   ├── gradlew
+│   ├── gradlew.bat
+│   ├── local.properties
+│   └── wrapper
+│       ├── gradle-wrapper.jar
+│       └── gradle-wrapper.properties
+├── gradle.properties
+├── gradlew
+├── gradlew.bat
+├── library
+│   ├── build
+│   │   ├── generated
+│   │   │   ├── res
+│   │   │   │   └── rs
+│   │   │   │       ├── debug
+│   │   │   │       └── test
+│   │   │   │           └── debug
+│   │   │   └── source
+│   │   │       ├── aidl
+│   │   │       │   ├── debug
+│   │   │       │   └── test
+│   │   │       │       └── debug
+│   │   │       ├── buildConfig
+│   │   │       │   ├── debug
+│   │   │       │   │   └── com
+│   │   │       │   │       └── cengalabs
+│   │   │       │   │           └── flatui
+│   │   │       │   │               └── BuildConfig.java
+│   │   │       │   └── test
+│   │   │       │       └── debug
+│   │   │       │           └── com
+│   │   │       │               └── cengalabs
+│   │   │       │                   └── flatui
+│   │   │       │                       └── test
+│   │   │       │                           └── BuildConfig.java
+│   │   │       ├── r
+│   │   │       │   ├── debug
+│   │   │       │   │   └── com
+│   │   │       │   │       └── cengalabs
+│   │   │       │   │           └── flatui
+│   │   │       │   │               └── R.java
+│   │   │       │   └── test
+│   │   │       │       └── debug
+│   │   │       │           └── com
+│   │   │       │               └── cengalabs
+│   │   │       │                   └── flatui
+│   │   │       │                       ├── R.java
+│   │   │       │                       └── test
+│   │   │       │                           └── R.java
+│   │   │       └── rs
+│   │   │           ├── debug
+│   │   │           └── test
+│   │   │               └── debug
+│   │   ├── intermediates
+│   │   │   ├── assets
+│   │   │   │   └── test
+│   │   │   │       └── debug
+│   │   │   │           └── fonts
+│   │   │   │               ├── opensans_bold.ttf
+│   │   │   │               ├── opensans_extrabold.ttf
+│   │   │   │               ├── opensans_extralight.ttf
+│   │   │   │               ├── opensans_light.ttf
+│   │   │   │               ├── opensans_regular.ttf
+│   │   │   │               ├── roboto_bold.ttf
+│   │   │   │               ├── roboto_extrabold.ttf
+│   │   │   │               ├── roboto_extralight.ttf
+│   │   │   │               ├── roboto_light.ttf
+│   │   │   │               └── roboto_regular.ttf
+│   │   │   ├── bundles
+│   │   │   │   └── debug
+│   │   │   │       ├── AndroidManifest.xml
+│   │   │   │       ├── R.txt
+│   │   │   │       ├── aidl
+│   │   │   │       ├── assets
+│   │   │   │       │   └── fonts
+│   │   │   │       │       ├── opensans_bold.ttf
+│   │   │   │       │       ├── opensans_extrabold.ttf
+│   │   │   │       │       ├── opensans_extralight.ttf
+│   │   │   │       │       ├── opensans_light.ttf
+│   │   │   │       │       ├── opensans_regular.ttf
+│   │   │   │       │       ├── roboto_bold.ttf
+│   │   │   │       │       ├── roboto_extrabold.ttf
+│   │   │   │       │       ├── roboto_extralight.ttf
+│   │   │   │       │       ├── roboto_light.ttf
+│   │   │   │       │       └── roboto_regular.ttf
+│   │   │   │       ├── classes.jar
+│   │   │   │       └── res
+│   │   │   │           └── values
+│   │   │   │               └── values.xml
+│   │   │   ├── classes
+│   │   │   │   └── debug
+│   │   │   │       └── com
+│   │   │   │           └── cengalabs
+│   │   │   │               └── flatui
+│   │   │   │                   ├── Attributes$AttributeChangeListener.class
+│   │   │   │                   ├── Attributes.class
+│   │   │   │                   ├── BuildConfig.class
+│   │   │   │                   ├── FlatUI.class
+│   │   │   │                   ├── R$array.class
+│   │   │   │                   ├── R$attr.class
+│   │   │   │                   ├── R$color.class
+│   │   │   │                   ├── R$id.class
+│   │   │   │                   ├── R$string.class
+│   │   │   │                   ├── R$styleable.class
+│   │   │   │                   ├── R.class
+│   │   │   │                   ├── TouchEffectAnimator$1.class
+│   │   │   │                   ├── TouchEffectAnimator$2.class
+│   │   │   │                   ├── TouchEffectAnimator$3.class
+│   │   │   │                   ├── TouchEffectAnimator$InterpolatedTimeCallback.class
+│   │   │   │                   ├── TouchEffectAnimator$ValueGeneratorAnim.class
+│   │   │   │                   ├── TouchEffectAnimator.class
+│   │   │   │                   └── views
+│   │   │   │                       ├── FlatAutoCompleteTextView.class
+│   │   │   │                       ├── FlatButton.class
+│   │   │   │                       ├── FlatCheckBox.class
+│   │   │   │                       ├── FlatEditText.class
+│   │   │   │                       ├── FlatRadioButton.class
+│   │   │   │                       ├── FlatSeekBar.class
+│   │   │   │                       ├── FlatTextView.class
+│   │   │   │                       └── FlatToggleButton.class
+│   │   │   ├── dependency-cache
+│   │   │   │   └── debug
+│   │   │   ├── incremental
+│   │   │   │   ├── aidl
+│   │   │   │   │   ├── debug
+│   │   │   │   │   │   └── dependency.store
+│   │   │   │   │   └── test
+│   │   │   │   │       └── debug
+│   │   │   │   │           └── dependency.store
+│   │   │   │   ├── mergeAssets
+│   │   │   │   │   ├── debug
+│   │   │   │   │   │   └── merger.xml
+│   │   │   │   │   └── test
+│   │   │   │   │       └── debug
+│   │   │   │   │           └── merger.xml
+│   │   │   │   ├── mergeResources
+│   │   │   │   │   └── test
+│   │   │   │   │       └── debug
+│   │   │   │   │           └── merger.xml
+│   │   │   │   └── packageResources
+│   │   │   │       └── debug
+│   │   │   │           └── merger.xml
+│   │   │   ├── lint
+│   │   │   ├── manifests
+│   │   │   │   ├── test
+│   │   │   │   │   └── debug
+│   │   │   │   │       └── AndroidManifest.xml
+│   │   │   │   └── tmp
+│   │   │   │       ├── manifestMerger2563470978409835291.xml
+│   │   │   │       └── manifestMerger7550195938545150950.xml
+│   │   │   ├── ndk
+│   │   │   │   └── debug
+│   │   │   │       ├── lib
+│   │   │   │       └── obj
+│   │   │   ├── res
+│   │   │   │   ├── resources-debug-test.ap_
+│   │   │   │   └── test
+│   │   │   │       └── debug
+│   │   │   │           └── values
+│   │   │   │               └── values.xml
+│   │   │   ├── rs
+│   │   │   │   ├── debug
+│   │   │   │   │   ├── lib
+│   │   │   │   │   └── obj
+│   │   │   │   └── test
+│   │   │   │       └── debug
+│   │   │   │           ├── lib
+│   │   │   │           └── obj
+│   │   │   └── symbols
+│   │   │       └── test
+│   │   │           └── debug
+│   │   │               └── R.txt
+│   │   ├── outputs
+│   │   │   └── aar
+│   │   │       └── library-debug.aar
+│   │   └── tmp
+│   │       ├── compileDebugJava
+│   │       └── packageDebugJar
+│   │           └── MANIFEST.MF
+│   ├── build.gradle
+│   ├── gradle.properties
+│   ├── library.iml
+│   └── src
+│       └── main
+│           ├── AndroidManifest.xml
+│           ├── assets
+│           │   └── fonts
+│           │       ├── opensans_bold.ttf
+│           │       ├── opensans_extrabold.ttf
+│           │       ├── opensans_extralight.ttf
+│           │       ├── opensans_light.ttf
+│           │       ├── opensans_regular.ttf
+│           │       ├── roboto_bold.ttf
+│           │       ├── roboto_extrabold.ttf
+│           │       ├── roboto_extralight.ttf
+│           │       ├── roboto_light.ttf
+│           │       └── roboto_regular.ttf
+│           ├── java
+│           │   └── com
+│           │       └── cengalabs
+│           │           └── flatui
+│           │               ├── Attributes.java
+│           │               ├── FlatUI.java
+│           │               ├── TouchEffectAnimator.java
+│           │               └── views
+│           │                   ├── FlatAutoCompleteTextView.java
+│           │                   ├── FlatButton.java
+│           │                   ├── FlatCheckBox.java
+│           │                   ├── FlatEditText.java
+│           │                   ├── FlatRadioButton.java
+│           │                   ├── FlatSeekBar.java
+│           │                   ├── FlatTextView.java
+│           │                   └── FlatToggleButton.java
+│           └── res
+│               └── values
+│                   ├── attrs.xml
+│                   ├── colors.xml
+│                   └── strings.xml
+├── local.properties
+├── sample
+│   └── sample.iml
+├── settings.gradle
+├── talkoo.iml
+└── tree
+
+352 directories, 374 files
