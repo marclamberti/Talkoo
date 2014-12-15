@@ -1,3 +1,6 @@
+//# CSIT 6000B    # Jordy Ngenze Domingos       20243311        jndomingos@ust.hk
+//# CSIT 6000B    # Marc Lamberti               20243622        mlamberti@ust.hk
+
 package com.mobile.marc.talkoo.Activities;
 
 import android.content.Intent;
@@ -9,9 +12,6 @@ import android.widget.EditText;
 import com.mobile.marc.talkoo.LoginActivity;
 import com.mobile.marc.talkoo.R;
 
-/**
- * Created by Marc on 15/12/14.
- */
 public class TestLoginActivity extends ActivityUnitTestCase<LoginActivity> {
 
     private LoginActivity activity;

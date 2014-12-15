@@ -1,3 +1,6 @@
+//# CSIT 6000B    # Jordy Ngenze Domingos       20243311        jndomingos@ust.hk
+//# CSIT 6000B    # Marc Lamberti               20243622        mlamberti@ust.hk
+
 package com.mobile.marc.talkoo.Activities;
 
 import android.net.wifi.p2p.WifiP2pDevice;
@@ -94,7 +97,7 @@ public class TestNavigatorActivity extends ActivityInstrumentationTestCase2<Navi
     /**
      * Test Peers Fragment
      */
-    public void testPeerFragment() {
+    public void testPeersFragment() {
         getActivity().onNavigationDrawerItemSelected(1);
         getInstrumentation().runOnMainSync(new Runnable() {
             @Override
