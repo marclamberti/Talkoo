@@ -1,11 +1,14 @@
 package com.mobile.marc.talkoo.Activities;
 
+import android.net.wifi.p2p.WifiP2pDevice;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.mobile.marc.talkoo.Adapters.PeersAdapter;
 import com.mobile.marc.talkoo.Fragments.HomeFragment;
@@ -15,9 +18,6 @@ import com.mobile.marc.talkoo.Fragments.SettingsFragment;
 import com.mobile.marc.talkoo.NavigatorActivity;
 import com.mobile.marc.talkoo.R;
 
-/**
- * Created by Marc on 15/12/14.
- */
 public class TestNavigatorActivity extends ActivityInstrumentationTestCase2<NavigatorActivity> {
 
     HomeFragment home_fragment;
@@ -111,6 +111,50 @@ public class TestNavigatorActivity extends ActivityInstrumentationTestCase2<Navi
         assertNotNull(adapter);
         assertEquals(adapter.getCount(), 0);
         View peerEmptyView = listView.getEmptyView();
-        //assertEquals("The empty view should be displayed", peerEmptyView.getVisibility(), true);
+        assertEquals("The empty view should be displayed", peerEmptyView.getVisibility(), View.VISIBLE);
+
+        WifiP2pDevice device = new WifiP2pDevice();
+        device.deviceAddress = "UnitTestAddress";
+        device.deviceName = "UnitTestName";
+        device.status = WifiP2pDevice.AVAILABLE;
+        peersFragment.addPeerToList(device);
+        assertEquals(adapter.getCount(), 1);
+
+        WifiP2pDevice tmp = adapter.getItem(0);
+        assertEquals("The device address is incorrect", tmp.deviceAddress, "UnitTestAddress");
+        assertEquals("The device name is incorrect", tmp.deviceName, "UnitTestName");
+        assertEquals("The device status is incorrect", tmp.status, WifiP2pDevice.AVAILABLE);
+    }
+
+    /**
+     * Test Settings Fragment
+     */
+    public void testSettingsFragment() {
+        getActivity().onNavigationDrawerItemSelected(2);
+        getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                getActivity().getFragmentManager().executePendingTransactions();
+            }
+        });
+        settingsFragment = (SettingsFragment) getActivity().getFragmentManager().findFragmentByTag(SettingsFragment.TAG);
+        View settingsView = settingsFragment.getView();
+        assertNotNull(settingsView);
+        int toggle_wifi_id = R.id.setting_toggle_wifi;
+        assertNotNull(settingsView.findViewById(toggle_wifi_id));
+        int save_button_id = R.id.setting_button_save;
+        assertNotNull(settingsView.findViewById(save_button_id));
+        final Button save_button = (Button)settingsView.findViewById(save_button_id);
+        final ToggleButton wifiToggle = (ToggleButton)settingsView.findViewById(toggle_wifi_id);
+        assertEquals("The wifi should be turn off", false, getActivity().onIsWifiConnected());
+        wifiToggle.performClick();
+        assertEquals("The wifi toggle button value is incorrect", true, wifiToggle.isEnabled());
+        getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                save_button.performClick();
+            }
+        });
+        assertEquals("The wifi should be turn on", false, getActivity().wifi_enabled);
     }
 }
