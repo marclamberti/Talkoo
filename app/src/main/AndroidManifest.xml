@@ -45,7 +45,7 @@
         </activity>
         <!-- Just for unit test -->
         <activity
-            android:name=".Fragments.FragmentContainerActivity" >
+            android:name=".FragmentContainerActivity" >
         </activity>
     </application>
 

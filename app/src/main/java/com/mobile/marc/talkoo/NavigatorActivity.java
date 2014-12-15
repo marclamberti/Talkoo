@@ -66,11 +66,13 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
     private WifiDirectLocalService          service_;
     public boolean                          wifi_enabled;
     private String                          login_;
-    // TODO: HAS TO BE CHANGED
-    public static ServerInit server;
-    public static boolean isOwner = false;
-    public static boolean isClient = false;
-    public static InetAddress owner_address;
+
+    public static ServerInit                server;
+    public static boolean                   isOwner = false;
+    public static boolean                   isClient = false;
+    public static InetAddress               owner_address;
+
+    private static final int                RESULT_ID_ROOM_ACTIVITY = 1;
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -223,6 +225,11 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
         }
     }
 
+    /**
+     * Return a string according to the error code
+     * @param code
+     * @return
+     */
     private String errorCode(int code) {
         switch (code) {
             case WifiP2pManager.BUSY:
@@ -238,9 +245,34 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
         }
     }
 
+    /**
+     * Stop the progress dialog which appears when we try to connect to a peer
+     */
     public void dismissProgressDialog() {
         if (progress_dialog_ != null && progress_dialog_.isShowing()) {
             progress_dialog_.dismiss();
+        }
+    }
+
+    /**
+     * Used to know when the room activity goes back to NavigatorActivity to reset the wifiP2P elements
+     * @param request_code
+     * @param result_code
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int request_code, int result_code, Intent data) {
+        if (request_code == RESULT_ID_ROOM_ACTIVITY) {
+            if (result_code == RESULT_OK) {
+                String result = data.getStringExtra(RoomActivity.RESULT_EXTRA);
+                if (result.contentEquals("Disconnected")) {
+                    service_.removeLocalService();
+                    initWifiDirect();
+                    System.out.println("RESET");
+                }
+            } else if (result_code == RESULT_CANCELED) {
+                // do something
+            }
         }
     }
 
@@ -385,7 +417,7 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
                 //Open the Room Activity
                 Intent intent = new Intent(NavigatorActivity.this, RoomActivity.class);
                 intent.putExtra(LoginActivity.EXTRA_LOGIN, login_);
-                startActivity(intent);
+                startActivityForResult(intent, RESULT_ID_ROOM_ACTIVITY);
             }
         });
     }

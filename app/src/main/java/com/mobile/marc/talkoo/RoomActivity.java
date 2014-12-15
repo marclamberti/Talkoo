@@ -43,6 +43,8 @@ public class RoomActivity extends Activity implements WifiDirectBroadcastListene
     private String                          login_;
     private static ListView                 message_list_view_;
 
+    public static final String              RESULT_EXTRA = "RESULT";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -157,6 +159,9 @@ public class RoomActivity extends Activity implements WifiDirectBroadcastListene
             NavigatorActivity.server.interrupt();
         }
         manager_.cancelConnect(channel_, null);
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra(RESULT_EXTRA, "Disconnected");
+        setResult(RESULT_OK, returnIntent);
         finish();
     }
 
@@ -218,12 +223,20 @@ public class RoomActivity extends Activity implements WifiDirectBroadcastListene
     }
 
     @Override
+    /**
+     * Called when the peers are disconnected
+     * Close the group, stop the server and send back some information to the Navigator Activity
+     * to indicate the disconnection
+     */
     public void onDisconnected() {
         Toast.makeText(RoomActivity.this, "Your have been disconnected", Toast.LENGTH_LONG).show();
         disconnectFromGroup();
         if (NavigatorActivity.server != null) {
             NavigatorActivity.server.interrupt();
         }
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra(RESULT_EXTRA, "Disconnected");
+        setResult(RESULT_OK, returnIntent);
         finish();
     }
 
