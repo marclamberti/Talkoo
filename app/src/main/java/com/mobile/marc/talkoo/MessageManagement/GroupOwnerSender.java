@@ -41,25 +41,25 @@ public class GroupOwnerSender extends AsyncTask<Message, Message, Message> {
             socket.setReuseAddress(true);
             socket.bind(null);
 
-            Log.v(TAG,"Connect to client: " + address.getHostAddress());
+     //       Log.v(TAG,"Connect to client: " + address.getHostAddress());
             socket.connect(new InetSocketAddress(address, SERVER_PORT));
-            Log.v(TAG, "doInBackground: connect to "+ address.getHostAddress() +" succeeded");
+    //        Log.v(TAG, "doInBackground: connect to "+ address.getHostAddress() +" succeeded");
 
             OutputStream outputStream = socket.getOutputStream();
             new ObjectOutputStream(outputStream).writeObject(message);
 
-            Log.v(TAG, "doInBackground: write to "+ address.getHostAddress() +" succeeded");
+    //        Log.v(TAG, "doInBackground: write to "+ address.getHostAddress() +" succeeded");
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();
-            Log.e(TAG, "Message sending failed");
+    //        Log.e(TAG, "Message sending failed");
         }
         return null;
     }
 
     @Override
     protected Message doInBackground(Message... message) {
-        Log.v(TAG, "doInBackground");
+    //    Log.v(TAG, "doInBackground");
 
         //Display le message on the sender before sending it
         publishProgress(message);
@@ -69,7 +69,8 @@ public class GroupOwnerSender extends AsyncTask<Message, Message, Message> {
 
         for (InetAddress address : listClients){
             if (message[0].getSenderAddress()!= null &&
-                    address.getHostAddress().equals(message[0].getSenderAddress().getHostAddress())){
+                    address.getHostAddress().equals(
+                            message[0].getSenderAddress().getHostAddress())) {
                 return message[0];
             }
             sendMessageToClient(address, message[0]);
@@ -87,14 +88,16 @@ public class GroupOwnerSender extends AsyncTask<Message, Message, Message> {
 
     @Override
     protected void onPostExecute(Message result) {
-        Log.v(TAG, "onPostExecute");
+    //    Log.v(TAG, "onPostExecute");
         super.onPostExecute(result);
     }
 
     @SuppressWarnings("rawtypes")
     public Boolean isActivityRunning(Class activityClass) {
-        ActivityManager activityManager = (ActivityManager) context_.getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningTaskInfo> tasks = activityManager.getRunningTasks(Integer.MAX_VALUE);
+        ActivityManager activityManager =
+                (ActivityManager) context_.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> tasks =
+                activityManager.getRunningTasks(Integer.MAX_VALUE);
 
         for (ActivityManager.RunningTaskInfo task : tasks) {
             if (activityClass.getCanonicalName().equalsIgnoreCase(task.baseActivity.getClassName()))

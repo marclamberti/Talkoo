@@ -31,7 +31,7 @@ public class ServerInit extends Thread{
                 Socket clientSocket = server_socket_.accept();
                 if(!clients.contains(clientSocket.getInetAddress())){
                     clients.add(clientSocket.getInetAddress());
-                    Log.v(TAG, "New client: " + clientSocket.getInetAddress().getHostAddress());
+                    //Log.v(TAG, "New client: " + clientSocket.getInetAddress().getHostAddress());
                 }
                 clientSocket.close();
             }
@@ -45,7 +45,7 @@ public class ServerInit extends Thread{
         super.interrupt();
         try {
             server_socket_.close();
-            Log.v(TAG, "Server init process interrupted");
+            //Log.v(TAG, "Server init process interrupted");
         } catch (IOException e) {
             e.printStackTrace();
         }

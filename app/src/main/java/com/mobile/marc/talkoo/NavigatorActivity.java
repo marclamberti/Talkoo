@@ -6,7 +6,6 @@ package com.mobile.marc.talkoo;
 import android.app.ActionBar;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,18 +15,15 @@ import android.net.wifi.WifiManager;
 import android.net.wifi.WpsInfo;
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
-import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
-import android.view.View;
 import android.widget.Toast;
 
 import com.mobile.marc.talkoo.BroadcastReceiver.WifiDirectBroadcastReceiver;
@@ -50,8 +46,9 @@ import java.net.InetAddress;
  * TODO: Detect when a connection is refused
  * TODO: Actualize the list on device periodically
  */
-public class NavigatorActivity extends FragmentActivity implements HomeListener, PeersListener, SettingsListener,
-        NavigationDrawerCallbacks, WifiDirectBroadcastListener, LocalServiceListener {
+public class NavigatorActivity extends FragmentActivity implements HomeListener, PeersListener,
+        SettingsListener, NavigationDrawerCallbacks, WifiDirectBroadcastListener,
+        LocalServiceListener {
 
     /**
      * Progress dialog
@@ -90,11 +87,14 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigator);
 
-        navigation_drawer_fragment_ = (NavigationDrawerFragment)getFragmentManager().findFragmentById(R.id.navigation_drawer);
+        navigation_drawer_fragment_ =
+                (NavigationDrawerFragment)getFragmentManager()
+                        .findFragmentById(R.id.navigation_drawer);
         title_ = getTitle();
 
         // Set up the drawer.
-        navigation_drawer_fragment_.setUp(R.id.navigation_drawer, (DrawerLayout)findViewById(R.id.drawer_layout));
+        navigation_drawer_fragment_.setUp(R.id.navigation_drawer,
+                (DrawerLayout)findViewById(R.id.drawer_layout));
 
         // Get the intent and the login parameter
         Intent intent = getIntent();
@@ -190,7 +190,8 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
             // decide what to show in the action bar.
 
             // Display the refresh icon in the action bar only if it is the peer's fragment
-            PeersFragment peers_fragment = (PeersFragment)getFragmentManager().findFragmentByTag(PeersFragment.TAG);
+            PeersFragment peers_fragment = (PeersFragment)getFragmentManager()
+                    .findFragmentByTag(PeersFragment.TAG);
             if (peers_fragment != null && peers_fragment.isVisible()) {
                 getMenuInflater().inflate(R.menu.home, menu);
                 if (discovering_peers_progress) {
@@ -216,7 +217,8 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
         int id = item.getItemId();
         switch (id) {
             case R.id.action_refresh:
-                ((PeersFragment)getFragmentManager().findFragmentByTag(PeersFragment.TAG)).refreshPeersList(item);
+                ((PeersFragment)getFragmentManager().findFragmentByTag(PeersFragment.TAG))
+                                                            .refreshPeersList(item);
                 break;
         }
     }
@@ -286,7 +288,8 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
         service_.clearServiceRequest();
 
         // Progress dialog waiting for a connection
-        progress_dialog_ = ProgressDialog.show(NavigatorActivity.this, "Connection", "Connection to: " + peer.deviceName, true, true, new DialogInterface.OnCancelListener() {
+        progress_dialog_ = ProgressDialog.show(NavigatorActivity.this,
+                "Connection", "Connection to: " + peer.deviceName, true, true, new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialogInterface) {
                 manager_.cancelConnect(channel_, new WifiP2pManager.ActionListener() {
@@ -312,7 +315,8 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
             @Override
             public void onFailure(int i) {
                 dismissProgressDialog();
-                Toast.makeText(NavigatorActivity.this, "Connection failed: " + errorCode(i), Toast.LENGTH_SHORT).show();
+                Toast.makeText(NavigatorActivity.this, "Connection failed: " + errorCode(i),
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -372,7 +376,8 @@ public class NavigatorActivity extends FragmentActivity implements HomeListener,
                     }
                 }
                 // Clear list of peers
-                PeersFragment fragment = ((PeersFragment)getFragmentManager().findFragmentByTag(PeersFragment.TAG));
+                PeersFragment fragment = ((PeersFragment)getFragmentManager()
+                        .findFragmentByTag(PeersFragment.TAG));
                 if (fragment != null) {
                     fragment.clearPeers();
                 }

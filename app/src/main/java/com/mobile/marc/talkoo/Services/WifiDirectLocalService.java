@@ -10,7 +10,6 @@ import android.net.wifi.p2p.WifiP2pManager.Channel;
 import android.net.wifi.p2p.WifiP2pManager.DnsSdTxtRecordListener;
 import android.net.wifi.p2p.WifiP2pManager.DnsSdServiceResponseListener;
 import android.net.wifi.p2p.nsd.WifiP2pDnsSdServiceRequest;
-import android.widget.Toast;
 
 import com.mobile.marc.talkoo.Fragments.PeersFragment;
 import com.mobile.marc.talkoo.NavigatorActivity;
@@ -24,7 +23,8 @@ import java.util.Map;
  * running on our device.
  * These capabilities help to communicate between apps.
  */
-public class WifiDirectLocalService implements DnsSdTxtRecordListener, DnsSdServiceResponseListener {
+public class WifiDirectLocalService implements DnsSdTxtRecordListener,
+        DnsSdServiceResponseListener {
 
     public static final String INSTANCE_NAME = "_talkoo";
     private static final int SERVER_PORT = 4445;
@@ -36,7 +36,8 @@ public class WifiDirectLocalService implements DnsSdTxtRecordListener, DnsSdServ
     private WifiP2pDnsSdServiceInfo         service_info_;
     public final HashMap<String, String>    peers = new HashMap<String, String>();
 
-    public WifiDirectLocalService(WifiP2pManager manager, Channel channel, NavigatorActivity activity, String login) {
+    public WifiDirectLocalService(WifiP2pManager manager, Channel channel,
+                                  NavigatorActivity activity, String login) {
         manager_ = manager;
         channel_ = channel;
         activity_ = activity;
@@ -58,14 +59,16 @@ public class WifiDirectLocalService implements DnsSdTxtRecordListener, DnsSdServ
         device.put("peer_available", "visible");
 
         // Service information, instance name, service type, and the information about this device
-        service_info_ = WifiP2pDnsSdServiceInfo.newInstance(INSTANCE_NAME, "_presence._tcp", device);
+        service_info_ = WifiP2pDnsSdServiceInfo.newInstance(INSTANCE_NAME, "_presence._tcp",
+                                                            device);
 
         // Add the local service
         manager_.addLocalService(channel_, service_info_, new WifiP2pManager.ActionListener() {
             @Override
             public void onSuccess() {
                 System.out.println("Local service registered");
-                manager_.setDnsSdResponseListeners(channel_, WifiDirectLocalService.this, WifiDirectLocalService.this);
+                manager_.setDnsSdResponseListeners(channel_, WifiDirectLocalService.this,
+                        WifiDirectLocalService.this);
             }
 
             @Override
@@ -93,7 +96,8 @@ public class WifiDirectLocalService implements DnsSdTxtRecordListener, DnsSdServ
     }
 
     @Override
-    public void onDnsSdServiceAvailable(String instance_name, String registration_type, WifiP2pDevice peer) {
+    public void onDnsSdServiceAvailable(String instance_name, String registration_type,
+                                        WifiP2pDevice peer) {
         System.out.println("onDnsSdServiceAvailable: " + instance_name);
         // Check if the peer comes from talkoo
         if (!instance_name.equals(INSTANCE_NAME)) {
@@ -105,7 +109,8 @@ public class WifiDirectLocalService implements DnsSdTxtRecordListener, DnsSdServ
         }
 
         // Add to the peer list fragment
-        PeersFragment fragment = (PeersFragment)activity_.getFragmentManager().findFragmentByTag(PeersFragment.TAG);
+        PeersFragment fragment = (PeersFragment)activity_.getFragmentManager()
+                .findFragmentByTag(PeersFragment.TAG);
         if (fragment != null) {
             fragment.addPeerToList(peer);
         }
@@ -123,7 +128,9 @@ public class WifiDirectLocalService implements DnsSdTxtRecordListener, DnsSdServ
             @Override
             public void onFailure(int i) {
                 System.out.println("Add service request failed: " + errorCode(i));
-                PeersFragment fragment = (PeersFragment)activity_.getFragmentManager().findFragmentByTag(PeersFragment.TAG);
+                PeersFragment fragment =
+                        (PeersFragment)activity_.getFragmentManager()
+                                .findFragmentByTag(PeersFragment.TAG);
                 if (fragment != null) {
                     fragment.stopRefreshActionBar();
                 }
@@ -142,7 +149,9 @@ public class WifiDirectLocalService implements DnsSdTxtRecordListener, DnsSdServ
             public void onFailure(int i) {
                 stopDiscoveryRequest();
                 System.out.println("Discovery services failed: " + errorCode(i));
-                PeersFragment fragment = (PeersFragment)activity_.getFragmentManager().findFragmentByTag(PeersFragment.TAG);
+                PeersFragment fragment =
+                        (PeersFragment)activity_.getFragmentManager()
+                                .findFragmentByTag(PeersFragment.TAG);
                 if (fragment != null) {
                     fragment.stopRefreshActionBar();
                     activity_.onErrorFromLocalService("Discovery services failed: " + errorCode(i));

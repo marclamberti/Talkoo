@@ -35,19 +35,7 @@ public class Message implements Serializable {
      *  The different message types.
      */
     public static final int MESSAGE_TEXT = 1;
-    public static final int MESSAGE_IMAGE = 2;
-    public static final int MESSAGE_VIDEO = 4;
-    public static final int MESSAGE_AUDIO = 8;
-    public static final int MESSAGE_FILE = 16;
-    public static final int MESSAGE_INVITATION = 32;
-
-    /**
-     *  These field are used is the message contains multimedia content.
-     */
-    private String      file_name_;
-    private long        file_length_;
-    private String      file_path_;
-    private byte[]      data_array_;
+    public static final int MESSAGE_INVITATION = 2;
 
     /**
      *  Constructor.
@@ -94,91 +82,10 @@ public class Message implements Serializable {
     public void setSenderAddress(InetAddress senderAddress) {
         this.sender_address_ = senderAddress;
     }
-    public byte[] getDataArray() {
-        return data_array_;
-    }
-    public void setDataArray(byte[] byteArray) {
-        this.data_array_ = byteArray;
-    }
-    public String getFileName() {
-        return file_name_;
-    }
-    public void setFileName(String fileName) {
-        this.file_name_ = fileName;
-    }
-    public long getFileLength() {
-        return file_length_;
-    }
-    public void setFileLength(long fileLength) {
-        this.file_length_ = fileLength;
-    }
-    public String getFilePath() {
-        return file_path_;
-    }
-    public void setFilePath(String filePath) {
-        this.file_path_ = filePath;
-    }
     public boolean isOwner() {
         return is_owner_;
     }
     public void setOwner(boolean isOwner) {
         this.is_owner_ = isOwner;
     }
-
-
-//    public Bitmap byteArrayToBitmap(byte[] b) {
-//        Log.v(TAG, "Convert byte array to image (bitmap)");
-//        return BitmapFactory.decodeByteArray(b, 0, b.length);
-//    }
-
-    /**
-     *  Put the content of bytes_array_ to a file.
-     */
-//    public void saveByteArrayToFile(Context context) {
-//        setFilePath(context);
-//        createFileAndWriteByteArray();
-//    }
-
-    /**
-     *  Create the file path using the environment directory and the file name.
-     */
-//    public void setFilePath(Context context) {
-//        switch(message_type_){
-//            case Message.MESSAGE_FILE:
-//                file_path_ = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
-//                        .getAbsolutePath() + "/" + file_name_;
-//                break;
-//            case Message.MESSAGE_AUDIO:
-//                file_path_ = context.getExternalFilesDir(Environment.DIRECTORY_MUSIC)
-//                        .getAbsolutePath() + "/" + file_name_;
-//                break;
-//            case Message.MESSAGE_VIDEO:
-//                file_path_ = context.getExternalFilesDir(Environment.DIRECTORY_MOVIES)
-//                        .getAbsolutePath() + "/" + file_name_;
-//                break;
-//        }
-//    }
-
-    /**
-     *  Creates a file and fills it with the content of data_array_.
-     */
-//    public void createFileAndWriteByteArray() {
-//        File file = new File(file_path_);
-
-//        if (file.exists()) {
-//            file.delete();
-//        }
-
-//        try {
-//            FileOutputStream fos = new FileOutputStream(file.getPath());
-
-//            fos.write(data_array_);
-//            fos.close();
-//            Log.v(TAG, "Byte array written in file.");
-//        }
-//        catch (java.io.IOException e) {
-//           e.printStackTrace();
-//            Log.e(TAG, "Cannot write byte array to file.");
-//        }
-//    }
 }

@@ -64,6 +64,7 @@
                 android:textColor="@android:color/white"
                 android:gravity="center_horizontal"
                 android:hint="@string/welcome_hint_sign_up_login"
+                android:maxLength="15"
                 android:includeFontPadding="true"
                 flatui:fl_fieldStyle="fl_flat"
                 flatui:fl_theme="@array/grass" />

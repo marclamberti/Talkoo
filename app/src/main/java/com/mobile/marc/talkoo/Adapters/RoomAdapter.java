@@ -54,10 +54,12 @@ public class RoomAdapter extends BaseAdapter {
             room_login.setText(message.getRoomLogin());
             room_message.setText(message.getMessageText());
 
-            RelativeLayout layout = (RelativeLayout)view.findViewById(R.id.room_layout_item_message);
+            RelativeLayout layout =
+                    (RelativeLayout)view.findViewById(R.id.room_layout_item_message);
             if (layout != null) {
                 if (message.isOwner()) {
-                    layout.setBackground(view.getResources().getDrawable(R.drawable.item_message_owner));
+                    layout.setBackground(
+                            view.getResources().getDrawable(R.drawable.item_message_owner));
                 } else {
                     layout.setBackground(view.getResources().getDrawable(R.drawable.item_message));
                 }

@@ -30,9 +30,9 @@ public class ClientInit extends Thread {
             socket.bind(null);
             while (!socket.isConnected()) {
                 try {
-                    System.out.println("TRY CONNECTING...");
+                    //System.out.println("TRY CONNECTING...");
                     socket.connect(new InetSocketAddress(server_address_, SERVER_PORT));
-                    System.out.println("Connected...");
+                    //System.out.println("Connected...");
                 } catch (IOException e) {
                     e.printStackTrace();
                     if (++count == maxTries) {

@@ -62,7 +62,6 @@ public class NotificationHandler extends AsyncTask<Void, Message, Void> {
         Notification notification = new Notification.Builder(context)
                 .setContentTitle(message.getRoomLogin())
                 .setContentText(message.getMessageText())
-                        // .setSmallIcon(R.drawable.icon_notification)
                 .setContentIntent(pending_intent)
                 .setSound(notification_uri)
                 .build();

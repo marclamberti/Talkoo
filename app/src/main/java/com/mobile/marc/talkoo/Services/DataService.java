@@ -18,21 +18,31 @@ import com.mobile.marc.talkoo.MessageManagement.Receiver;
  * Created by Marc on 14/12/14.
  */
 public class DataService extends Service {
+    /*
+    ** For testing purpose.
+     */
+    public static boolean client_created = false;
+    public static boolean server_created = false;
+
     @Override
     public IBinder onBind(Intent arg0) {
         return null;
     }
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+    public int onStartCommand(Intent intent, int flags, int startId /*, boolean test*/) {
         System.out.println("onStartCommand");
         //Start the AsyncTask for the server to receive messages
         if (NavigatorActivity.isOwner) {
             System.out.println("Start the AsyncTask for the server to receive messages");
-            new Receiver(getApplicationContext(), true).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, (Void[])null);
+            new Receiver(getApplicationContext(), true)
+                    .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, (Void[])null);
+            server_created = true;
         }
         else if (NavigatorActivity.isClient) {
             System.out.println("Start the AsyncTask for the client to receive messages");
-            new Receiver(getApplicationContext(), false).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, (Void[])null);
+            new Receiver(getApplicationContext(), false)
+                    .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, (Void[])null);
+            client_created = true;
         }
         return START_STICKY;
     }

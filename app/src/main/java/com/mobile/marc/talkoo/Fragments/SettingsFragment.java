@@ -4,16 +4,12 @@
 package com.mobile.marc.talkoo.Fragments;
 
 import android.app.Activity;
-import android.net.Uri;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ToggleButton;
 
 import com.cengalabs.flatui.views.FlatTextView;
 import com.cengalabs.flatui.views.FlatToggleButton;

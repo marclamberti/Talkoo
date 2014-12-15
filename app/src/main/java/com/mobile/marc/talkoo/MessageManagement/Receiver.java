@@ -106,12 +106,6 @@ public class Receiver extends NotificationHandler {
         super.onProgressUpdate(messages);
         Notify(context_, messages[0]);
 
-        //If the message contains a video or an audio, we saved this file to the external storage
-        int type = messages[0].getMessageType();
-        if (type == Message.MESSAGE_AUDIO || type == Message.MESSAGE_VIDEO || type == Message.MESSAGE_FILE) {
-            //messages[0].saveByteArrayToFile(context_);
-        }
-
         if (is_server_) {
             new GroupOwnerSender(context_, false).executeOnExecutor(THREAD_POOL_EXECUTOR, messages);
         } else if (isActivityRunning(LoginActivity.class)) {
@@ -125,13 +119,13 @@ public class Receiver extends NotificationHandler {
     public Boolean isActivityRunning(Class activityClass) {
         ActivityManager activityManager =
                 (ActivityManager) context_.getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningTaskInfo> tasks = activityManager.getRunningTasks(Integer.MAX_VALUE);
+        List<ActivityManager.RunningTaskInfo> tasks =
+                activityManager.getRunningTasks(Integer.MAX_VALUE);
 
         for (ActivityManager.RunningTaskInfo task : tasks) {
             if (activityClass.getCanonicalName().equalsIgnoreCase(task.baseActivity.getClassName()))
                 return true;
         }
-
         return false;
     }
 }

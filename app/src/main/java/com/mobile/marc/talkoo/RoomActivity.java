@@ -31,9 +31,6 @@ import com.mobile.marc.talkoo.Services.DataService;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: Check, when a client discover a peer with a given name, the peer discovered goes back to home and choose another name then find peers.
-// TODO: When he find a peer and try to connect it, when they are connected, the original client does not show the room activity because he has
-// TODO: kept the previous login at the first discovery
 public class RoomActivity extends Activity implements WifiDirectBroadcastListener {
 
     static private RoomAdapter              room_adapter_;
@@ -182,13 +179,17 @@ public class RoomActivity extends Activity implements WifiDirectBroadcastListene
     public void sendMessageEvent(View view) {
         EditText room_message_edit_text = (EditText)findViewById(R.id.room_edit_message);
         if (room_message_edit_text != null && room_message_edit_text.getText().length() != 0) {
-            Message message = new Message(Message.MESSAGE_TEXT, room_message_edit_text.getText().toString(), null, login_, 0);
+            Message message = new Message(Message.MESSAGE_TEXT,
+                    room_message_edit_text.getText().toString(), null, login_, 0);
             // TODO: HAS TO BE CHANGED
             if (NavigatorActivity.isOwner) {
-                new GroupOwnerSender(this, true).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, message);
+                new GroupOwnerSender(this, true)
+                        .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, message);
             } else if (NavigatorActivity.isClient) {
-                new ClientSender(this, NavigatorActivity.owner_address).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, message);
+                new ClientSender(this, NavigatorActivity.owner_address)
+                        .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, message);
             }
+            room_message_edit_text.setText("");
         }
     }
 

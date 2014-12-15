@@ -37,10 +37,16 @@ public class TestPeersAdapter extends InstrumentationTestCase {
         adapter_ = new PeersAdapter(context_, view_id_, peers_);
     }
 
+    /*
+    **
+     */
     public void testCount() throws Exception {
         assertEquals(adapter_.getCount(), list_size_);
     }
 
+    /*
+    **
+    */
     public void testView() throws Exception {
         View view = adapter_.getView(0, null, null);
         TextView name = (TextView)view.findViewById(R.id.item_peer_name);
